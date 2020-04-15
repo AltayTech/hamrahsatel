@@ -1,0 +1,91 @@
+name: hamrahsatel
+
+description: A new Flutter application.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^3.2.0
+  shared_preferences: ^0.5.6
+  http: ^0.12.0+2
+  intl: ^0.16.0
+  flutter_widget_from_html_core: ^0.3.2+1
+
+  #  syncfusion_flutter_charts: ^17.4.40
+  share: ^0.6.3+5
+  image_picker: ^0.6.2+3
+  #  popup_menu: ^1.0.5
+  #  flutter_range_slider: ^1.4.0
+  #  json_serializable: ^3.2.5
+  url_launcher: ^5.4.1
+  html: ^0.14.0
+  flutter_spinkit: "^4.1.1"
+  #  back_button_interceptor: ^4.2.3
+  flutter_masked_text: ^0.7.0
+  #  splashscreen: ^1.2.0
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/cal_image.JPG
+    - assets/images/start_aghsat.JPG
+    - assets/images/main_item1.JPG
+    - assets/images/main_item2.JPG
+    - assets/images/main_item3.JPG
+    - assets/images/main_item4.JPG
+    - assets/images/balloons.png
+    - assets/images/login_header1.png
+    - assets/images/logo.png
+    - assets/images/logo.jpg
+    - assets/images/phone_icon.png
+    - assets/images/login_footer1.png
+    - assets/images/cheque.jpg
+    - assets/images/instagram.png
+    - assets/images/telegram.png
+    - assets/images/cafe_bazar.png
+    - assets/images/google_play.jpg
+    - assets/images/circle.gif
+    - assets/images/circle2.gif
+    - assets/images/drawer_header.jpg
+    - assets/images/logo_splash.png
+    - assets/images/orders_list.png
+    - assets/images/message_icon.png
+    - assets/images/user_Icon.png
+
+
+
+  fonts:
+    #   - family: Schyler
+    #     fonts:
+    #       - asset: fonts/Schyler-Regular.ttf
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    - family: Iransans
+      fonts:
+        - asset: assets/fonts/IRANSansMobile.ttf
+        - asset: assets/fonts/IRANSansMobile_Bold.ttf
+        - asset: assets/fonts/IRANSansMobile_Light.ttf
+        - asset: assets/fonts/IRANSansMobile_UltraLight.ttf
+          weight: 700
+    - family: IransansNonEn
+      fonts:
+        - asset: assets/fonts/IRANSansMobileNoEnMedium.ttf
+          weight: 700
+    - family: BFarnaz
+      fonts:
+        - asset: assets/fonts/B_Farnaz.ttf
+          weight: 700
+
