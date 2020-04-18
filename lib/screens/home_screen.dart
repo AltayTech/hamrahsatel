@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/classes/flutter_carousel_slider.dart';
+import 'package:hamrahsatel/models/gallery.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -21,6 +23,7 @@ class HomeScreeen extends StatefulWidget {
 class _HomeScreeenState extends State<HomeScreeen> {
   bool _isInit = true;
   final searchTextController = TextEditingController();
+  int _current = 0;
 
   List<ProductCart> shoppItems;
 
@@ -109,7 +112,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final HomePage loadedHomePage = Provider.of<Products>(context).homeItems;
     print('lenggggggggg' + loadedHomePage.categories.length.toString());
-
+    List<Gallery> slider = loadedHomePage.new_products[1].gallery;
     Provider.of<Auth>(context, listen: false).getToken();
 
     return SingleChildScrollView(
@@ -128,16 +131,88 @@ class _HomeScreeenState extends State<HomeScreeen> {
               child: Container(
                 height: deviceHeight * 0.25,
                 child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
+                  children: [
                     Positioned(
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      top: 0,
-                      child: Image.asset(
-                        "assets/images/drawer_header.jpg",
-                        fit: BoxFit.cover,
+                      left: 0.0,
+                      right: 0.0,
+                      child: CarouselSlider(
+//                        aspectRatio: 11 / 9,
+                        viewportFraction: 1.0,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: false,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration:
+                            Duration(milliseconds: 800),
+                        pauseAutoPlayOnTouch: Duration(seconds: 10),
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (index) {
+                          _current = index;
+                          setState(() {});
+                        },
+                        items: slider.map((gallery) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                  width: deviceWidth,
+//                                  margin: EdgeInsets.symmetric(
+//                                      horizontal: 5.0),
+                                  child:
+                                  Stack(
+                                    children: <Widget>[
+
+                                      Positioned.fill(
+
+                                        child: FadeInImage(
+                                          placeholder: AssetImage(
+                                              'assets/images/circle.gif'),
+                                          image: NetworkImage(gallery.url),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+//                                      Center(
+//                                        child: Text(
+//                                          'جزئیات',
+//                                          style: TextStyle(
+//                                            color: AppTheme.primary,
+//                                            fontFamily: 'Iransans',
+//                                            fontWeight:FontWeight.bold,
+//                                            fontSize: textScaleFactor * 20.0,
+//                                          ),
+//                                        ),
+//                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 3,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: slider.map<Widget>(
+                          (index) {
+                            return Container(
+                              width: 10.0,
+                              height: 10.0,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 2.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: AppTheme.h1),
+                                  color: _current == slider.indexOf(index)
+                                      ? AppTheme.h1
+                                      : AppTheme.bg),
+                            );
+                          },
+                        ).toList(),
                       ),
                     ),
                   ],

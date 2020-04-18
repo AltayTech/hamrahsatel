@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../../classes/app_theme.dart';
 
+import '../../classes/app_theme.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../provider/customer_info.dart';
@@ -49,6 +49,32 @@ class _CustomerDetailOrderScreenState extends State<CustomerDetailOrderScreen> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          EnArConvertor()
+                              .replaceArNumber((orderList.length.toString())),
+                          style: TextStyle(
+                            color: Color(0xffA67FEC),
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 14.0,
+                          ),
+                        ),
+                        Text(
+                          'تعداد ',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 14.0,
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'سفارش ها',
                       style: TextStyle(
@@ -68,48 +94,7 @@ class _CustomerDetailOrderScreenState extends State<CustomerDetailOrderScreen> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Color(0xffECE8E8),
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'تعداد سفارشات',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 14.0,
-                                ),
-                              ),
-                              Text(
-                                EnArConvertor().replaceArNumber(
-                                    (orderList.length.toString())),
-                                style: TextStyle(
-                                  color: Color(0xffA67FEC),
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+
               Directionality(
                 textDirection: TextDirection.rtl,
                 child: ListView.builder(
@@ -171,107 +156,122 @@ class OrderItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-        height: deviceHeight * 0.20,
+        height: deviceHeight * 0.250,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: AppTheme.text, width: 0.4)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'شماره سفارش: ' + number,
-                style: TextStyle(
-                  color: AppTheme.secondary,
-                  fontFamily: 'Iransans',
-                  fontSize: textScaleFactor * 12.0,
-                ),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'شماره سفارش: ' + number,
+                    style: TextStyle(
+                      color: AppTheme.h1,
+                      fontFamily: 'Iransans',
+                      fontSize: textScaleFactor * 12.0,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    status,
+                    style: TextStyle(
+                      color: AppTheme.primary,
+                      fontFamily: 'Iransans',
+                      fontSize: textScaleFactor * 14.0,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: AppTheme.text, width: 0.4)),
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4.0),
-                            child: Icon(
-                              Icons.calendar_today,
-                              color: AppTheme.h1,
-                            ),
+            Divider(
+              color: AppTheme.secondary,
+              thickness: 2,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Icon(
+                            Icons.calendar_today,
+                            color: AppTheme.h1,
                           ),
-                          Text(
-                            date,
-                            style: TextStyle(
-                              color: AppTheme.primary,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 13.0,
-                            ),
+                        ),
+                        Text(
+                          date,
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 13.0,
                           ),
-                          Spacer(),
-                          Text(
-                            EnArConvertor()
-                                    .replaceArNumber(currencyFormat
-                                        .format(double.parse(totalPrice)))
-                                    .toString() +
-                                ' تومان',
-                            style: TextStyle(
-                              color: AppTheme.primary,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 15.0,
-                            ),
+                        ),
+                        Spacer(),
+                        Text(
+                          EnArConvertor()
+                                  .replaceArNumber(currencyFormat
+                                      .format(double.parse(totalPrice)))
+                                  .toString() +
+                              ' تومان',
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 15.0,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Divider(
-                      indent: 15,
-                      endIndent: 15,
+                  ),
+                  Divider(
+                    indent: 15,
+                    endIndent: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'تعداد: ',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 12.0,
+                          ),
+                        ),
+                        Text(
+                          EnArConvertor().replaceArNumber(
+                            totalNumber,
+                          ),
+                          style: TextStyle(
+                            color: AppTheme.h1,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 14.0,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          'مشاهده جزئیات',
+                          style: TextStyle(
+                            color: AppTheme.secondary,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 11.0,
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'تعداد: ',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 12.0,
-                            ),
-                          ),
-                          Text(
-                            EnArConvertor().replaceArNumber(
-                              totalNumber,
-                            ),
-                            style: TextStyle(
-                              color: AppTheme.h1,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 14.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            status,
-                            style: TextStyle(
-                              color: AppTheme.secondary,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 11.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

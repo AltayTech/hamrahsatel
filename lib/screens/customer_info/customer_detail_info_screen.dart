@@ -132,22 +132,22 @@ class _CustomerDetailInfoScreenState extends State<CustomerDetailInfoScreen> {
                       bgColor: Colors.white,
                       iconColor: Color(0xffA67FEC),
                     ),
-                    InfoItem(
-                      title: 'جنسیت',
-                      text: customer.personal_data.gender != null
-                          ? customer.personal_data.gender
-                          : 'نامشخص',
-                      bgColor: Colors.white,
-                      iconColor: Color(0xffA67FEC),
-                    ),
-                    InfoItem(
-                      title: 'کد ملی',
-                      text: customer.personal_data.national_code != null
-                          ? customer.personal_data.national_code
-                          : '',
-                      bgColor: Colors.white,
-                      iconColor: Color(0xffA67FEC),
-                    ),
+//                    InfoItem(
+//                      title: 'جنسیت',
+//                      text: customer.personal_data.gender != null
+//                          ? customer.personal_data.gender
+//                          : 'نامشخص',
+//                      bgColor: Colors.white,
+//                      iconColor: Color(0xffA67FEC),
+//                    ),
+//                    InfoItem(
+//                      title: 'کد ملی',
+//                      text: customer.personal_data.national_code != null
+//                          ? customer.personal_data.national_code
+//                          : '',
+//                      bgColor: Colors.white,
+//                      iconColor: Color(0xffA67FEC),
+//                    ),
                   ],
                 ),
               ),
@@ -203,35 +203,35 @@ class _CustomerDetailInfoScreenState extends State<CustomerDetailInfoScreen> {
                   ],
                 ),
               ),
-              Divider(
-                color: Colors.white,
-              ),
-              Text(
-                'اطلاعات بانکی',
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontFamily: 'Iransans',
-                  fontSize: textScaleFactor * 14.0,
-                ),
-                textAlign: TextAlign.right,
-              ),
-              Container(
-                color: Colors.white,
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    InfoItem2(
-                      title: 'شماره کارت بانکی',
-                      text: customer.personal_data.credit != null
-                          ? customer.personal_data.credit
-                          : '',
-                      bgColor: Colors.white,
-                      iconColor: Color(0xffED8A19),
-                    ),
-                  ],
-                ),
-              ),
+//              Divider(
+//                color: Colors.white,
+//              ),
+//              Text(
+//                'اطلاعات بانکی',
+//                style: TextStyle(
+//                  color: Colors.blueGrey,
+//                  fontFamily: 'Iransans',
+//                  fontSize: textScaleFactor * 14.0,
+//                ),
+//                textAlign: TextAlign.right,
+//              ),
+//              Container(
+//                color: Colors.white,
+//                child: ListView(
+//                  physics: NeverScrollableScrollPhysics(),
+//                  shrinkWrap: true,
+//                  children: <Widget>[
+//                    InfoItem2(
+//                      title: 'شماره کارت بانکی',
+//                      text: customer.personal_data.credit != null
+//                          ? customer.personal_data.credit
+//                          : '',
+//                      bgColor: Colors.white,
+//                      iconColor: Color(0xffED8A19),
+//                    ),
+//                  ],
+//                ),
+//              ),
               SizedBox(
                 height: deviceHeight * 0.02,
               )
@@ -279,7 +279,7 @@ class InfoItem extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: bgColor,
-                border: Border.all(color: Colors.grey.withOpacity(0.4,)),
+                border: Border.all(color: Colors.grey.withOpacity(0.0,)),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Padding(
@@ -333,8 +333,8 @@ class InfoItem2 extends StatelessWidget {
           Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppTheme.bg,
-                border: Border.all(color: Colors.grey),
+                color: bgColor,
+                border: Border.all(color: Colors.grey.withOpacity(0.0)),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Padding(

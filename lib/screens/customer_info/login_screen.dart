@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import '../../provider/Products.dart';
 
 import '../../classes/app_theme.dart';
 import '../../classes/http_exception.dart';
+import '../../provider/Products.dart';
 import '../../provider/auth.dart';
 import '../../widgets/main_drawer.dart';
 import '../navigation_bottom_screen.dart';
@@ -48,55 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Stack(
             children: <Widget>[
               Positioned(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      child: Image.asset(
-                        'assets/images/login_header1.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Spacer(),
-                    Container(
-                      width: double.infinity,
-                      child: Image.asset(
-                        'assets/images/login_footer1.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: deviceSize.height * 0.06,
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'موبایل سعید',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Iransans',
-                    fontSize: textScaleFactor * 27.0,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: deviceSize.height * 0.12,
-                width: deviceSize.width,
-                child: Text(
-                  'فروشگاه موبایل، تبلت و وسایل جانبی',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Iransans',
-                    fontSize: textScaleFactor * 12.0,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: deviceSize.height * 0.22,
+                top: deviceSize.height * 0.18,
                 width: deviceSize.width,
                 child: Center(
                   child: Card(
@@ -137,34 +89,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Flexible(
-                          child: Container(
-                        height: 40,
-                        child: Stack(
-                          children: <Widget>[
-                            Center(
-                              child: Divider(
-                                indent: 40,
-                                endIndent: 40,
-                                color: Colors.black54,
-                              ),
-                            ),
-                            Center(
-                                child: Container(
-                              color: Color(0xffF9F9F9),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 18.0),
-                                child: Text(
-                                  'ورود',
-                                  style: TextStyle(
-                                    fontFamily: 'Iransans',
-                                    color: Colors.blue,
-                                    fontSize: textScaleFactor * 16.0,
-                                  ),
-                                ),
-                              ),
-                            ))
-                          ],
+                          child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 30),
+                        child: Text(
+                          'همراه ساتل',
+                          style: TextStyle(
+                            fontFamily: 'BFarnaz',
+                            fontWeight: FontWeight.w900,
+                            color: Colors.blue,
+                            fontSize: textScaleFactor * 28.0,
+                          ),
                         ),
                       )),
                       Flexible(
@@ -447,7 +382,7 @@ class _AuthCardState extends State<AuthCard>
                                 height: deviceSize.height * 0.055,
                                 width: deviceSize.width * 0.6,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
                                       color: Colors.blue, width: 1.5),
                                 ),
@@ -511,13 +446,13 @@ class _AuthCardState extends State<AuthCard>
                                 height: deviceSize.height * 0.055,
                                 width: deviceSize.width * 0.6,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
-                                      color: Colors.blue, width: 1.5),
+                                      color: AppTheme.h1, width: 0.5),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
+                                      horizontal: 8),
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: <Widget>[
@@ -546,11 +481,11 @@ class _AuthCardState extends State<AuthCard>
                                       ),
                                       Positioned(
                                           right: 3,
-                                          top: 7,
+                                          top: 5,
                                           bottom: 12,
                                           child: Icon(
                                             Icons.mobile_screen_share,
-                                            color: AppTheme.primary,
+                                            color: AppTheme.secondary,
                                           )),
                                     ],
                                   ),
@@ -597,13 +532,13 @@ class _AuthCardState extends State<AuthCard>
                           _submit();
                         },
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         padding: EdgeInsets.symmetric(
                             horizontal: 30.0, vertical: 8.0),
-                        color: AppTheme.secondary,
+                        color: AppTheme.primary,
                         textColor:
-                            Theme.of(context).primaryTextTheme.button.color,
+                            AppTheme.bg,
                       ),
                     ),
               AnimatedContainer(

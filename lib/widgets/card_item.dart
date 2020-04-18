@@ -69,54 +69,54 @@ class _CardItemState extends State<CardItem> {
     var currencyFormat = intl.NumberFormat.decimalPattern();
     isLogin = Provider.of<Auth>(context).isAuth;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: AppTheme.h1, width: 0.5),
-            borderRadius: BorderRadius.circular(5)),
-        height: deviceWidth * 0.55,
-        child: InkWell(
-          onTap: () {
-            Provider.of<Products>(context).item =
-                Provider.of<Products>(context).item_zero;
-            Navigator.of(context).pushNamed(
-              ProductDetailScreen.routeName,
-              arguments: widget.shoppItems[widget.index].id,
-            );
-          },
-          child: Stack(
-            children: <Widget>[
-              Container(
-                width: deviceWidth,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 7,
-                      child: Container(
-                        width: double.infinity,
-                        child: FadeInImage(
-                          placeholder: AssetImage('assets/images/logo.png'),
-                          image: NetworkImage(widget
-                              .shoppItems[widget.index].featured_media_url),
-                          fit: BoxFit.fill,
+    return LayoutBuilder(
+      builder: (_, constraints) => Card(
+        child: Container(
+          decoration: BoxDecoration(
+              border:
+                  Border(bottom: BorderSide(width: 0.3, color: Colors.grey))),
+          height: deviceWidth * 0.4,
+          child: InkWell(
+            onTap: () {
+              Provider.of<Products>(context).item =
+                  Provider.of<Products>(context).item_zero;
+              Navigator.of(context).pushNamed(
+                ProductDetailScreen.routeName,
+                arguments: widget.shoppItems[widget.index].id,
+              );
+            },
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: deviceWidth,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            child: FadeInImage(
+                              placeholder: AssetImage('assets/images/logo.jpg'),
+                              image: NetworkImage(widget
+                                  .shoppItems[widget.index].featured_media_url),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 6,
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: deviceWidth * 0.03,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
                                     child: Text(
                                       widget.shoppItems[widget.index].title !=
                                               null
@@ -124,128 +124,80 @@ class _CardItemState extends State<CardItem> {
                                               .shoppItems[widget.index].title
                                           : 'ندارد',
                                       style: TextStyle(
-                                        color: AppTheme.secondary,
+                                        color: Colors.blue,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
                                       ),
                                     ),
                                   ),
-                                  Spacer(),
-                                  Expanded(
-                                    flex: 4,
-                                    child: Container(
-//
-                                      child: Container(
-                                        height: deviceHeight * 0.2,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: widget
-                                              .shoppItems[widget.index]
-                                              .colors
-                                              .length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
-                                              width: 30,
-                                              height: 30,
-                                              child: Center(
-                                                child: Container(
-                                                  width: 20,
-                                                  height: 20,
-                                                  decoration: widget
-                                                              .shoppItems[
-                                                                  widget.index]
-                                                              .colors[index]
-                                                              .id ==
-                                                          widget
-                                                              .shoppItems[
-                                                                  widget.index]
-                                                              .color_selected
-                                                              .id
-                                                      ? BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      0.3),
-                                                              blurRadius: 1.10,
-                                                              // has the effect of softening the shadow
-                                                              spreadRadius:
-                                                                  5.510,
-                                                              // has the effect of extending the shadow
-                                                              offset: Offset(
-                                                                0,
-                                                                // horizontal, move right 10
-                                                                0, // vertical, move down 10
-                                                              ),
-                                                            )
-                                                          ],
-                                                          border: Border.all(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 0.2),
-                                                        )
-                                                      : BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          border: Border.all(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 0),
-                                                        ),
-                                                  child: Container(
-                                                    width: 5,
-                                                    height: 5,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      border: Border.all(
-                                                          color: Colors.black,
-                                                          width: 0.2),
-                                                      color: Color(
-                                                        int.parse(
-                                                          '0xff' +
-                                                              widget
-                                                                  .shoppItems[
-                                                                      widget
-                                                                          .index]
-                                                                  .colors[index]
-                                                                  .color_code
-                                                                  .replaceRange(
-                                                                      0, 1, ''),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black45, width: 0.4),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Wrap(
+                                        alignment: WrapAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              widget.shoppItems[widget.index]
+                                                  .color_selected.title,
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 12,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            padding: EdgeInsets.all(10),
+                                            width: 15.0,
+                                            height: 15.0,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 0.2),
+                                              color: Color(
+                                                int.parse(
+                                                  '0xff' +
+                                                      widget
+                                                          .shoppItems[
+                                                              widget.index]
+                                                          .color_selected
+                                                          .color_code
+                                                          .replaceRange(
+                                                              0, 1, ''),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                        ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 3,
-                                      child: ClipRRect(
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      ClipRRect(
                                         borderRadius: BorderRadius.circular(5),
                                         child: Container(
+                                          height: constraints.maxHeight * 0.2,
+                                          width: constraints.maxWidth * 0.2,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
                                             border: Border.all(
                                                 color: AppTheme.h1, width: 0.2),
                                           ),
@@ -283,10 +235,10 @@ class _CardItemState extends State<CardItem> {
                                                   });
                                                 },
                                                 child: Container(
-                                                    color: AppTheme.text,
+                                                    color: AppTheme.primary,
                                                     child: Icon(
                                                       Icons.add,
-                                                      color: AppTheme.primary,
+                                                      color: AppTheme.bg,
                                                     )),
                                               )),
                                               Expanded(
@@ -335,118 +287,114 @@ class _CardItemState extends State<CardItem> {
                                                   });
                                                 },
                                                 child: Container(
-                                                    color: AppTheme.text,
+                                                    color: AppTheme.primary,
                                                     child: Icon(
                                                       Icons.remove,
-                                                      color: AppTheme.primary,
+                                                      color: AppTheme.bg,
                                                     )),
                                               )),
                                             ],
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Spacer(),
-                                    Expanded(
-                                      flex: 5,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          Text(
-                                            widget.shoppItems[widget.index]
-                                                    .price_low.isNotEmpty
-                                                ? EnArConvertor().replaceArNumber(
-                                                    currencyFormat
-                                                        .format(double.parse(widget
-                                                            .shoppItems[
-                                                                widget.index]
-                                                            .price_low))
-                                                        .toString())
-                                                : widget
-                                                        .shoppItems[
-                                                            widget.index]
-                                                        .price
-                                                        .isNotEmpty
-                                                    ? EnArConvertor().replaceArNumber(currencyFormat
-                                                        .format(double.parse(widget
-                                                            .shoppItems[widget.index]
-                                                            .price))
-                                                        .toString())
-                                                    : EnArConvertor().replaceArNumber('0'),
-                                            style: TextStyle(
-                                              color: AppTheme.primary,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 19,
+                                      Spacer(),
+                                      Container(
+                                        height: constraints.maxHeight * 0.2,
+                                        width: constraints.maxWidth * 0.30,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text(
+                                              widget.shoppItems[widget.index]
+                                                      .price_low.isNotEmpty
+                                                  ? EnArConvertor().replaceArNumber(
+                                                      currencyFormat
+                                                          .format(double.parse(widget
+                                                              .shoppItems[
+                                                                  widget.index]
+                                                              .price_low))
+                                                          .toString())
+                                                  : widget
+                                                          .shoppItems[
+                                                              widget.index]
+                                                          .price
+                                                          .isNotEmpty
+                                                      ? EnArConvertor().replaceArNumber(
+                                                          currencyFormat
+                                                              .format(double.parse(
+                                                                  widget.shoppItems[widget.index].price))
+                                                              .toString())
+                                                      : EnArConvertor().replaceArNumber('0'),
+                                              style: TextStyle(
+                                                color: Colors.redAccent,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 16,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            '  تومان ',
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 12,
+                                            Text(
+                                              '  تومان ',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 12,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  height: deviceWidth * 0.060,
-                  width: deviceWidth * 0.06,
-                  decoration: BoxDecoration(
-                      color: AppTheme.primary,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                      )),
-                  child: InkWell(
-                    onTap: () {
-                      return removeItem();
-                    },
-                    child: Icon(
-                      Icons.close,
-                      size: 20,
-                      color: AppTheme.bg,
+                      ],
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: _isLoading
-                          ? SpinKitFadingCircle(
-                              itemBuilder: (BuildContext context, int index) {
-                                return DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: index.isEven
-                                        ? Colors.grey
-                                        : Colors.grey,
-                                  ),
-                                );
-                              },
-                            )
-                          : Container()))
-            ],
+                Positioned(
+                  top: 5,
+                  left: 4,
+                  child: Container(
+                    height: deviceWidth * 0.10,
+                    width: deviceWidth * 0.1,
+                    child: InkWell(
+                      onTap: () {
+                        return removeItem();
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: 20,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: _isLoading
+                            ? SpinKitFadingCircle(
+                                itemBuilder: (BuildContext context, int index) {
+                                  return DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index.isEven
+                                          ? Colors.grey
+                                          : Colors.grey,
+                                    ),
+                                  );
+                                },
+                              )
+                            : Container()))
+              ],
+            ),
           ),
         ),
       ),

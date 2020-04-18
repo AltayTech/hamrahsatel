@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../models/customer.dart';
-import '../provider/auth.dart';
-import '../provider/customer_info.dart';
-import '../widgets/custom_dialog_enter.dart';
-import '../widgets/custom_dialog_profile.dart';
 
 import '../classes/app_theme.dart';
+import '../models/customer.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
+import '../provider/auth.dart';
+import '../provider/customer_info.dart';
 import '../screens/cash_payment_screen.dart';
 import '../screens/credit_payment_screen.dart';
 import '../widgets/card_item.dart';
 import '../widgets/commission_calculator.dart';
+import '../widgets/custom_dialog_enter.dart';
+import '../widgets/custom_dialog_profile.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/main_drawer.dart';
 
@@ -117,7 +117,7 @@ class _CartScreenState extends State<CartScreen> {
                         Container(
                           height: deviceHeight * 0.07,
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: AppTheme.primary,
                               borderRadius: BorderRadius.circular(5),
                               border:
                                   Border.all(color: Colors.grey, width: 0.2)),
@@ -128,7 +128,7 @@ class _CartScreenState extends State<CartScreen> {
                               children: <Widget>[
                                 Icon(
                                   Icons.shopping_cart,
-                                  color: AppTheme.primary,
+                                  color: AppTheme.bg,
                                 ),
                                 Text(
                                   'تعداد: ' +
@@ -137,13 +137,13 @@ class _CartScreenState extends State<CartScreen> {
                                               shoppItems.length.toString())
                                           .toString(),
                                   style: TextStyle(
-                                    color: AppTheme.h1,
+                                    color: AppTheme.bg,
                                     fontFamily: 'Iransans',
                                     fontSize: textScaleFactor * 12,
                                   ),
                                 ),
                                 VerticalDivider(
-                                  color: AppTheme.h1,
+                                  color: AppTheme.bg,
                                   thickness: 1,
                                   indent: 4,
                                   endIndent: 4,
@@ -151,7 +151,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Text(
                                   'مبلغ قابل پرداخت (تومان)',
                                   style: TextStyle(
-                                    color: AppTheme.h1,
+                                    color: AppTheme.bg,
                                     fontFamily: 'Iransans',
                                     fontSize: textScaleFactor * 12,
                                   ),
@@ -164,7 +164,7 @@ class _CartScreenState extends State<CartScreen> {
                                               .toString())
                                       : EnArConvertor().replaceArNumber('0'),
                                   style: TextStyle(
-                                    color: AppTheme.primary,
+                                    color: AppTheme.bg,
                                     fontFamily: 'Iransans',
                                     fontSize: textScaleFactor * 18,
                                   ),
@@ -343,65 +343,66 @@ class _CartScreenState extends State<CartScreen> {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: Container(
-                      height: deviceHeight * 0.07,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 2.0,
-                            // has the effect of softening the shadow
-                            spreadRadius: 1.50,
-                            // has the effect of extending the shadow
-                            offset: Offset(
-                              1.0, // horizontal, move right 10
-                              1.0, // vertical, move down 10
-                            ),
-                          )
-                        ],
-                        color: shoppItems.isEmpty
-                            ? AppTheme.text
-                            : AppTheme.primary,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: InkWell(
-                              onTap: () {
-                                SnackBar addToCartSnackBar = SnackBar(
-                                  content: Text(
-                                    'سبد خرید خالی می باشد!',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 14.0,
-                                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: InkWell(
+                            onTap: () {
+                              SnackBar addToCartSnackBar = SnackBar(
+                                content: Text(
+                                  'سبد خرید خالی می باشد!',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 14.0,
                                   ),
-                                  action: SnackBarAction(
-                                    label: 'متوجه شدم',
-                                    onPressed: () {
-                                      // Some code to undo the change.
-                                    },
-                                  ),
-                                );
-                                if (shoppItems.isEmpty) {
-                                  Scaffold.of(context)
-                                      .showSnackBar(addToCartSnackBar);
-                                } else if (!isLogin) {
-                                  _showLogindialog();
+                                ),
+                                action: SnackBarAction(
+                                  label: 'متوجه شدم',
+                                  onPressed: () {
+                                    // Some code to undo the change.
+                                  },
+                                ),
+                              );
+                              if (shoppItems.isEmpty) {
+                                Scaffold.of(context)
+                                    .showSnackBar(addToCartSnackBar);
+                              } else if (!isLogin) {
+                                _showLogindialog();
+                              } else {
+                                if (customer
+                                    .personal_data.personal_data_complete) {
+                                  Navigator.of(context)
+                                      .pushNamed(CashPaymentScreen.routeName);
                                 } else {
-                                  if (customer
-                                      .personal_data.personal_data_complete) {
-                                    Navigator.of(context)
-                                        .pushNamed(CashPaymentScreen.routeName);
-                                  } else {
-                                    _showCompletedialog();
-                                  }
+                                  _showCompletedialog();
                                 }
-                              },
+                              }
+                            },
+                            child: Container(
+                              width: deviceWidth * 0.4,
+                              height: deviceWidth * 0.13,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 2.0,
+                                    // has the effect of softening the shadow
+                                    spreadRadius: 1.50,
+                                    // has the effect of extending the shadow
+                                    offset: Offset(
+                                      1.0, // horizontal, move right 10
+                                      1.0, // vertical, move down 10
+                                    ),
+                                  )
+                                ],
+                                color: shoppItems.isEmpty
+                                    ? AppTheme.text
+                                    : AppTheme.secondary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -428,77 +429,93 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ),
                           ),
-                          VerticalDivider(
-                            color: Colors.white,
-                            thickness: 2,
-                            indent: 6,
-                            endIndent: 6,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: InkWell(
-                              onTap: () {
-                                SnackBar addToCartSnackBar = SnackBar(
-                                  content: Text(
-                                    'سبد خرید خالی میباشد!',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 14.0,
-                                    ),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: InkWell(
+                            onTap: () {
+                              SnackBar addToCartSnackBar = SnackBar(
+                                content: Text(
+                                  'سبد خرید خالی میباشد!',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 14.0,
                                   ),
-                                  action: SnackBarAction(
-                                    label: 'متوجه شدم',
-                                    onPressed: () {
-                                      // Some code to undo the change.
-                                    },
-                                  ),
-                                );
-                                if (shoppItems.isEmpty) {
-                                  Scaffold.of(context)
-                                      .showSnackBar(addToCartSnackBar);
-                                } else if (!isLogin) {
-                                  _showLogindialog();
-                                } else {
-                                  if (customer
-                                      .personal_data.personal_data_complete) {
-                                    Navigator.of(context).pushNamed(
-                                        CreditPaymentScreen.routeName);
-                                  } else {
-                                    _showCompletedialog();
-                                  }
-                                }
-                              },
-                              child: Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Icon(
-                                        Icons.credit_card,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        'پرداخت اقساطی',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Iransans',
-                                          fontSize: textScaleFactor * 13.0,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ],
                                 ),
+                                action: SnackBarAction(
+                                  label: 'متوجه شدم',
+                                  onPressed: () {
+                                    // Some code to undo the change.
+                                  },
+                                ),
+                              );
+                              if (shoppItems.isEmpty) {
+                                Scaffold.of(context)
+                                    .showSnackBar(addToCartSnackBar);
+                              } else if (!isLogin) {
+                                _showLogindialog();
+                              } else {
+                                if (customer
+                                    .personal_data.personal_data_complete) {
+                                  Navigator.of(context)
+                                      .pushNamed(CreditPaymentScreen.routeName);
+                                } else {
+                                  _showCompletedialog();
+                                }
+                              }
+                            },
+                            child: Container(
+                              width: deviceWidth * 0.4,
+                              height: deviceWidth * 0.13,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 2.0,
+                                    // has the effect of softening the shadow
+                                    spreadRadius: 1.50,
+                                    // has the effect of extending the shadow
+                                    offset: Offset(
+                                      1.0, // horizontal, move right 10
+                                      1.0, // vertical, move down 10
+                                    ),
+                                  )
+                                ],
+                                color: shoppItems.isEmpty
+                                    ? AppTheme.text
+                                    : AppTheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Icon(
+                                      Icons.credit_card,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      'پرداخت اقساطی',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Iransans',
+                                        fontSize: textScaleFactor * 13.0,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Positioned(

@@ -129,13 +129,13 @@ class _CustomerDetailInfoEditScreenState
                                   iconColor: Color(0xffA67FEC),
                                   keybordType: TextInputType.text,
                                 ),
-                                InfoEditItem(
-                                  title: 'جنسیت',
-                                  controller: genderController,
-                                  bgColor: AppTheme.bg,
-                                  iconColor: Color(0xffA67FEC),
-                                  keybordType: TextInputType.text,
-                                ),
+//                                InfoEditItem(
+//                                  title: 'جنسیت',
+//                                  controller: genderController,
+//                                  bgColor: AppTheme.bg,
+//                                  iconColor: Color(0xffA67FEC),
+//                                  keybordType: TextInputType.text,
+//                                ),
                                 InfoEditItem(
                                   title: 'کد ملی',
                                   controller: NIController,
@@ -193,26 +193,26 @@ class _CustomerDetailInfoEditScreenState
                           Divider(
                             color: Colors.grey,
                           ),
-                          Text(
-                            'اطلاعات بانکی',
-                            textAlign: TextAlign.right,
-                          ),
-                          Container(
-                            color: AppTheme.bg,
-                            child: ListView(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              children: <Widget>[
-                                InfoEditItem(
-                                  title: 'شماره کارت بانکی',
-                                  controller: creditController,
-                                  bgColor: AppTheme.bg,
-                                  iconColor: Color(0xffED8A19),
-                                  keybordType: TextInputType.number,
-                                ),
-                              ],
-                            ),
-                          ),
+//                          Text(
+//                            'اطلاعات بانکی',
+//                            textAlign: TextAlign.right,
+//                          ),
+//                          Container(
+//                            color: AppTheme.bg,
+//                            child: ListView(
+//                              physics: NeverScrollableScrollPhysics(),
+//                              shrinkWrap: true,
+//                              children: <Widget>[
+//                                InfoEditItem(
+//                                  title: 'شماره کارت بانکی',
+//                                  controller: creditController,
+//                                  bgColor: AppTheme.bg,
+//                                  iconColor: Color(0xffED8A19),
+//                                  keybordType: TextInputType.number,
+//                                ),
+//                              ],
+//                            ),
+//                          ),
                           SizedBox(
                             height: deviceHeight * 0.02,
                           )
@@ -265,7 +265,7 @@ class _CustomerDetailInfoEditScreenState
                             .popAndPushNamed(ProfileScreen.routeName);
                       });
                     },
-                    backgroundColor: Color(0xff3F9B12),
+                    backgroundColor: AppTheme.primary,
                     child: Icon(
                       Icons.check,
                       color: Colors.white,
@@ -346,8 +346,11 @@ class InfoEditItem extends StatelessWidget {
                         controller: controller,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                width: 0,
+                                color: Colors.white,
+                              )),
 
 //                        border: InputBorder.none,
                           labelStyle: TextStyle(

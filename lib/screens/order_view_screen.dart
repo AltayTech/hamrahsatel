@@ -143,430 +143,454 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
           height: deviceHeight * 0.8,
           width: deviceWidth,
           child: Align(
-              alignment: Alignment.topCenter,
-              child: _isLoading
-                  ? SpinKitFadingCircle(
-                itemBuilder: (BuildContext context, int index) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: index.isEven ? Colors.grey : Colors.grey,
-                    ),
-                  );
-                },
-              )
-                  :  Directionality(
-                textDirection: TextDirection.rtl,
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'جزئیات سفارش',
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 12,
+            alignment: Alignment.topCenter,
+            child: _isLoading
+                ? SpinKitFadingCircle(
+                    itemBuilder: (BuildContext context, int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index.isEven ? Colors.grey : Colors.grey,
+                        ),
+                      );
+                    },
+                  )
+                : Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: SingleChildScrollView(
+                      child: Wrap(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        'وضعیت سفارش: ',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        orderDetails.order_status.toString(),
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'شماره سفارش: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.shenaseh.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'تاریخ ایجاد سفارش: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.order_register_date.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'وضعیت سفارش: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.order_status.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'قیمت کل: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  EnArConvertor()
-                                      .replaceArNumber(currencyFormat.format(
-                                      double.parse(
-                                          orderDetails.total_cost)))
-                                      .toString() +
-                                      ' تومان',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'نوع پرداخت: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.pay_type.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'وضعیت پرداخت: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.pay_status.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.purple,
-                                ),
-                                Text(
-                                  'پیش پرداخت: ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                                Text(
-                                  orderDetails.pish == null
-                                      ? EnArConvertor()
-                                      .replaceArNumber(currencyFormat
-                                      .format(double.parse(
-                                      orderDetails.pish)))
-                                      .toString() +
-                                      ' تومان'
-                                      : '-',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: orderDetails.products.length,
-                                  itemBuilder: (ctx, i) {
-                                    return OrderProductItem(
-                                      id: orderDetails.products[i].id,
-                                      title: orderDetails.products[i].title,
-                                      price: orderDetails.products[i].price_low,
-                                      color:
-                                      orderDetails.products[i].selected_color,
-                                      number: '1',
-                                    );
-                                  }),
-                            ),
-                            Consumer<CustomerInfo>(
-                              builder: (_, products, ch) => _imageList.isNotEmpty
-                                  ? Container(
-                                child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: _imageList.length,
-                                    itemBuilder: (ctx, i) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Card(
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              height: deviceHeight * 0.3,
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text((i + 1).toString()),
-                                                  Image.network(
-                                                    _imageList[i].url,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ],
-                                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'شماره سفارش: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
                                             ),
                                           ),
                                         ),
-                                      );
-                                    }),
-                              )
-                                  : Container(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (_uploadIsOk) {
-                            Provider.of<CustomerInfo>(context)
-                                .addPicture(orderId);
-                          } else {
-                            SnackBar addToCartSnackBar = SnackBar(
-                              content: Text(
-                                'این مرحله برای شما فعال نگردیده است!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 14.0,
-                                ),
-                              ),
-                              action: SnackBarAction(
-                                label: 'متوجه شدم',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            );
-                            Scaffold.of(context).showSnackBar(addToCartSnackBar);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: deviceHeight * 0.08,
-                            decoration: BoxDecoration(
-                              color:
-                              _uploadIsOk ? Color(0xff3F9B12) : Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 2.0,
-                                  // has the effect of softening the shadow
-                                  spreadRadius: 1.50,
-                                  // has the effect of extending the shadow
-                                  offset: Offset(
-                                    1.0, // horizontal, move right 10
-                                    1.0, // vertical, move down 10
-                                  ),
-                                )
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Icon(
-                                    Icons.credit_card,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Center(
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 5.0, left: 10),
-                                    child: Text(
-                                      'اپلود تصاویر چک ها',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 16.0,
-                                      ),
-                                      textAlign: TextAlign.center,
+                                        Expanded(
+                                          child: Text(
+                                            orderDetails.shenaseh.toString(),
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'تاریخ ایجاد سفارش: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            orderDetails.order_register_date
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'قیمت کل: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            EnArConvertor()
+                                                    .replaceArNumber(
+                                                        currencyFormat.format(
+                                                            double.parse(
+                                                                orderDetails
+                                                                    .total_cost)))
+                                                    .toString() +
+                                                ' تومان',
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'نوع پرداخت: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            orderDetails.pay_type.toString(),
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'وضعیت پرداخت: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            orderDetails.pay_status.toString(),
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'پیش پرداخت: ',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            orderDetails.pish == null
+                                                ? EnArConvertor()
+                                                        .replaceArNumber(
+                                                            currencyFormat.format(
+                                                                double.parse(
+                                                                    orderDetails
+                                                                        .pish)))
+                                                        .toString() +
+                                                    ' تومان'
+                                                : '-',
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (_payIsActive) {
-                            pay(orderId);
-                          } else {
-                            SnackBar addToCartSnackBar = SnackBar(
-                              content: Text(
-                                'این مرحله برای شما فعال نگردیده است!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 14.0,
-                                ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'لیست محصولات',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Iransans',
+                                fontSize: textScaleFactor * 14,
                               ),
-                              action: SnackBarAction(
-                                label: 'متوجه شدم',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            );
-                            Scaffold.of(context).showSnackBar(addToCartSnackBar);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: deviceHeight * 0.08,
-                            decoration: BoxDecoration(
-                              color:
-                              _payIsActive ? Color(0xff3F9B12) : Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 2.0,
-                                  // has the effect of softening the shadow
-                                  spreadRadius: 1.50,
-                                  // has the effect of extending the shadow
-                                  offset: Offset(
-                                    1.0, // horizontal, move right 10
-                                    1.0, // vertical, move down 10
-                                  ),
-                                )
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Icon(
-                                    Icons.monetization_on,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Center(
-                                  child: Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 5.0, left: 10),
-                                    child: Text(
-                                      'پرداخت',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 16.0,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
-                        ),
+                          Card(
+                            child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: orderDetails.products.length,
+                                itemBuilder: (ctx, i) {
+                                  return OrderProductItem(
+                                    id: orderDetails.products[i].id,
+                                    title: orderDetails.products[i].title,
+                                    price: orderDetails.products[i].price_low,
+                                    color:
+                                        orderDetails.products[i].selected_color,
+                                    number: orderDetails.number_of_products
+                                        .toString(),
+                                  );
+                                }),
+                          ),
+                          Consumer<CustomerInfo>(
+                            builder: (_, products, ch) => _imageList.isNotEmpty
+                                ? Container(
+                                    child: ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: _imageList.length,
+                                        itemBuilder: (ctx, i) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: deviceHeight * 0.3,
+                                                  child: Wrap(
+                                                    children: <Widget>[
+                                                      Text((i + 1).toString()),
+                                                      Image.network(
+                                                        _imageList[i].url,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                  )
+                                : Container(),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (_uploadIsOk) {
+                                Provider.of<CustomerInfo>(context)
+                                    .addPicture(orderId);
+                              } else {
+                                SnackBar addToCartSnackBar = SnackBar(
+                                  content: Text(
+                                    'این مرحله برای شما فعال نگردیده است!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Iransans',
+                                      fontSize: textScaleFactor * 14.0,
+                                    ),
+                                  ),
+                                  action: SnackBarAction(
+                                    label: 'متوجه شدم',
+                                    onPressed: () {
+                                      // Some code to undo the change.
+                                    },
+                                  ),
+                                );
+                                Scaffold.of(context)
+                                    .showSnackBar(addToCartSnackBar);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: deviceHeight * 0.08,
+                                decoration: BoxDecoration(
+                                  color: _uploadIsOk
+                                      ? AppTheme.primary
+                                      : Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 2.0,
+                                      // has the effect of softening the shadow
+                                      spreadRadius: 1.50,
+                                      // has the effect of extending the shadow
+                                      offset: Offset(
+                                        1.0, // horizontal, move right 10
+                                        1.0, // vertical, move down 10
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Icon(
+                                        Icons.credit_card,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5.0, left: 10),
+                                        child: Text(
+                                          'اپلود تصاویر چک ها',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Iransans',
+                                            fontSize: textScaleFactor * 16.0,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (_payIsActive) {
+                                pay(orderId);
+                              } else {
+                                SnackBar addToCartSnackBar = SnackBar(
+                                  content: Text(
+                                    'این مرحله برای شما فعال نگردیده است!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Iransans',
+                                      fontSize: textScaleFactor * 14.0,
+                                    ),
+                                  ),
+                                  action: SnackBarAction(
+                                    label: 'متوجه شدم',
+                                    onPressed: () {
+                                      // Some code to undo the change.
+                                    },
+                                  ),
+                                );
+                                Scaffold.of(context)
+                                    .showSnackBar(addToCartSnackBar);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: deviceHeight * 0.08,
+                                decoration: BoxDecoration(
+                                  color: _payIsActive
+                                      ? AppTheme.primary
+                                      : Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 2.0,
+                                      // has the effect of softening the shadow
+                                      spreadRadius: 1.50,
+                                      // has the effect of extending the shadow
+                                      offset: Offset(
+                                        1.0, // horizontal, move right 10
+                                        1.0, // vertical, move down 10
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5.0, left: 10),
+                                        child: Text(
+                                          'پرداخت',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Iransans',
+                                            fontSize: textScaleFactor * 16.0,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),),
+          ),
         ),
       ),
       endDrawer: Theme(
@@ -607,9 +631,9 @@ class OrderProductItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-        height: deviceHeight * 0.1,
+        height: deviceHeight * 0.15,
         decoration: BoxDecoration(
-          color: Color(0xffFFEDD8),
+          color: AppTheme.primary.withOpacity(0.1),
           borderRadius: BorderRadius.circular(5),
         ),
         child: InkWell(
@@ -627,9 +651,9 @@ class OrderProductItem extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                      fontFamily: 'Iransans',
-                      fontSize: textScaleFactor * 11.0,
-                    ),
+                        fontFamily: 'Iransans',
+                        fontSize: textScaleFactor * 14.0,
+                        color: AppTheme.primary),
                   ),
                 ),
                 Expanded(
@@ -647,7 +671,7 @@ class OrderProductItem extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Iransans',
-                            fontSize: textScaleFactor * 11.0,
+                            fontSize: textScaleFactor * 14.0,
                           ),
                         ),
                       ),
@@ -663,7 +687,7 @@ class OrderProductItem extends StatelessWidget {
                                   child: Text(
                                     color.title,
                                     style: TextStyle(
-                                      color: Colors.blue,
+                                      color: AppTheme.primary,
                                       fontFamily: 'Iransans',
                                       fontSize: textScaleFactor * 12,
                                     ),
@@ -675,7 +699,7 @@ class OrderProductItem extends StatelessWidget {
                                   width: 15.0,
                                   height: 15.0,
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
+                                    shape: BoxShape.circle,
                                     border: Border.all(
                                         color: Colors.black, width: 0.2),
                                     color: Color(
@@ -693,17 +717,13 @@ class OrderProductItem extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: Text(
-                          'قیمت: ' +'${price.toString().isNotEmpty?
-                              EnArConvertor()
-                                  .replaceArNumber(currencyFormat
-                                      .format(double.parse(price)))
-                                  .toString():'0'}' +
+                          '${price.toString().isNotEmpty ? EnArConvertor().replaceArNumber(currencyFormat.format(double.parse(price))).toString() : '0'}' +
                               ' تومان',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'Iransans',
-                            fontSize: textScaleFactor * 14.0,
-                          ),
+                              fontFamily: 'Iransans',
+                              fontSize: textScaleFactor * 16.0,
+                              color: AppTheme.primary),
                         ),
                       ),
                     ],

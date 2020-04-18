@@ -178,7 +178,7 @@ class Products with ChangeNotifier {
   String _token;
 
   List<Product> get items {
-    return [..._items];
+    return _items;
   }
 
   HomePage get homeItems {
@@ -194,7 +194,7 @@ class Products with ChangeNotifier {
   }
 
   List<ProductCart> get cartItems {
-    return [..._cartItems];
+    return _cartItems;
   }
 
   Future<void> addShopCart(

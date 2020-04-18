@@ -169,14 +169,11 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
                           children: <Widget>[
                             Container(
                               width: double.infinity,
-                              child: Hero(
-                                tag: product.id,
-                                child: FadeInImage(
-                                  placeholder:
-                                      AssetImage('assets/images/logo.png'),
-                                  image: NetworkImage(product.img_url),
-                                  fit: BoxFit.contain,
-                                ),
+                              child: FadeInImage(
+                                placeholder:
+                                    AssetImage('assets/images/logo.png'),
+                                image: NetworkImage(product.img_url),
+                                fit: BoxFit.contain,
                               ),
                             ),
                             Positioned(

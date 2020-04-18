@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../widgets/cash_payment_product_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../classes/app_theme.dart';
@@ -25,8 +24,7 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
   var _isInit = true;
 
   @override
-  void didChangeDependencies() async{
-    // TODO: implement didChangeDependencies
+  void didChangeDependencies() async {
     if (_isInit) {
       await Provider.of<CustomerInfo>(context, listen: false).getCustomer();
     }
@@ -58,8 +56,6 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
     String _payUrl = await Provider.of<CustomerInfo>(context).payUrl;
     print('1' + _payUrl);
     _launchURL(_payUrl);
-
-//    Navigator.of(context).pop();
 
     setState(() {
       _isLoading = false;
@@ -99,414 +95,325 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
           textDirection: TextDirection.rtl,
           child: Stack(
             children: <Widget>[
-              Container(
-                  color: Color(0xffF9F9F9),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SingleChildScrollView(
-                      child: Wrap(
-                        children: <Widget>[
-                          Container(
-                            height: deviceHeight * 0.75,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'پرداخت نقدی',
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 12,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.arrow_right,
-                                          color: Colors.red,
-                                        ),
-                                        Text(
-                                          'محصولات',
-                                          style: TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 12,
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          'تعداد: ' +
-                                              EnArConvertor().replaceArNumber(
-                                                  shoppItems.length.toString()),
-                                          style: TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: Colors.grey,
-                                                width: 0.2)),
-                                        child: ListView.builder(
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: shoppItems.length,
-                                          itemBuilder: (ctx, i) {
-                                            return CashPaymentProductItem(
-                                              id: shoppItems[i].id,
-                                              title: shoppItems[i].title,
-                                              color_selected:
-                                                  shoppItems[i].color_selected,
-                                              price: shoppItems[i].price,
-                                              price_low:
-                                                  shoppItems[i].price_low,
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 15.0, bottom: 15.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.arrow_right,
-                                          color: Colors.red,
-                                        ),
-                                        Text(
-                                          'اطلاعات ارسال محصول',
-                                          style: TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 12,
-                                          ),
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                  ),
-                                  Card(
-                                    child: Container(
-                                      width: double.infinity,
-                                      color: Color(0xffEEF4FE),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'نام و نام خانوادگی: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    customer.personal_data
-                                                            .first_name +
-                                                        ' ' +
-                                                        customer.personal_data
-                                                            .last_name,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-//                                            Divider(),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'استان: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    customer
-                                                        .personal_data.ostan,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'شهر: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    customer.personal_data.city,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-//                                            Divider(),
-
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'آدرس: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    customer
-                                                        .personal_data.address,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-//                                            Divider(),
-
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'کدپستی: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    customer
-                                                        .personal_data.postcode,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-//                                            Divider(),
-
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.0),
-                                              child: Wrap(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'همراه: ',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    EnArConvertor()
-                                                        .replaceArNumber((customer
-                                                                .personal_data
-                                                                .phone
-                                                                .toString())
-                                                            .toString()),
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontFamily: 'Iransans',
-                                                      fontSize:
-                                                          textScaleFactor * 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-//                                            Divider(),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Container(
-                                        child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text(
-                                          'مبلغ قابل پرداخت (تومان): ',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 14,
-                                          ),
-                                        ),
-                                        Text(
-                                          EnArConvertor().replaceArNumber(
-                                              currencyFormat
-                                                  .format(totalPrice)
-                                                  .toString()),
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 18,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                  ),
-                                ],
+              Positioned(
+                left: 0,
+                right: 0,
+                height: deviceHeight * 0.35,
+                child: Image.asset(
+                  'assets/images/cash_pay_header.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: deviceHeight * 0.1,
+                left: deviceWidth * 0.1,
+                child: Text(
+                  'پرداخت نقدی',
+                  style: TextStyle(
+                      color: AppTheme.bg,
+                      fontFamily: 'Iransans',
+                      fontSize: textScaleFactor * 22,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Positioned(
+                top: deviceHeight * 0.22,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    height: deviceHeight * 0.5,
+                    width: deviceWidth * 0.8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                              ),
+                              color: AppTheme.primary),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 15.0, bottom: 15.0),
+                              child: Text(
+                                'اطلاعات ارسال محصول',
+                                style: TextStyle(
+                                  color: AppTheme.bg,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 15,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: deviceHeight * 0.08,
-                              decoration: BoxDecoration(
-                                color: Color(0xff3F9B12),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: 2.0,
-                                    // has the effect of softening the shadow
-                                    spreadRadius: 1.50,
-                                    // has the effect of extending the shadow
-                                    offset: Offset(
-                                      1.0, // horizontal, move right 10
-                                      1.0, // vertical, move down 10
-                                    ),
-                                  )
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    if (totalPrice == 0) {
-                                      var _snackBarMessage =
-                                          'محصولی وجود ندارد!';
-                                      final addToCartSnackBar = SnackBar(
-                                        content: Text(
-                                          _snackBarMessage,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 14.0,
-                                          ),
-                                        ),
-                                        action: SnackBarAction(
-                                          label: 'متوجه شدم',
-                                          onPressed: () {
-                                            // Some code to undo the change.
-                                          },
-                                        ),
-                                      );
-                                      Scaffold.of(context)
-                                          .showSnackBar(addToCartSnackBar);
-                                    } else {
-                                      submitCashPayment();
-                                    }
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: AppTheme.h1, width: 0.3),
+                              color: AppTheme.bg),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
                                     children: <Widget>[
-                                      Center(
-                                        child: Text(
-                                          'پرداخت نقدی',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Iransans',
-                                            fontSize: textScaleFactor * 16.0,
-                                          ),
-                                          textAlign: TextAlign.center,
+                                      Text(
+                                        'نام و نام خانوادگی:    ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        customer.personal_data.first_name +
+                                            ' ' +
+                                            customer.personal_data.last_name,
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        'استان:    ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        customer.personal_data.ostan,
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        'شهر:   ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        customer.personal_data.city,
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        'آدرس:    ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        customer.personal_data.address,
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        'کدپستی:    ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        customer.personal_data.postcode,
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        'همراه:    ',
+                                        style: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        EnArConvertor().replaceArNumber(
+                                            (customer.personal_data.phone
+                                                    .toString())
+                                                .toString()),
+                                        style: TextStyle(
+                                          color: AppTheme.primary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                'مبلغ قابل پرداخت (تومان): ',
+                                style: TextStyle(
+                                  color: AppTheme.secondary,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 14,
+                                ),
+                              ),
+                              Text(
+                                EnArConvertor().replaceArNumber(currencyFormat
+                                    .format(totalPrice)
+                                    .toString()),
+                                style: TextStyle(
+                                  color: AppTheme.primary,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 18,
+                                ),
+                              ),
+                            ],
+                          )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: deviceHeight * 0.08,
+                    decoration: BoxDecoration(
+                      color: AppTheme.primary,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 2.0,
+                          // has the effect of softening the shadow
+                          spreadRadius: 1.50,
+                          // has the effect of extending the shadow
+                          offset: Offset(
+                            1.0, // horizontal, move right 10
+                            1.0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          if (totalPrice == 0) {
+                            var _snackBarMessage = 'محصولی وجود ندارد!';
+                            final addToCartSnackBar = SnackBar(
+                              content: Text(
+                                _snackBarMessage,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 14.0,
+                                ),
+                              ),
+                              action: SnackBarAction(
+                                label: 'متوجه شدم',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            );
+                            Scaffold.of(context)
+                                .showSnackBar(addToCartSnackBar);
+                          } else {
+                            submitCashPayment();
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Center(
+                              child: Text(
+                                'پرداخت نقدی',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 16.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
               Positioned(
                 height: deviceHeight * 0.8,
                 width: deviceWidth,

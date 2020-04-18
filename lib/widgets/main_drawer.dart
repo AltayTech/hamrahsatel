@@ -63,19 +63,25 @@ class MainDrawer extends StatelessWidget {
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
-                      Image.asset(
-                        'assets/images/drawer_header.jpg',
-                        fit: BoxFit.fill,
+                      Container(
+                        height:deviceHeight*0.3 ,
+                        width: double.infinity,
+
+                        child: Image.asset(
+                          'assets/images/drawer_header.jpg',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Container(
                         width: double.infinity,
+                        height:deviceHeight*0.3 ,
                         padding: EdgeInsets.all(20),
                         alignment: Alignment.center,
                         color: Colors.purpleAccent.withOpacity(0.1),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Text(
-                            'فروشگاه  \n مبل تبریز',
+                            'فروشگاه  \n همراه ساتل',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 24,

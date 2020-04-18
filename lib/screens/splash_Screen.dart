@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/classes/app_theme.dart';
 import 'package:provider/provider.dart';
+
 import '../provider/Products.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/splashscreen.dart';
-
 import 'navigation_bottom_screen.dart';
 
 class SplashScreens extends StatefulWidget {
@@ -30,7 +31,7 @@ class _SplashScreensState extends State<SplashScreens> {
       seconds: 3,
       navigateAfterSeconds: new NavigationBottomScreen(),
       title: new Text(
-        ' فروشگاه آنلاین ',
+        ' همراه ساتل',
         style: new TextStyle(
           fontFamily: 'BFarnaz',
           fontSize: MediaQuery.of(context).textScaleFactor * 30,
@@ -38,7 +39,7 @@ class _SplashScreensState extends State<SplashScreens> {
         ),
       ),
       loadingText: Text(
-        EnArConvertor().replaceArNumber('نسخه 1.2'),
+        EnArConvertor().replaceArNumber('نسخه 1.0'),
         style: new TextStyle(
           fontFamily: 'Iransans',
           fontWeight: FontWeight.w400,
@@ -54,9 +55,9 @@ class _SplashScreensState extends State<SplashScreens> {
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
-          Color(0xff006DB5),
-          Color(0xff008AB5),
-          Color(0xff01A89E),
+          AppTheme.h1,
+          AppTheme.primary,
+          AppTheme.primary,
         ],
       ),
       styleTextUnderTheLoader: new TextStyle(),

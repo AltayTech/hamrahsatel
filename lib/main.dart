@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screens/product_detail_more_details_screen.dart';
 import 'package:provider/provider.dart';
-import './screens/customer_info/customer_favorite_screen.dart';
-import './screens/customer_info/customer_notification_screen.dart';
-import './screens/customer_info/customer_orders_screen.dart';
-import './screens/customer_info/customer_user_info_screen.dart';
 
 import './provider/auth.dart';
 import './provider/customer_info.dart';
@@ -13,14 +10,18 @@ import './screens/cart_screen.dart';
 import './screens/cash_payment_screen.dart';
 import './screens/contact_with_us_screen.dart';
 import './screens/credit_payment_screen.dart';
+import './screens/customer_info/customer_favorite_screen.dart';
+import './screens/customer_info/customer_notification_screen.dart';
+import './screens/customer_info/customer_orders_screen.dart';
+import './screens/customer_info/customer_user_info_screen.dart';
 import './screens/home_screen.dart';
 import './screens/navigation_bottom_screen.dart';
-import './screens/order_view_screen.dart';
-import './screens/product_detail_screen.dart';
-import './screens/product_screen.dart';
-import './screens/rules_screen.dart';
-import './widgets/commission_calculator.dart';
-import './widgets/favorite_view.dart';
+import 'screens/order_view_screen.dart';
+import 'screens/product_detail_screen.dart';
+import 'screens/product_screen.dart';
+import 'screens/rules_screen.dart';
+import 'widgets/commission_calculator.dart';
+import 'widgets/favorite_view.dart';
 import 'classes/strings.dart';
 import 'provider/Products.dart';
 import 'screens/customer_info/customer_detail_info_edit_screen.dart';
@@ -103,6 +104,8 @@ class MyApp extends StatelessWidget {
           CustomerFavoriteScreen.routeName: (ctx) => CustomerFavoriteScreen(),
           CustomerNotificationScreen.routeName: (ctx) =>
               CustomerNotificationScreen(),
+          ProductDetailMoreDetailScreen.routeName: (ctx) =>
+              ProductDetailMoreDetailScreen(),
           // '/': (ctx) => NavigationBottomScreen(),
         },
       ),
