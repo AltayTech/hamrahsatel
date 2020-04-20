@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../classes/app_theme.dart';
 
+import '../classes/app_theme.dart';
 import '../models/product.dart';
 import '../provider/Products.dart';
 import '../screens/product_detail_screen.dart';
@@ -19,24 +19,11 @@ class ProductItemProductScreen extends StatelessWidget {
     var currencyFormat = intl.NumberFormat.decimalPattern();
 
     Widget priceWidget() {
-      if (product.price == product.price_low) {
+      if (product.price.price == product.price.price) {
         return Text(
-          product.price.isNotEmpty
-              ? EnArConvertor().replaceArNumber(
-                  currencyFormat.format(double.parse(product.price)).toString())
-              : EnArConvertor().replaceArNumber('0'),
-          style: TextStyle(
-            fontFamily: 'Iransans',
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w600,
-            fontSize: textScaleFactor * 15.0,
-          ),
-        );
-      } else if (product.price == '0' || product.price.isEmpty) {
-        return Text(
-          product.price_low.isNotEmpty
+          product.price.price.isNotEmpty
               ? EnArConvertor().replaceArNumber(currencyFormat
-                  .format(double.parse(product.price_low))
+                  .format(double.parse(product.price.price))
                   .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
@@ -46,11 +33,26 @@ class ProductItemProductScreen extends StatelessWidget {
             fontSize: textScaleFactor * 15.0,
           ),
         );
-      } else if (product.price_low == '0' || product.price_low.isEmpty) {
+      } else if (product.price.price == '0' || product.price.price.isEmpty) {
         return Text(
-          product.price.isNotEmpty
-              ? EnArConvertor().replaceArNumber(
-                  currencyFormat.format(double.parse(product.price)).toString())
+          product.price.price.isNotEmpty
+              ? EnArConvertor().replaceArNumber(currencyFormat
+                  .format(double.parse(product.price.price))
+                  .toString())
+              : EnArConvertor().replaceArNumber('0'),
+          style: TextStyle(
+            fontFamily: 'Iransans',
+            color: AppTheme.primary,
+            fontWeight: FontWeight.w600,
+            fontSize: textScaleFactor * 15.0,
+          ),
+        );
+      } else if (product.price.price == '0' || product.price.price.isEmpty) {
+        return Text(
+          product.price.price.isNotEmpty
+              ? EnArConvertor().replaceArNumber(currencyFormat
+                  .format(double.parse(product.price.price))
+                  .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
@@ -64,9 +66,9 @@ class ProductItemProductScreen extends StatelessWidget {
           direction: Axis.vertical,
           children: <Widget>[
             Text(
-              product.price.isNotEmpty
+              product.price.price.isNotEmpty
                   ? EnArConvertor().replaceArNumber(currencyFormat
-                      .format(double.parse(product.price))
+                      .format(double.parse(product.price.price))
                       .toString())
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
@@ -77,9 +79,9 @@ class ProductItemProductScreen extends StatelessWidget {
               ),
             ),
             Text(
-              product.price_low.isNotEmpty
+              product.price.price.isNotEmpty
                   ? EnArConvertor().replaceArNumber(currencyFormat
-                      .format(double.parse(product.price_low))
+                      .format(double.parse(product.price.price))
                       .toString())
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
@@ -108,12 +110,11 @@ class ProductItemProductScreen extends StatelessWidget {
                 arguments: product.id,
               );
             },
-            child:  Card(
+            child: Card(
               child: Stack(
                 children: <Widget>[
                   Container(
                     height: constraints.maxHeight,
-
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -121,8 +122,8 @@ class ProductItemProductScreen extends StatelessWidget {
                           child: Container(
                             child: FadeInImage(
                               placeholder:
-                              AssetImage('assets/images/circle.gif'),
-                              image: NetworkImage(product.gallery[0].url),
+                                  AssetImage('assets/images/circle.gif'),
+                              image: NetworkImage(product.featured_image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -154,13 +155,13 @@ class ProductItemProductScreen extends StatelessWidget {
                                     constraints.maxWidth * 0.005),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       child: Wrap(
                                         direction: Axis.vertical,
                                         crossAxisAlignment:
-                                        WrapCrossAlignment.center,
+                                            WrapCrossAlignment.center,
                                         children: <Widget>[
 //                                          Padding(
 //                                            padding: const EdgeInsets.symmetric(
@@ -180,7 +181,7 @@ class ProductItemProductScreen extends StatelessWidget {
                                         child: Wrap(
                                           direction: Axis.vertical,
                                           crossAxisAlignment:
-                                          WrapCrossAlignment.center,
+                                              WrapCrossAlignment.center,
                                           children: <Widget>[
                                             FittedBox(child: priceWidget()),
                                             Text(
@@ -232,8 +233,7 @@ class ProductItemProductScreen extends StatelessWidget {
                                   color: Color(
                                     int.parse(
                                       '0xff' +
-                                          product.color[index]
-                                              .color_code
+                                          product.color[index].color_code
                                               .replaceRange(0, 1, ''),
                                     ),
                                   ),
@@ -242,7 +242,7 @@ class ProductItemProductScreen extends StatelessWidget {
                             );
                           },
                           gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             childAspectRatio: 1,
                             crossAxisSpacing: 1,

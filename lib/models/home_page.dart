@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/home_slider.dart';
+
+import '../models/category.dart' as category;
 import 'brand.dart';
 import 'color_code.dart';
 import 'productm.dart';
-import '../models/category.dart' as category;
+
 class HomePage with ChangeNotifier {
+  final List<HomeSlider> sliders;
+
   final List<category.Category> categories;
   final List<Brand> brands;
   final List<ColorCode> colors;
@@ -12,6 +17,7 @@ class HomePage with ChangeNotifier {
   final List<Productm> discount_products;
 
   HomePage({
+    this.sliders,
     this.categories,
     this.brands,
     this.colors,
@@ -21,11 +27,16 @@ class HomePage with ChangeNotifier {
   });
 
   factory HomePage.fromJson(Map<String, dynamic> parsedJson) {
+    var slidersList = parsedJson['sliders'] as List;
+    List<HomeSlider> slidersRaw = new List<HomeSlider>();
+
+    slidersRaw = slidersList.map((i) => HomeSlider.fromJson(i)).toList();
+
     var categoriesList = parsedJson['categories'] as List;
     List<category.Category> categoriesRaw = new List<category.Category>();
 
-    categoriesRaw = categoriesList.map((i) => category.Category.fromJson(i)).toList();
-
+    categoriesRaw =
+        categoriesList.map((i) => category.Category.fromJson(i)).toList();
 
     var brandList = parsedJson['brands'] as List;
     List<Brand> brandRaw = new List<Brand>();
@@ -50,6 +61,7 @@ class HomePage with ChangeNotifier {
         discount_productsList.map((i) => Productm.fromJson(i)).toList();
 
     return HomePage(
+      sliders: slidersRaw,
       categories: categoriesRaw,
       brands: brandRaw,
       colors: colorRaw,

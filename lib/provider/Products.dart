@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/price.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/brand.dart';
 import '../models/brandc.dart';
 import '../models/color_code.dart';
-import '../models/gallery.dart';
 import '../models/home_page.dart';
-import '../models/main_features.dart';
 import '../models/meta_data.dart' as meta;
 import '../models/product.dart';
 import '../models/product_cart.dart';
@@ -38,8 +37,7 @@ class Products with ChangeNotifier {
           id: 0,
           title: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
-          gallery: [Gallery(id: 0, url: '')],
-          price_low: '',
+          price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
           status: meta.MetaData(id: 0, title: ''))
     ],
@@ -48,8 +46,7 @@ class Products with ChangeNotifier {
           id: 0,
           title: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
-          gallery: [Gallery(id: 0, url: '')],
-          price_low: '',
+          price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
           status: meta.MetaData(id: 0, title: ''))
     ],
@@ -58,8 +55,7 @@ class Products with ChangeNotifier {
           id: 0,
           title: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
-          gallery: [Gallery(id: 0, url: '')],
-          price_low: '',
+          price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
           status: meta.MetaData(id: 0, title: ''))
     ],
@@ -92,8 +88,8 @@ class Products with ChangeNotifier {
         _ssellcase == '' &&
         _scolor == '' &&
         _sstatus == '' &&
-        _spriceRange == ''&&
-        _scategory=='') {
+        _spriceRange == '' &&
+        _scategory == '') {
       _isFiltered = false;
     } else {
       _isFiltered = true;
@@ -142,37 +138,38 @@ class Products with ChangeNotifier {
   }
 
   static Product _item_zero = Product(
-      id: 0,
-      title: "",
-      price: "",
-      price_low: "",
-      main_features:
-          MainFeatures(screen_inch: "", camera: "0", memory: "", ram: ""),
-      content: '',
-      gallery: [
-        Gallery(
-          id: 0,
-          url: '',
-        ),
-      ],
-      tags: [
-        meta.MetaData(id: null, title: null)
-      ],
-      brand: [
-        Brand(id: 0, title: "", brand_img_url: "")
-      ],
-      productcat: [
-        meta.MetaData(id: 123, title: "")
-      ],
-      sellcase: [
-        meta.MetaData(id: 72, title: "")
-      ],
-      color: [
-        ColorCode(id: 0, title: "", color_code: "")
-      ],
-      status: [
-        meta.MetaData(id: 0, title: '')
-      ]);
+//      id: 0,
+//      title: "",
+//      price: "",
+//      price_low: "",
+//      main_features:
+//          MainFeatures(screen_inch: "", camera: "0", memory: "", ram: ""),
+//      content: '',
+//      gallery: [
+//        Gallery(
+//          id: 0,
+//          url: '',
+//        ),
+//      ],
+//      tags: [
+//        meta.MetaData(id: null, title: null)
+//      ],
+//      brand: [
+//        Brand(id: 0, title: "", brand_img_url: "")
+//      ],
+//      productcat: [
+//        meta.MetaData(id: 123, title: "")
+//      ],
+//      sellcase: [
+//        meta.MetaData(id: 72, title: "")
+//      ],
+//      color: [
+//        ColorCode(id: 0, title: "", color_code: "")
+//      ],
+//      status: [
+//        meta.MetaData(id: 0, title: '')
+//      ]
+      );
   Product _item = _item_zero;
 
   String _token;
@@ -226,14 +223,14 @@ class Products with ChangeNotifier {
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.price,
-          price_low: product.price_low,
+          price: product.price.price_without_discount,
+          price_low: product.price.price,
           brand: Brandc(
               id: product.brand[0].id,
               title: product.brand[0].title,
               img_url: product.brand[0].brand_img_url),
           colors: product.color,
-          featured_media_url: product.gallery[0].url,
+          featured_media_url: product.featured_image,
           color_selected: colorId,
           productCount: quantity,
         ));
@@ -246,16 +243,16 @@ class Products with ChangeNotifier {
         _cartItems.add(ProductCart(
             id: product.id,
             title: product.title,
-            price: product.price,
-            price_low: product.price_low,
+            price: product.price.price_without_discount,
+            price_low: product.price.price,
             brand: Brandc(
                 id: product.brand[0].id,
                 title: product.brand[0].title,
                 img_url: product.brand[0].brand_img_url),
             colors: product.color,
-            featured_media_url: product.gallery[0].url,
+            featured_media_url: product.featured_image,
             color_selected: colorId,
-        productCount:quantity ));
+            productCount: quantity));
       }
       notifyListeners();
     } catch (error) {
@@ -437,6 +434,7 @@ class Products with ChangeNotifier {
     print('fetchAndSetHomeData');
 
     final url = Urls.rootUrl + Urls.homeEndPoint;
+    print(url);
 
     try {
       final response = await get(url, headers: {
@@ -449,6 +447,7 @@ class Products with ChangeNotifier {
 
       List<HomePage> homePage =
           extractedData.map((i) => HomePage.fromJson(i)).toList();
+      print(homePage[0].categories[0].name);
 
       _homeItems = homePage[0];
       notifyListeners();
@@ -472,9 +471,11 @@ class Products with ChangeNotifier {
       print(response.statusCode);
       if (response.statusCode == 200) {
         final extractedData = json.decode(response.body);
+        print(extractedData.toString());
 
         ProductMain productMain = ProductMain.fromJson(extractedData);
-        print(response.headers.toString());
+        print(productMain.productsDetail.max_page.toString());
+//        print(response.headers.toString());
 
         _items = productMain.products;
         _searchDetails = productMain.productsDetail;
@@ -492,6 +493,7 @@ class Products with ChangeNotifier {
     print('retrieveItem');
 
     final url = Urls.rootUrl + Urls.productsEndPoint + "/$productId";
+    print(url);
 
     try {
       final response = await get(url, headers: {
@@ -499,7 +501,11 @@ class Products with ChangeNotifier {
         'Accept': 'application/json'
       });
       final extractedData = json.decode(response.body) as dynamic;
+      print(extractedData);
+
       Product product = Product.fromJson(extractedData);
+      print(product.id.toString());
+      print(product.description.toString());
 
       _item = product;
     } catch (error) {

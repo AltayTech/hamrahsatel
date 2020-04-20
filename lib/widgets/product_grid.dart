@@ -22,9 +22,9 @@ class ProductGrid extends StatelessWidget {
             id: loadedSalon[i].id,
             title: loadedSalon[i].title,
             brand_title: loadedSalon[i].brand.title,
-            price: loadedSalon[i].price.toString(),
-            price_low: loadedSalon[i].price_low.toString(),
-            imageUrl: loadedSalon[i].gallery[0].url,
+            price: loadedSalon[i].price.price_without_discount.toString(),
+            price_low: loadedSalon[i].price.price.toString(),
+            imageUrl: loadedSalon[i].featured_image,
             brandImageUrl: loadedSalon[i].brand.brand_img_url,
             productColor: loadedSalon[i].colors,
           );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hamrahsatel/classes/flutter_carousel_slider.dart';
 import 'package:hamrahsatel/models/gallery.dart';
+import 'package:hamrahsatel/models/home_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -112,7 +113,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final HomePage loadedHomePage = Provider.of<Products>(context).homeItems;
     print('lenggggggggg' + loadedHomePage.categories.length.toString());
-    List<Gallery> slider = loadedHomePage.new_products[1].gallery;
+    List<HomeSlider> slider =loadedHomePage.sliders ;
     Provider.of<Auth>(context, listen: false).getToken();
 
     return SingleChildScrollView(
@@ -168,7 +169,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                                         child: FadeInImage(
                                           placeholder: AssetImage(
                                               'assets/images/circle.gif'),
-                                          image: NetworkImage(gallery.url),
+                                          image: NetworkImage(gallery.featured_image),
                                           fit: BoxFit.cover,
                                         ),
                                       ),

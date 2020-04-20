@@ -91,22 +91,31 @@ class _ProductsScreenState extends State<ProductsScreen>
   void didChangeDependencies() {
     if (_isInit) {
       int tabIndex = ModalRoute.of(context).settings.arguments as int;
+      print(_isLoading.toString());
+
       loadedHomePage = Provider.of<Products>(context).homeItems;
+      print(_isLoading.toString());
 
       Provider.of<Products>(context, listen: false).searchBuilder();
+      print(_isLoading.toString());
+
       Provider.of<Products>(context, listen: false).checkfiltered();
+      print(_isLoading.toString());
 
       brandList = loadedHomePage.brands;
       for (int i = 0; i < brandList.length; i++) {
         print(i.toString());
         brandValueList.add(brandList[i].title);
       }
+      print('brand');
 
       colorList = loadedHomePage.colors;
       for (int i = 0; i < colorList.length; i++) {
         print(i.toString());
         colorValueList.add(colorList[i].title);
       }
+      print('color');
+
       searchItems();
     }
     _isInit = false;
@@ -132,6 +141,8 @@ class _ProductsScreenState extends State<ProductsScreen>
     setState(() {
       _isLoading = true;
     });
+    print(_isLoading.toString());
+
     Provider.of<Products>(context, listen: false).searchBuilder();
     await Provider.of<Products>(context, listen: false).searchItem();
     productsDetail = Provider.of<Products>(context).searchDetails;

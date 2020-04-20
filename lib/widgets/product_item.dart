@@ -133,7 +133,7 @@ class ProductItem extends StatelessWidget {
                             child: FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/circle.gif'),
-                              image: NetworkImage(imageUrl),
+                              image: NetworkImage(imageUrl!=null?imageUrl:''),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -179,7 +179,7 @@ class ProductItem extends StatelessWidget {
                                               horizontal: 10,
                                             ),
                                             child: Image.network(
-                                              brandImageUrl,
+                                              brandImageUrl!=null?brandImageUrl:'',
                                             ),
                                           ),
                                         ],

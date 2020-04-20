@@ -153,7 +153,7 @@ class _ProductDetailMoreDetailScreenState
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: HtmlWidget(
-                              loadedProduct.content,
+                              loadedProduct.description,
                               onTapUrl: (url) => showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(
@@ -245,7 +245,7 @@ class _ProductDetailMoreDetailScreenState
                     ),
                     onPressed: () {
                       setState(() {});
-                      if (loadedProduct.price_low.isEmpty) {
+                      if (loadedProduct.price.price.isEmpty) {
                         _snackBarMessage = 'قیمت محصول صفر میباشد';
                       } else {
                         _snackBarMessage =

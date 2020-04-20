@@ -1,37 +1,41 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/brand.dart';
 import '../models/color_code.dart';
 import '../models/gallery.dart';
-import '../models/main_features.dart';
 import '../models/meta_data.dart';
+import 'price.dart';
 
 class Product with ChangeNotifier {
   final int id;
+  final String date;
+  final bool show;
   final String title;
-  final String price;
-  final String price_low;
-  final MainFeatures main_features;
-  final String content;
-
-  final List<Gallery> gallery;
-  final List<MetaData> tags;
+  final Price price;
+  final String featured_image;
+  final List<String> gallery;
+  final String product_spec;
+  final String investigate;
+  final String note_product;
+  final String description;
   final List<Brand> brand;
   final List<MetaData> productcat;
   final List<MetaData> sellcase;
   final List<ColorCode> color;
   final List<MetaData> status;
 
-
-
   Product({
     this.id,
+    this.date,
+    this.show,
     this.title,
     this.price,
-    this.price_low,
-    this.main_features,
-    this.content,
+    this.featured_image,
     this.gallery,
-    this.tags,
+    this.product_spec,
+    this.investigate,
+    this.note_product,
+    this.description,
     this.brand,
     this.productcat,
     this.sellcase,
@@ -39,16 +43,9 @@ class Product with ChangeNotifier {
     this.status,
   });
 
-
   factory Product.fromJson(Map<String, dynamic> parsedJson) {
     var galleryList = parsedJson['gallery'] as List;
-    List<Gallery> galleryRaw = new List<Gallery>();
-
-    galleryRaw = galleryList.map((i) => Gallery.fromJson(i)).toList();
-
-    var tagsList = parsedJson['tags'] as List;
-    List<MetaData> tagsRaw = new List<MetaData>();
-    tagsRaw = tagsList.map((i) => MetaData.fromJson(i)).toList();
+    List<String> galleryRaw = galleryList.map((i) => i.toString()).toList();
 
     var brandList = parsedJson['brand'] as List;
     List<Brand> brandRaw = brandList.map((i) => Brand.fromJson(i)).toList();
@@ -70,13 +67,16 @@ class Product with ChangeNotifier {
 
     return Product(
       id: parsedJson['id'],
+      date: parsedJson['date'],
+      show: parsedJson['show'],
       title: parsedJson['title'],
-      price: parsedJson['price'],
-      price_low: parsedJson['price_low'],
-      main_features: MainFeatures.fromJson(parsedJson['main_features']),
-      content: parsedJson['content'],
+      price: Price.fromJson(parsedJson['price']),
+      featured_image: parsedJson['featured_image'],
       gallery: galleryRaw,
-      tags: tagsRaw,
+      product_spec: parsedJson['product_spec'],
+      investigate: parsedJson['investigate'],
+      note_product: parsedJson['note_product'],
+      description: parsedJson['description'],
       brand: brandRaw,
       productcat: productcatRaw,
       sellcase: sellcaseRaw,

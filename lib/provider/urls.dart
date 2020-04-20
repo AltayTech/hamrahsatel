@@ -1,5 +1,5 @@
 class Urls {
-  static const rootUrl = 'http://www.sofa.ealda.ir/rest/saeedmobile/v1';
+  static const rootUrl = 'http://www.hamrahsatel.com/rest/hs/v1';
   static const productsEndPoint = '/products';
   static const homeEndPoint = '/home';
 
