@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 
 import '../models/brand.dart';
 import '../models/color_code.dart';
-import '../models/gallery.dart';
 import '../models/meta_data.dart';
 import 'price.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/classes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../models/productm.dart';
@@ -40,7 +41,7 @@ class HorizontalList extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.only(top:4.0,bottom: 4,left: 10,right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -48,7 +49,8 @@ class HorizontalList extends StatelessWidget {
                     listTitle,
                     style: TextStyle(
                       fontFamily: 'Iransans',
-                      fontSize: MediaQuery.of(context).textScaleFactor * 12.0,
+                      color: AppTheme.h1,
+                      fontSize: MediaQuery.of(context).textScaleFactor * 14.0,
                     ),
                   ),
                   isAd
@@ -104,6 +106,8 @@ class HorizontalList extends StatelessWidget {
                                 'همه',
                                 style: TextStyle(
                                   fontFamily: 'Iransans',
+                                  color: AppTheme.h1,
+
                                   fontSize:
                                       MediaQuery.of(context).textScaleFactor *
                                           12.0,
@@ -111,7 +115,9 @@ class HorizontalList extends StatelessWidget {
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
-                                size: 20,
+                                color: AppTheme.h1,
+
+                                size: 15,
                               ),
                             ],
                           ),

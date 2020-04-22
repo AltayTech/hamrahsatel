@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screens/navigation_bottom_screen.dart';
 
 import '../classes/app_theme.dart';
 import '../provider/auth.dart';
@@ -15,6 +14,7 @@ import '../screens/contact_with_us_screen.dart';
 import '../screens/customer_info/login_screen.dart';
 import '../screens/customer_info/profile_screen.dart';
 import '../screens/favorite_screen.dart';
+import '../screens/navigation_bottom_screen.dart';
 import '../screens/product_screen.dart';
 import '../screens/rules_screen.dart';
 
@@ -64,9 +64,8 @@ class MainDrawer extends StatelessWidget {
                   Stack(
                     children: <Widget>[
                       Container(
-                        height:deviceHeight*0.3 ,
+                        height: deviceHeight * 0.25,
                         width: double.infinity,
-
                         child: Image.asset(
                           'assets/images/drawer_header.jpg',
                           fit: BoxFit.cover,
@@ -74,7 +73,7 @@ class MainDrawer extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        height:deviceHeight*0.3 ,
+                        height: deviceHeight * 0.25,
                         padding: EdgeInsets.all(20),
                         alignment: Alignment.center,
                         color: Colors.purpleAccent.withOpacity(0.1),
@@ -83,9 +82,11 @@ class MainDrawer extends StatelessWidget {
                           child: Text(
                             'فروشگاه  \n همراه ساتل',
                             style: TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 fontSize: 24,
-                                color: AppTheme.primary),
+                                fontFamily: 'BFarnaz',
+
+                                color: AppTheme.bg),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -125,7 +126,7 @@ class MainDrawer extends StatelessWidget {
                     thickness: 2,
                   ),
                   Container(
-                    height: deviceHeight * 0.55,
+                    height: deviceHeight * 0.6,
                     child: SingleChildScrollView(
                       child: Wrap(
                         children: <Widget>[
@@ -328,9 +329,7 @@ class MainDrawer extends StatelessWidget {
                               Provider.of<CustomerInfo>(context).customer =
                                   Provider.of<CustomerInfo>(context)
                                       .customer_zero;
-//                              Provider.of<CustomerInfo>(context).orders.clear();
-//                              Provider.of<CustomerInfo>(context).favoriteProducts.clear();
-                              await Provider.of<Auth>(context).removeToken();
+                           await Provider.of<Auth>(context).removeToken();
                               Provider.of<Auth>(context, listen: false)
                                   .isFirstLogout = true;
                               Navigator.of(context).pop();

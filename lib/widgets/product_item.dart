@@ -79,18 +79,18 @@ class ProductItem extends StatelessWidget {
         return Wrap(
           direction: Axis.vertical,
           children: <Widget>[
-            Text(
-              price.isNotEmpty
-                  ? EnArConvertor().replaceArNumber(
-                      currencyFormat.format(double.parse(price)).toString())
-                  : EnArConvertor().replaceArNumber('0'),
-              style: TextStyle(
-                decoration: TextDecoration.lineThrough,
-                fontFamily: 'Iransans',
-                color: AppTheme.h1,
-                fontSize: textScaleFactor * 15.0,
-              ),
-            ),
+//            Text(
+//              price.isNotEmpty
+//                  ? EnArConvertor().replaceArNumber(
+//                      currencyFormat.format(double.parse(price)).toString())
+//                  : EnArConvertor().replaceArNumber('0'),
+//              style: TextStyle(
+//                decoration: TextDecoration.lineThrough,
+//                fontFamily: 'Iransans',
+//                color: AppTheme.h1,
+//                fontSize: textScaleFactor * 15.0,
+//              ),
+//            ),
             Text(
               price_low.isNotEmpty
                   ? EnArConvertor().replaceArNumber(
@@ -110,7 +110,7 @@ class ProductItem extends StatelessWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width * 0.45,
-      height: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.6,
       child: LayoutBuilder(
         builder: (ctx, constraints) {
           return InkWell(
@@ -133,7 +133,8 @@ class ProductItem extends StatelessWidget {
                             child: FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/circle.gif'),
-                              image: NetworkImage(imageUrl!=null?imageUrl:''),
+                              image: NetworkImage(
+                                  imageUrl != null ? imageUrl : ''),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -146,7 +147,7 @@ class ProductItem extends StatelessWidget {
                                 flex: 6,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
+                                      horizontal: 10.0, vertical: 5),
                                   child: Text(
                                     title,
                                     maxLines: 2,
@@ -179,7 +180,9 @@ class ProductItem extends StatelessWidget {
                                               horizontal: 10,
                                             ),
                                             child: Image.network(
-                                              brandImageUrl!=null?brandImageUrl:'',
+                                              brandImageUrl != null
+                                                  ? brandImageUrl
+                                                  : '',
                                             ),
                                           ),
                                         ],
@@ -225,13 +228,13 @@ class ProductItem extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: productColor.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: Container(
+                          child: Container(
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: productColor.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
                                   padding: EdgeInsets.all(10),
                                   width: 10.0,
                                   height: 10.0,
@@ -248,15 +251,15 @@ class ProductItem extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              childAspectRatio: 1,
-                              crossAxisSpacing: 1,
-                              mainAxisSpacing: 3,
+                                );
+                              },
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1,
+                                childAspectRatio: 1,
+                                crossAxisSpacing: 1,
+                                mainAxisSpacing: 3,
+                              ),
                             ),
                           ),
                         ),

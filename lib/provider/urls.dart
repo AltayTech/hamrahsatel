@@ -2,6 +2,7 @@ class Urls {
   static const rootUrl = 'http://www.hamrahsatel.com/rest/hs/v1';
   static const productsEndPoint = '/products';
   static const homeEndPoint = '/home';
+  static const shopEndPoint = '/shop';
 
   static const loginEndPoint = '/login';
   static const tokenEndPoint = '/login/token';

@@ -22,8 +22,6 @@ class Products with ChangeNotifier {
   List<ProductCart> _cartItems = [];
   List<String> filterTitle = [];
 
-//  List<ProductCart> _cartItems_zero = [ProductCart(id: 0,title: '',)];
-
   HomePage _homeItems = HomePage(
     brands: [
       Brand(
@@ -131,9 +129,9 @@ class Products with ChangeNotifier {
     if (!(_spriceRange == '' || _spriceRange == null)) {
       searchEndPoint = searchEndPoint + '&price_range=$_spriceRange';
     }
-//    if (!(_scategory == '' || _scategory == null)) {
-//      searchEndPoint = searchEndPoint + '&price_range=$_spriceRange';
-//    }
+    if (!(_scategory == '' || _scategory == null)) {
+      searchEndPoint = searchEndPoint + '&productcat=$_scategory';
+    }
     print(searchEndPoint);
   }
 
@@ -194,6 +192,12 @@ class Products with ChangeNotifier {
     return _cartItems;
   }
 
+  get scategory => _scategory;
+
+  set scategory(value) {
+    _scategory = value;
+  }
+
   Future<void> addShopCart(
       Product product, ColorCode colorId, int quantity, bool isLogin) async {
     print('addShopCart');
@@ -223,8 +227,7 @@ class Products with ChangeNotifier {
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.price.price_without_discount,
-          price_low: product.price.price,
+          price: colorId.price,
           brand: Brandc(
               id: product.brand[0].id,
               title: product.brand[0].title,
@@ -244,7 +247,6 @@ class Products with ChangeNotifier {
             id: product.id,
             title: product.title,
             price: product.price.price_without_discount,
-            price_low: product.price.price,
             brand: Brandc(
                 id: product.brand[0].id,
                 title: product.brand[0].title,
@@ -264,7 +266,6 @@ class Products with ChangeNotifier {
   Future<void> updateShopCart(ProductCart product, ColorCode colorId,
       int quantity, bool isLogin) async {
     print('updateShopCart');
-//    print(colorId.toString());
     try {
       if (isLogin) {
         final prefs = await SharedPreferences.getInstance();
@@ -285,14 +286,12 @@ class Products with ChangeNotifier {
         final extractedData = json.decode(response.body);
 
         print(extractedData.toString());
-//        Product pro = _items.firstWhere((prod) => prod.id == product.id);
         _cartItems
             .remove(_cartItems.firstWhere((prod) => prod.id == product.id));
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.price,
-          price_low: product.price_low,
+          price: product.color_selected.price,
           brand: Brandc(
               id: product.brand.id,
               title: product.brand.title,
@@ -303,17 +302,12 @@ class Products with ChangeNotifier {
           productCount: quantity,
         ));
       } else {
-//        Product pro = _items.firstWhere((prod) => prod.id == productId);
-//        await retrieveToShoppItem(productId);
-//        Product pro = _itemShopp;
-        print(product.title.toString());
         _cartItems
             .remove(_cartItems.firstWhere((prod) => prod.id == product.id));
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.price,
-          price_low: product.price_low,
+          price: product.color_selected.price,
           brand: Brandc(
               id: product.brand.id,
               title: product.brand.title,

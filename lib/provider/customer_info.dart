@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/shop.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +16,6 @@ import '../models/orderItem.dart';
 import '../models/order_details.dart';
 import '../models/order_details_aghsat.dart';
 import '../models/personal_data.dart';
-import '../models/popular_app.dart';
 import '../models/productFavorite.dart';
 import '../models/rule_data.dart';
 import 'urls.dart';
@@ -27,13 +27,7 @@ class CustomerInfo with ChangeNotifier {
 
   List<RuleData> _ruleList = [RuleData(id: 0, title: '', content: '')];
 
-  List<PopularApp> _popularAppList = [
-    PopularApp(id: 0,
-        title: '',
-        bazar: '',
-        appstore: '',
-        img_url: '')
-  ];
+  Shop _shop;
 
   String get payUrl => _payUrl;
   List<File> chequeImageList = [];
@@ -43,9 +37,7 @@ class CustomerInfo with ChangeNotifier {
         id: 0,
         first_name: '',
         last_name: '',
-        gender: '',
-        national_code: '',
-        credit: '',
+        email: '',
         ostan: '',
         city: '',
         address: '',
@@ -106,9 +98,7 @@ class CustomerInfo with ChangeNotifier {
   int _id;
   String _first_name;
   String _last_name;
-  String _gender;
-  String _national_code;
-  String _credit;
+  String _email;
   String _ostan;
   String _city;
   String _address;
@@ -124,10 +114,12 @@ class CustomerInfo with ChangeNotifier {
     print('getCustomer');
 
     final url = Urls.rootUrl + Urls.customerEndPoint;
+    print(url);
 
     final prefs = await SharedPreferences.getInstance();
 
     _token = prefs.getString('token');
+
     print(_token);
 
     Customer customers;
@@ -168,18 +160,16 @@ class CustomerInfo with ChangeNotifier {
       final response = await post(url,
           headers: {
             'Authorization': 'Bearer $_token',
-
             'Content-Type': 'application/json',
-            'Accept': 'application/json'},
+            'Accept': 'application/json'
+          },
           body: jsonEncode({
             "personal_data": {
               "id": _customer.personal_data.id,
               "phone": _customer.personal_data.phone,
               "first_name": _first_name,
               "last_name": _last_name,
-              "gender": _gender,
-              "national_code": _national_code,
-              "credit": _credit,
+              "credit": _email,
               "ostan": _ostan,
               "city": _city,
               "address": _address,
@@ -222,7 +212,6 @@ class CustomerInfo with ChangeNotifier {
     try {
       final response = await get(url, headers: {
         'Authorization': 'Bearer $_token',
-
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       });
@@ -351,7 +340,7 @@ class CustomerInfo with ChangeNotifier {
         'Accept': 'application/json'
       });
 
-      final extractedData = json.decode(response.body) ;
+      final extractedData = json.decode(response.body);
       print(extractedData);
 
       int orderId = extractedData['order_id'];
@@ -418,7 +407,7 @@ class CustomerInfo with ChangeNotifier {
     print('Upload');
 
     var stream =
-    new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
     final url = Uri.parse(
@@ -433,9 +422,11 @@ class CustomerInfo with ChangeNotifier {
     _token = prefs.getString('token');
     print(order_id.toString());
 
-    Map<String, String> header1 = {'Authorization': 'Bearer $_token',
+    Map<String, String> header1 = {
+      'Authorization': 'Bearer $_token',
       'Content-Type': 'application/json',
-      'Accept': 'application/json'};
+      'Accept': 'application/json'
+    };
     request.headers.addAll(header1);
 
     var multipartFile = new http.MultipartFile('file', stream, length,
@@ -456,7 +447,7 @@ class CustomerInfo with ChangeNotifier {
     final url = Urls.rootUrl + Urls.rulesEndPoint;
 
     try {
-      final response = await get(url,headers: {
+      final response = await get(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       });
@@ -478,28 +469,25 @@ class CustomerInfo with ChangeNotifier {
     }
   }
 
-  Future<void> getPopAppInfo() async {
-    print('getFavorite');
+  Future<void> fetchShopData() async {
+    print('fetchShopData');
 
-    final url = Urls.rootUrl + Urls.popularAppEndPoint;
+    final url = Urls.rootUrl + Urls.shopEndPoint;
+    print(url);
 
     try {
-      final response = await get(url,headers: {
+      final response = await get(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       });
 
-      final extractedData = json.decode(response.body) as List;
-
-      List<PopularApp> popularAppList = new List<PopularApp>();
-
-      popularAppList =
-          extractedData.map((i) => PopularApp.fromJson(i)).toList();
-
-      _popularAppList = popularAppList;
-
+      final extractedData = json.decode(response.body) as dynamic;
       print(extractedData);
 
+      Shop shopData = Shop.fromJson(extractedData);
+      print(shopData.about_shop);
+
+      _shop = shopData;
       notifyListeners();
     } catch (error) {
       print(error.toString());
@@ -515,16 +503,8 @@ class CustomerInfo with ChangeNotifier {
     _last_name = value;
   }
 
-  set gender(String value) {
-    _gender = value;
-  }
-
-  set national_code(String value) {
-    _national_code = value;
-  }
-
-  set credit(String value) {
-    _credit = value;
+  set email(String value) {
+    _email = value;
   }
 
   set ostan(String value) {
@@ -549,8 +529,6 @@ class CustomerInfo with ChangeNotifier {
 
   List<RuleData> get ruleList => _ruleList;
 
-  List<PopularApp> get popularAppList => _popularAppList;
-
   set customer(Customer value) {
     _customer = value;
   }
@@ -564,4 +542,12 @@ class CustomerInfo with ChangeNotifier {
   }
 
   Customer get customer_zero => _customer_zero;
+
+  Shop get shop => _shop;
+
+  set shop(Shop value) {
+    _shop = value;
+  }
+
+
 }

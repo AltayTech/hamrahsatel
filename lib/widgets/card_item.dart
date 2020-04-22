@@ -212,8 +212,6 @@ class _CardItemState extends State<CardItem> {
                                                 onTap: () {
                                                   productCount =
                                                       productCount + 1;
-                                                  print('productCount' +
-                                                      productCount.toString());
 
                                                   Provider.of<Products>(context,
                                                           listen: false)
@@ -307,25 +305,18 @@ class _CardItemState extends State<CardItem> {
                                           children: <Widget>[
                                             Text(
                                               widget.shoppItems[widget.index]
-                                                      .price_low.isNotEmpty
+                                                      .price.isNotEmpty
                                                   ? EnArConvertor().replaceArNumber(
                                                       currencyFormat
-                                                          .format(double.parse(widget
-                                                              .shoppItems[
-                                                                  widget.index]
-                                                              .price_low))
+                                                          .format(double.parse(
+                                                              widget
+                                                                  .shoppItems[
+                                                                      widget
+                                                                          .index]
+                                                                  .price))
                                                           .toString())
-                                                  : widget
-                                                          .shoppItems[
-                                                              widget.index]
-                                                          .price
-                                                          .isNotEmpty
-                                                      ? EnArConvertor().replaceArNumber(
-                                                          currencyFormat
-                                                              .format(double.parse(
-                                                                  widget.shoppItems[widget.index].price))
-                                                              .toString())
-                                                      : EnArConvertor().replaceArNumber('0'),
+                                                  : EnArConvertor()
+                                                      .replaceArNumber('0'),
                                               style: TextStyle(
                                                 color: Colors.redAccent,
                                                 fontFamily: 'Iransans',

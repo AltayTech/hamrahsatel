@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hamrahsatel/classes/flutter_carousel_slider.dart';
-import 'package:hamrahsatel/models/gallery.dart';
 import 'package:hamrahsatel/models/home_slider.dart';
+import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -112,40 +112,38 @@ class _HomeScreeenState extends State<HomeScreeen> {
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final HomePage loadedHomePage = Provider.of<Products>(context).homeItems;
-    print('lenggggggggg' + loadedHomePage.categories.length.toString());
-    List<HomeSlider> slider =loadedHomePage.sliders ;
+    List<HomeSlider> slider = loadedHomePage.sliders;
     Provider.of<Auth>(context, listen: false).getToken();
 
     return SingleChildScrollView(
       child: Container(
         color: AppTheme.bg,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            InkWell(
-              onTap: () {
-                cleanFilters(context);
-                Provider.of<Products>(context).ssellcase = '71';
+            Container(
+              height: deviceWidth * 0.6,
+              child: InkWell(
+                onTap: () {
+                  cleanFilters(context);
+                  Provider.of<Products>(context).ssellcase = '71';
 
-                Navigator.of(context)
-                    .pushNamed(ProductsScreen.routeName, arguments: 0);
-              },
-              child: Container(
-                height: deviceHeight * 0.25,
+                  Navigator.of(context)
+                      .pushNamed(ProductsScreen.routeName, arguments: 0);
+                },
                 child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    Positioned(
-                      left: 0.0,
-                      right: 0.0,
+                    Positioned.fill(
+
                       child: CarouselSlider(
-//                        aspectRatio: 11 / 9,
                         viewportFraction: 1.0,
                         initialPage: 0,
                         enableInfiniteScroll: true,
                         reverse: false,
-                        autoPlay: false,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                            Duration(milliseconds: 800),
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 5),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
                         pauseAutoPlayOnTouch: Duration(seconds: 10),
                         enlargeCenterPage: true,
                         scrollDirection: Axis.horizontal,
@@ -158,33 +156,12 @@ class _HomeScreeenState extends State<HomeScreeen> {
                             builder: (BuildContext context) {
                               return Container(
                                   width: deviceWidth,
-//                                  margin: EdgeInsets.symmetric(
-//                                      horizontal: 5.0),
-                                  child:
-                                  Stack(
-                                    children: <Widget>[
-
-                                      Positioned.fill(
-
-                                        child: FadeInImage(
-                                          placeholder: AssetImage(
-                                              'assets/images/circle.gif'),
-                                          image: NetworkImage(gallery.featured_image),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-//                                      Center(
-//                                        child: Text(
-//                                          'جزئیات',
-//                                          style: TextStyle(
-//                                            color: AppTheme.primary,
-//                                            fontFamily: 'Iransans',
-//                                            fontWeight:FontWeight.bold,
-//                                            fontSize: textScaleFactor * 20.0,
-//                                          ),
-//                                        ),
-//                                      ),
-                                    ],
+                                  child: FadeInImage(
+                                    placeholder:
+                                        AssetImage('assets/images/circle.gif'),
+                                    image: NetworkImage(gallery.featured_image),
+                                    fit: BoxFit.cover,
+                                    height: deviceWidth*0.7,
                                   ));
                             },
                           );
@@ -207,9 +184,10 @@ class _HomeScreeenState extends State<HomeScreeen> {
                                   vertical: 10.0, horizontal: 2.0),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: AppTheme.h1),
+                                  border: Border.all(
+                                      color: AppTheme.h1, width: 0.4),
                                   color: _current == slider.indexOf(index)
-                                      ? AppTheme.h1
+                                      ? AppTheme.secondary
                                       : AppTheme.bg),
                             );
                           },
@@ -241,7 +219,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
             HorizontalList(
               list: loadedHomePage.discount_products,
               listTitle: 'باورنرکدنی',
-              isAd: false,
+              isAd: true,
               isDiscounted: true,
             ),
           ],

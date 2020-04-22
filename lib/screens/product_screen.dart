@@ -191,7 +191,6 @@ class _ProductsScreenState extends State<ProductsScreen>
         key: scaffoldKey,
         backgroundColor: Color(0xffF9F9F9),
         appBar: AppBar(
-//                backgroundColor: AppTheme.appBarColor,
           backgroundColor: AppTheme.appBarColor,
           iconTheme: new IconThemeData(color: AppTheme.appBarIconColor),
           elevation: 0,
@@ -228,7 +227,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                       child: Container(
-                        height: deviceHeight * 0.07,
+                        height: deviceHeight * 0.05,
                         width: deviceWidth,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -236,7 +235,6 @@ class _ProductsScreenState extends State<ProductsScreen>
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              height: deviceHeight * 0.20,
                               child: InkWell(
                                 onTap: () {
                                   _selectedCategoryIndexs.clear();
@@ -269,15 +267,17 @@ class _ProductsScreenState extends State<ProductsScreen>
                                       .spage = 1;
                                   Provider.of<Products>(context, listen: false)
                                       .ssellcase = sellcaseEndpoint;
+
                                   Provider.of<Products>(context, listen: false)
                                       .searchBuilder();
                                   Provider.of<Products>(context, listen: false)
                                       .checkfiltered();
 
                                   addToFilterList(_selectedCategoryTitle);
-
+                                  String categoriesEndpoint =
+                                      '$_selectedCategoryId';
                                   Provider.of<Products>(context, listen: false)
-                                      .sbrand = brandsEndpoint;
+                                      .scategory = categoriesEndpoint;
 
                                   Provider.of<Products>(context, listen: false)
                                       .searchBuilder();
@@ -346,7 +346,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                                   Scaffold.of(context).openEndDrawer();
                                 },
                                 child: Container(
-                                  height: deviceHeight * 0.05,
+                                  height: deviceHeight * 0.045,
                                   width: deviceHeight * 0.05,
                                   decoration: BoxDecoration(
                                     color: AppTheme.h1,
@@ -374,7 +374,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                                           color: AppTheme.h1, width: 0.2)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8, top: 8),
+                                        right: 8.0, left: 8, top: 6),
                                     child: DropdownButton<String>(
                                       value: sortValue,
                                       icon: Icon(
@@ -471,17 +471,17 @@ class _ProductsScreenState extends State<ProductsScreen>
                                 child: Container(
                                   alignment: Alignment.centerRight,
                                   decoration: BoxDecoration(
-                                      color: AppTheme.bg,
+                                      color: AppTheme.secondary,
                                       border: Border.all(
                                           color: AppTheme.h1, width: 0.2)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8, top: 8),
+                                        right: 8.0, left: 8, top: 6),
                                     child: DropdownButton<String>(
                                       hint: Text(
                                         'برندها',
                                         style: TextStyle(
-                                          color: AppTheme.h1,
+                                          color: AppTheme.bg,
                                           fontFamily: 'Iransans',
                                           fontSize: textScaleFactor * 13.0,
                                         ),
@@ -489,11 +489,12 @@ class _ProductsScreenState extends State<ProductsScreen>
                                       value: brandValue,
                                       icon: Icon(
                                         Icons.arrow_drop_down,
-                                        color: AppTheme.h1,
+                                        color: AppTheme.bg,
                                         size: 24,
                                       ),
+                                      dropdownColor: AppTheme.secondary,
                                       style: TextStyle(
-                                        color: AppTheme.h1,
+                                        color: AppTheme.bg,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 13.0,
                                       ),
@@ -538,7 +539,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                                             child: Text(
                                               value,
                                               style: TextStyle(
-                                                color: AppTheme.h1,
+                                                color: AppTheme.bg,
                                                 fontFamily: 'Iransans',
                                                 fontSize:
                                                     textScaleFactor * 13.0,
@@ -559,32 +560,40 @@ class _ProductsScreenState extends State<ProductsScreen>
                                 child: Container(
                                   alignment: Alignment.centerRight,
                                   decoration: BoxDecoration(
-                                      color: AppTheme.bg,
+                                      color: AppTheme.h1,
                                       border: Border.all(
                                           color: AppTheme.h1, width: 0.2)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8, top: 8),
+                                      right: 8.0,
+                                      left: 8,
+                                      top: 6,
+                                    ),
                                     child: DropdownButton<String>(
-                                      hint: Text(
-                                        'رنگها',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: AppTheme.h1,
-                                          fontFamily: 'Iransans',
-                                          fontSize: textScaleFactor * 13.0,
+                                      hint: Center(
+                                        child: Text(
+                                          'رنگها',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: AppTheme.bg,
+                                            fontFamily: 'Iransans',
+                                            fontSize: textScaleFactor * 13.0,
+                                          ),
                                         ),
                                       ),
                                       value: colorValue,
                                       icon: Icon(
                                         Icons.arrow_drop_down,
-                                        color: AppTheme.h1,
+                                        color: AppTheme.bg,
                                         size: 24,
                                       ),
+                                      dropdownColor: AppTheme.h1,
+                                      iconSize: 24,
                                       style: TextStyle(
-                                        color: AppTheme.h1,
+                                        color: AppTheme.bg,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 13.0,
+
                                       ),
                                       isDense: true,
                                       onChanged: (newValue) {
@@ -622,16 +631,19 @@ class _ProductsScreenState extends State<ProductsScreen>
                                               (String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
+
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 3.0),
                                             child: Text(
                                               value,
+
                                               style: TextStyle(
-                                                color: AppTheme.h1,
+                                                color: AppTheme.bg,
                                                 fontFamily: 'Iransans',
                                                 fontSize:
                                                     textScaleFactor * 13.0,
+
                                               ),
                                             ),
                                           ),
@@ -735,8 +747,8 @@ class _ProductsScreenState extends State<ProductsScreen>
                         }),
                         Container(
                           width: double.infinity,
-                          height: deviceHeight * 0.6,
-                          child: GridView.builder(
+                          height: deviceHeight * 0.68,
+                          child: ListView.builder(
                             controller: _scrollController,
                             scrollDirection: Axis.vertical,
                             itemCount: loadedProductstolist.length,
@@ -744,13 +756,6 @@ class _ProductsScreenState extends State<ProductsScreen>
                                 ChangeNotifierProvider.value(
                               value: loadedProductstolist[i],
                               child: ProductItemProductScreen(),
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.75,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
                             ),
                           ),
                         ),

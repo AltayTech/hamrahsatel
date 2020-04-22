@@ -46,12 +46,13 @@ class _CartScreenState extends State<CartScreen> {
 
   void _showCompletedialog() {
     showDialog(
-        context: context,
-        builder: (ctx) => CustomDialogProfile(
-              title: 'اطلاعات کاربری',
-              buttonText: 'صفحه پروفایل ',
-              description: 'برای ادامه باید اطلاعات کاربری تکمیل کنید',
-            ));
+      context: context,
+      builder: (ctx) => CustomDialogProfile(
+        title: 'اطلاعات کاربری',
+        buttonText: 'صفحه پروفایل ',
+        description: 'برای ادامه باید اطلاعات کاربری تکمیل کنید',
+      ),
+    );
   }
 
   @override
@@ -67,7 +68,6 @@ class _CartScreenState extends State<CartScreen> {
       _isLoading = false;
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -84,11 +84,10 @@ class _CartScreenState extends State<CartScreen> {
     int transportCost = 10000;
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {
-        shoppItems[i].price_low.isNotEmpty
-            ? totalPrice = totalPrice + int.parse(shoppItems[i].price_low)
-            : shoppItems[i].price.isNotEmpty
-                ? totalPrice = totalPrice + int.parse(shoppItems[i].price)
-                : totalPrice = totalPrice;
+        shoppItems[i].price.isNotEmpty
+            ? totalPrice = totalPrice +
+                int.parse(shoppItems[i].price) * shoppItems[i].productCount
+            : totalPrice = totalPrice;
       }
     }
     int totalPricePure = totalPrice + transportCost;

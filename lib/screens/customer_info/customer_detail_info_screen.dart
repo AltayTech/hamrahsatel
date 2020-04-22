@@ -132,22 +132,12 @@ class _CustomerDetailInfoScreenState extends State<CustomerDetailInfoScreen> {
                       bgColor: Colors.white,
                       iconColor: Color(0xffA67FEC),
                     ),
-//                    InfoItem(
-//                      title: 'جنسیت',
-//                      text: customer.personal_data.gender != null
-//                          ? customer.personal_data.gender
-//                          : 'نامشخص',
-//                      bgColor: Colors.white,
-//                      iconColor: Color(0xffA67FEC),
-//                    ),
-//                    InfoItem(
-//                      title: 'کد ملی',
-//                      text: customer.personal_data.national_code != null
-//                          ? customer.personal_data.national_code
-//                          : '',
-//                      bgColor: Colors.white,
-//                      iconColor: Color(0xffA67FEC),
-//                    ),
+                    InfoItem(
+                      title: 'ایمیل',
+                      text: customer.personal_data.email,
+                      bgColor: Colors.white,
+                      iconColor: Color(0xffA67FEC),
+                    ),
                   ],
                 ),
               ),

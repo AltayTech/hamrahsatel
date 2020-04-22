@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/shop.dart';
+import 'package:hamrahsatel/provider/customer_info.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../classes/app_theme.dart';
@@ -20,6 +23,42 @@ class _ContactWithUsState extends State<ContactWithUs> {
     }
   }
 
+  bool _isInit = true;
+
+  Shop shopData;
+
+  List<String> aboutInfotitle = [];
+
+  List<String> aboutInfoContent = [];
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await Provider.of<CustomerInfo>(context, listen: false).fetchShopData();
+      shopData = Provider.of<CustomerInfo>(context).shop;
+
+      aboutInfoContent = [
+        shopData.about_shop,
+        shopData.return_policy,
+        shopData.privacy,
+        shopData.how_to_order,
+        shopData.faq,
+        shopData.pay_methods_desc
+      ];
+      aboutInfotitle = [
+        'درباره فروشگاه',
+        'قوانین بازگردانی',
+        'حریم خصوصی',
+        'نحوه سفارش',
+        'سوالات متداول',
+        'شیوه پرداخت',
+      ];
+    }
+    _isInit = false;
+
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -31,7 +70,7 @@ class _ContactWithUsState extends State<ContactWithUs> {
         title: Text(
           'تماس با ما',
           style: TextStyle(
-            color: Colors.blue,
+            color: AppTheme.bg,
             fontFamily: 'Iransans',
             fontSize: textScaleFactor * 18.0,
           ),
@@ -50,25 +89,28 @@ class _ContactWithUsState extends State<ContactWithUs> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100, bottom: 30),
-                    child: Text(
-                      'مبل تبریز',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontFamily: 'Iransans',
-                        fontSize: textScaleFactor * 24.0,
-                      ),
+                  Container(
+                    width: deviceWidth * 0.3,
+                    height: deviceWidth * 0.3,
+                    color: AppTheme.bg,
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/images/circle.gif'),
+                      image: NetworkImage(shopData.logo),
+                      fit: BoxFit.contain,
+                      height: deviceWidth * 0.5,
                     ),
                   ),
-                  Text(
-                    'محصولات اصل، با کیفیت و روش های متفاوت خرید در کنار شما با مبل تبریز',
-                    style: TextStyle(
-                      color: Colors.blueGrey,
-                      fontFamily: 'Iransans',
-                      fontSize: textScaleFactor * 14.0,
+                  Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Text(
+                      shopData.shop_name,
+                      style: TextStyle(
+                        color: AppTheme.primary,
+                        fontFamily: 'BFarnaz',
+                        fontSize: textScaleFactor * 24.0,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   Divider(),
                   Column(
@@ -89,7 +131,7 @@ class _ContactWithUsState extends State<ContactWithUs> {
                               Expanded(
                                 flex: 8,
                                 child: Text(
-                                  'تبریز، میدان ساعت، جنب اتاق بازرگانی',
+                                  shopData.address,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Iransans',
@@ -118,7 +160,36 @@ class _ContactWithUsState extends State<ContactWithUs> {
                               Expanded(
                                 flex: 8,
                                 child: Text(
-                                  '04135265197',
+                                  shopData.support_phone,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 18,
+                                  ),
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: Icon(
+                                  Icons.smartphone,
+                                  color: Colors.indigoAccent,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 8,
+                                child: Text(
+                                  shopData.shop_cellphone,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Iransans',
@@ -143,7 +214,8 @@ class _ContactWithUsState extends State<ContactWithUs> {
                                   flex: 8,
                                   child: InkWell(
                                     onTap: () {
-                                      _launchURL('https://www.instagram.com/tabrizapps/');
+                                      _launchURL(
+                                          shopData.social_media.instagram);
                                     },
                                     child: Image.asset(
                                         'assets/images/instagram.png'),
@@ -153,7 +225,8 @@ class _ContactWithUsState extends State<ContactWithUs> {
                                   flex: 8,
                                   child: InkWell(
                                       onTap: () {
-                                        _launchURL('https://t.me/tabrizapps');
+                                        _launchURL(
+                                            shopData.social_media.telegram);
                                       },
                                       child: Image.asset(
                                           'assets/images/telegram.png')),

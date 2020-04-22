@@ -20,9 +20,8 @@ class _CustomerDetailInfoEditScreenState
     extends State<CustomerDetailInfoEditScreen> {
   final nameController = TextEditingController();
   final familyController = TextEditingController();
-  final genderController = TextEditingController();
-  final NIController = TextEditingController();
-  final creditController = TextEditingController();
+
+  final emailController = TextEditingController();
   final ostanController = TextEditingController();
   final cityController = TextEditingController();
   final addressController = TextEditingController();
@@ -34,9 +33,8 @@ class _CustomerDetailInfoEditScreenState
         Provider.of<CustomerInfo>(context, listen: false).customer;
     nameController.text = customer.personal_data.first_name;
     familyController.text = customer.personal_data.last_name;
-    genderController.text = customer.personal_data.gender;
-    NIController.text = customer.personal_data.national_code;
-    creditController.text = customer.personal_data.credit;
+
+    emailController.text = customer.personal_data.email;
     ostanController.text = customer.personal_data.ostan;
     cityController.text = customer.personal_data.city;
     addressController.text = customer.personal_data.address;
@@ -50,11 +48,9 @@ class _CustomerDetailInfoEditScreenState
   void dispose() {
     nameController.dispose();
     familyController.dispose();
-    genderController.dispose();
     cityController.dispose();
     ostanController.dispose();
-    NIController.dispose();
-    creditController.dispose();
+    emailController.dispose();
     postCodeController.dispose();
     addressController.dispose();
     // TODO: implement dispose
@@ -129,19 +125,12 @@ class _CustomerDetailInfoEditScreenState
                                   iconColor: Color(0xffA67FEC),
                                   keybordType: TextInputType.text,
                                 ),
-//                                InfoEditItem(
-//                                  title: 'جنسیت',
-//                                  controller: genderController,
-//                                  bgColor: AppTheme.bg,
-//                                  iconColor: Color(0xffA67FEC),
-//                                  keybordType: TextInputType.text,
-//                                ),
                                 InfoEditItem(
-                                  title: 'کد ملی',
-                                  controller: NIController,
+                                  title: 'ایمیل',
+                                  controller: emailController,
                                   bgColor: AppTheme.bg,
                                   iconColor: Color(0xffA67FEC),
-                                  keybordType: TextInputType.number,
+                                  keybordType: TextInputType.text,
                                 ),
                               ],
                             ),
@@ -193,26 +182,7 @@ class _CustomerDetailInfoEditScreenState
                           Divider(
                             color: Colors.grey,
                           ),
-//                          Text(
-//                            'اطلاعات بانکی',
-//                            textAlign: TextAlign.right,
-//                          ),
-//                          Container(
-//                            color: AppTheme.bg,
-//                            child: ListView(
-//                              physics: NeverScrollableScrollPhysics(),
-//                              shrinkWrap: true,
-//                              children: <Widget>[
-//                                InfoEditItem(
-//                                  title: 'شماره کارت بانکی',
-//                                  controller: creditController,
-//                                  bgColor: AppTheme.bg,
-//                                  iconColor: Color(0xffED8A19),
-//                                  keybordType: TextInputType.number,
-//                                ),
-//                              ],
-//                            ),
-//                          ),
+
                           SizedBox(
                             height: deviceHeight * 0.02,
                           )
@@ -243,12 +213,9 @@ class _CustomerDetailInfoEditScreenState
                           nameController.text;
                       Provider.of<CustomerInfo>(context).last_name =
                           familyController.text;
-                      Provider.of<CustomerInfo>(context).gender =
-                          genderController.text;
-                      Provider.of<CustomerInfo>(context).national_code =
-                          NIController.text;
-                      Provider.of<CustomerInfo>(context).credit =
-                          creditController.text;
+
+                      Provider.of<CustomerInfo>(context).email =
+                          emailController.text;
                       Provider.of<CustomerInfo>(context).ostan =
                           ostanController.text;
                       Provider.of<CustomerInfo>(context).city =

@@ -97,8 +97,7 @@ class ProductItemProductScreen extends StatelessWidget {
     }
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
-      height: MediaQuery.of(context).size.width * 0.9,
+      height: widthDevice * 0.45,
       child: LayoutBuilder(
         builder: (ctx, constraints) {
           return InkWell(
@@ -111,15 +110,17 @@ class ProductItemProductScreen extends StatelessWidget {
               );
             },
             child: Card(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: constraints.maxHeight,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 14,
-                          child: Container(
+              child: Container(
+                height: constraints.maxHeight,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
                             child: FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/circle.gif'),
@@ -127,74 +128,100 @@ class ProductItemProductScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 10,
-                          child: Column(
+                          Container(
+                            height: constraints.maxHeight * 0.08,
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: Colors.white70,
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: product.color.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: Container(
+                                        width: 10.0,
+                                        height: 10.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color: Colors.black, width: 0.2),
+                                          color: Color(
+                                            int.parse(
+                                              '0xff' +
+                                                  product
+                                                      .color[index].color_code
+                                                      .replaceRange(0, 1, ''),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 10,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text(
+                              product.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: AppTheme.primary,
+                                fontFamily: 'Iransans',
+                                fontSize: textScaleFactor * 14.0,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Expanded(
-                                flex: 6,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-                                  child: Text(
-                                    product.title,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: AppTheme.primary,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 12.0,
-                                    ),
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                  horizontal: 10,
+                                ),
+                                child: Image.network(
+                                  product.brand[0].brand_img_url,
+                                  fit: BoxFit.contain,
+                                  height: constraints.maxHeight * 0.25,
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(
-                                    constraints.maxWidth * 0.005),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                ),
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: <Widget>[
-                                    Expanded(
-                                      child: Wrap(
-                                        direction: Axis.vertical,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        children: <Widget>[
-//                                          Padding(
-//                                            padding: const EdgeInsets.symmetric(
-//                                              vertical: 4,
-//                                              horizontal: 10,
-//                                            ),
-//                                            child: Image.network(
-//                                              product.brand[0].brand_img_url,
-//                                            ),
-//                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Wrap(
-                                          direction: Axis.vertical,
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          children: <Widget>[
-                                            FittedBox(child: priceWidget()),
-                                            Text(
-                                              'تومان',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: AppTheme.text,
-                                                fontFamily: 'Iransans',
-                                                fontSize: textScaleFactor * 9.0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    FittedBox(child: priceWidget()),
+                                    Text(
+                                      'تومان',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppTheme.text,
+                                        fontFamily: 'Iransans',
+                                        fontSize: textScaleFactor * 9.0,
                                       ),
                                     ),
                                   ],
@@ -202,57 +229,11 @@ class ProductItemProductScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    child: Container(
-                      height: constraints.maxHeight * 0.08,
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: Colors.white70,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: product.color.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                width: 10.0,
-                                height: 10.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Colors.black, width: 0.2),
-                                  color: Color(
-                                    int.parse(
-                                      '0xff' +
-                                          product.color[index].color_code
-                                              .replaceRange(0, 1, ''),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 1,
-                            mainAxisSpacing: 3,
-                          ),
-                        ),
+                        ],
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           );

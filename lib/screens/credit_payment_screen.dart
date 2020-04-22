@@ -26,10 +26,8 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
     double totalPrice = 0;
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {
-        shoppItems[i].price_low.isNotEmpty
-            ? totalPrice = totalPrice + int.parse(shoppItems[i].price_low)
-            : shoppItems[i].price.isNotEmpty
-            ? totalPrice = totalPrice + int.parse(shoppItems[i].price)
+         shoppItems[i].price.isNotEmpty
+            ? totalPrice = totalPrice + int.parse(shoppItems[i].price)*shoppItems[i].productCount
             : totalPrice = totalPrice;
       }
     }

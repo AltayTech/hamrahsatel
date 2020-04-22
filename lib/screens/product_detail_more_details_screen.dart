@@ -11,7 +11,6 @@ import '../models/color_code.dart';
 import '../models/product.dart';
 import '../provider/Products.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
 import '../widgets/main_drawer.dart';
 
 class ProductDetailMoreDetailScreen extends StatefulWidget {
@@ -55,7 +54,6 @@ class _ProductDetailMoreDetailScreenState
   var _selectedColor;
 
   bool isLogin;
-
 
   @override
   void didChangeDependencies() {
@@ -133,8 +131,7 @@ class _ProductDetailMoreDetailScreenState
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 15.0, right: 15),
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
                           child: Text(
                             'مشخصات',
                             maxLines: 2,
@@ -176,128 +173,6 @@ class _ProductDetailMoreDetailScreenState
                 .transparent, //or any other color you want. e.g Colors.blue.withOpacity(0.5)
           ),
           child: MainDrawer(),
-        ),
-//          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: Builder(
-          builder: (context) => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Wrap(
-              direction: Axis.vertical,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: FloatingActionButton(
-                    heroTag: Hero(
-                      child: Container(),
-                      tag: 'share',
-                    ),
-                    onPressed: () {},
-                    backgroundColor: AppTheme.bg,
-                    child: Icon(
-                      Icons.share,
-                      color: AppTheme.h1,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: FloatingActionButton(
-                    heroTag: Hero(
-                      child: Container(),
-                      tag: 'favorite',
-                    ),
-                    onPressed: () {
-                      Provider.of<CustomerInfo>(context, listen: false)
-                          .addFavorite(loadedProduct.id, 'add');
-                      _snackBarMessage =
-                          'محصول با موفقیت به موارد مورد علاقه اضافه گردید!';
-                      SnackBar addToCartSnackBar = SnackBar(
-                        content: Text(
-                          _snackBarMessage,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Iransans',
-                            fontSize: textScaleFactor * 14.0,
-                          ),
-                        ),
-                        action: SnackBarAction(
-                          label: 'متوجه شدم',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      );
-                      Scaffold.of(context).showSnackBar(addToCartSnackBar);
-                    },
-                    backgroundColor: AppTheme.bg,
-                    child: Icon(
-                      Icons.favorite,
-                      color: AppTheme.h1,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: FloatingActionButton(
-                    heroTag: Hero(
-                      child: Container(),
-                      tag: 'shoppingCart',
-                    ),
-                    onPressed: () {
-                      setState(() {});
-                      if (loadedProduct.price.price.isEmpty) {
-                        _snackBarMessage = 'قیمت محصول صفر میباشد';
-                      } else {
-                        _snackBarMessage =
-                            'محصول با موفقیت به سبد اضافه گردید!';
-                        _selectedColor == null
-                            ? _selectedColor = loadedProduct.color
-                            : _selectedColor =
-                                loadedProduct.color[_selectedColorIndex];
-
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        Provider.of<Products>(context, listen: false)
-                            .addShopCart(
-                                loadedProduct, _selectedColor, 1, isLogin)
-                            .then((_) {
-                          setState(() {
-                            _isLoading = false;
-                            print(_isLoading.toString());
-                          });
-                        });
-                      }
-
-                      SnackBar addToCartSnackBar = SnackBar(
-                        content: Text(
-                          _snackBarMessage,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Iransans',
-                            fontSize: textScaleFactor * 14.0,
-                          ),
-                        ),
-                        action: SnackBarAction(
-                          label: 'متوجه شدم',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      );
-                      Scaffold.of(context).showSnackBar(addToCartSnackBar);
-                    },
-                    backgroundColor: AppTheme.primary,
-                    child: Icon(
-                      Icons.add_shopping_cart,
-                      color: AppTheme.bg,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
         ),
       ),
     );

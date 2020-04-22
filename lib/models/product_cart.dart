@@ -7,7 +7,6 @@ class ProductCart with ChangeNotifier {
   final int id;
   final String title;
   final String price;
-  final String price_low;
   final String featured_media_url;
   final Brandc brand;
   final List<ColorCode> colors;
@@ -19,7 +18,6 @@ class ProductCart with ChangeNotifier {
       {this.id,
       this.title,
       this.price,
-      this.price_low,
       this.featured_media_url,
       this.brand,
       this.colors,
@@ -35,7 +33,6 @@ class ProductCart with ChangeNotifier {
       id: parsedJson['id'],
       title: parsedJson['title'],
       price: parsedJson['price'],
-      price_low: parsedJson['price_low'],
       featured_media_url: parsedJson['featured_media_url'],
       brand: Brandc.fromJson(parsedJson['brand']),
       colors: colorRaw,
