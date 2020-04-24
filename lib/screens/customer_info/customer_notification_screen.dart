@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../screens/customer_info/customer_detail_notification_screen.dart';
+import 'package:hamrahsatel/screens/messages_screen.dart';
 
 import '../../classes/app_theme.dart';
 import '../../models/customer.dart';
@@ -36,7 +36,7 @@ class _CustomerNotificationScreenState
         ),
         child: MainDrawer(),
       ), // resizeToAvoidBottomInset: false,
-      body: CustomerDetailNotificationScreen(),
+      body: MessageScreen(),
     );
   }
 }

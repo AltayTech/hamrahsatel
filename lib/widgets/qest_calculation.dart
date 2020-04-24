@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hamrahsatel/classes/app_theme.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,8 @@ class _QestCalculationState extends State<QestCalculation> {
   FocusNode depositDocusNode;
 
   String totalPrice = '0';
-var _isInit=true;
+  var _isInit = true;
+
   @override
   void initState() {
     totalPriceDocusNode = FocusNode();
@@ -56,20 +58,18 @@ var _isInit=true;
 
   @override
   void didChangeDependencies() {
-    if(_isInit) {
+    if (_isInit) {
       _totalPriceTextFieldController.text =
-      Provider
-          .of<CommissionCalculator>(context, listen: false)
-          .totalPrice
-          .toString()
-          .isEmpty
-          ? '0'
-          : Provider
-          .of<CommissionCalculator>(context, listen: false)
-          .totalPrice
-          .toString();
+          Provider.of<CommissionCalculator>(context, listen: false)
+                  .totalPrice
+                  .toString()
+                  .isEmpty
+              ? '0'
+              : Provider.of<CommissionCalculator>(context, listen: false)
+                  .totalPrice
+                  .toString();
     }
-    _isInit=false;
+    _isInit = false;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -123,9 +123,13 @@ var _isInit=true;
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blue, width: 0.6)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppTheme.secondary,
+                            width: 0.6,
+                          ),
+                        ),
                         height: deviceHeight * 0.06,
                         alignment: Alignment.centerRight,
                         child: Padding(
@@ -174,9 +178,13 @@ var _isInit=true;
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blue, width: 0.6)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppTheme.secondary,
+                            width: 0.6,
+                          ),
+                        ),
                         height: deviceHeight * 0.06,
                         alignment: Alignment.centerRight,
                         child: Padding(
@@ -225,9 +233,13 @@ var _isInit=true;
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blue, width: 0.6)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppTheme.secondary,
+                            width: 0.6,
+                          ),
+                        ),
                         height: deviceHeight * 0.06,
                         alignment: Alignment.centerRight,
                         child: DropdownButton<String>(
@@ -235,7 +247,9 @@ var _isInit=true;
                           value: qestCountValue,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
-                          style: TextStyle(color: Colors.deepPurple),
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                          ),
                           onChanged: (String newValue) {
                             setState(() {
                               qestCountValue = newValue;
@@ -276,16 +290,22 @@ var _isInit=true;
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blue, width: 0.6)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppTheme.secondary,
+                            width: 0.6,
+                          ),
+                        ),
                         height: deviceHeight * 0.06,
                         alignment: Alignment.centerRight,
                         child: DropdownButton<String>(
                           value: monthCountValue,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
-                          style: TextStyle(color: Colors.deepPurple),
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                          ),
                           onChanged: (String newValue) {
                             setState(() {
                               monthCountValue = newValue;
@@ -318,110 +338,116 @@ var _isInit=true;
                   ),
                 ],
               ),
+              Container(
+                height: deviceHeight * 0.06,
+                decoration: BoxDecoration(
+                  color: AppTheme.secondary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    Provider.of<CommissionCalculator>(context,
+                        listen: false)
+                        .calculator(
+                        int.parse(double.parse(removeSemicolon(
+                            _totalPriceTextFieldController.text))
+                            .toStringAsFixed(0)
+                            .toString()),
+                        double.parse(removeSemicolon(
+                            _depositTextFieldController.text)),
+                        int.parse(qestCountValue),
+                        int.parse(monthCountValue));
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: Center(
+                    child: Text(
+                      'محاسبه',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Iransans',
+                        fontSize: textScaleFactor * 16,
+                      ),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      height: deviceHeight * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurpleAccent,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Provider.of<CommissionCalculator>(context,listen: false).calculator(
-                              int.parse( double.parse(removeSemicolon(
-                                  _totalPriceTextFieldController.text)).toStringAsFixed(0).toString()),
-                              double.parse(removeSemicolon(
-                                  _depositTextFieldController.text)),
-                              int.parse(qestCountValue),
-                              int.parse(monthCountValue));
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Center(
-                          child: Text(
-                            'محاسبه',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 16,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: deviceWidth * 0.13,
+                          width: deviceWidth * 0.08,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppTheme.secondary,
+                              width: 1,
                             ),
-                            overflow: TextOverflow.clip,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Container(
-                            height: deviceWidth * 0.13,
-                            width: deviceWidth * 0.08,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.deepPurpleAccent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Wrap(
-                              direction: Axis.vertical,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            crossAxisAlignment: WrapCrossAlignment.center,
 //                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Consumer<CommissionCalculator>(
-                                    builder: (_, commissionData, ch) => Text(
-                                      EnArConvertor().replaceArNumber(
-                                          commissionData.totalMonth.toString()),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 12,
-                                      ),
-                                      overflow: TextOverflow.clip,
+                            children: <Widget>[
+                              Text(
+                                'ماه',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 12,
+                                ),
+                                overflow: TextOverflow.clip,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Consumer<CommissionCalculator>(
+                                  builder: (_, commissionData, ch) => Text(
+                                    EnArConvertor().replaceArNumber(
+                                        commissionData.totalMonth.toString()),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Iransans',
+                                      fontSize: textScaleFactor * 15,
                                     ),
+                                    overflow: TextOverflow.clip,
                                   ),
                                 ),
-                                Text(
-                                  'ماه',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: 'Iransans',
-                                    fontSize: textScaleFactor * 12,
-                                  ),
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ],
-                            ),
+                              ),
+
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'مدت زمان کل اقساط\n (حداکثر 1 سال)',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontFamily: 'Iransans',
-                          fontSize: textScaleFactor * 12,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right:8.0),
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'مدت زمان کل اقساط',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontFamily: 'Iransans',
+                            fontSize: textScaleFactor * 12,
+                          ),
+                          overflow: TextOverflow.clip,
                         ),
-                        overflow: TextOverflow.clip,
                       ),
                     ),
                   ),
                 ],
               ),
+
               Divider(),
               Container(
                 height: deviceHeight * 0.13,
@@ -435,7 +461,7 @@ var _isInit=true;
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.deepPurpleAccent,
+                              color: AppTheme.secondary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(10),
@@ -462,7 +488,7 @@ var _isInit=true;
                                             .toString()),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.blue,
+                                      color: AppTheme.primary,
                                       fontFamily: 'Iransans',
                                       fontSize: textScaleFactor * 15,
                                     ),
@@ -482,7 +508,7 @@ var _isInit=true;
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.deepPurpleAccent,
+                              color: AppTheme.secondary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(10),
@@ -510,7 +536,7 @@ var _isInit=true;
                                             .toString()),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.blue,
+                                      color: AppTheme.primary,
                                       fontFamily: 'Iransans',
                                       fontSize: textScaleFactor * 15,
                                     ),
@@ -530,7 +556,7 @@ var _isInit=true;
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.deepPurpleAccent,
+                              color: AppTheme.secondary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(10),
@@ -551,12 +577,12 @@ var _isInit=true;
                               FittedBox(
                                 child: Text(
                                   EnArConvertor().replaceArNumber(currencyFormat
-                                      .format(int.parse(
-                                          removeSemicolon(_totalPriceTextFieldController.text)))
+                                      .format(int.parse(removeSemicolon(
+                                          _totalPriceTextFieldController.text)))
                                       .toString()),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Colors.blue,
+                                    color: AppTheme.primary,
                                     fontFamily: 'IransansNonEn',
                                     fontSize: textScaleFactor * 15,
                                   ),
@@ -579,7 +605,7 @@ var _isInit=true;
                     'جدول اقساط',
                     style: TextStyle(
                       fontFamily: 'Iransans',
-                      color: Colors.blueGrey,
+                      color: AppTheme.primary,
                       fontSize: textScaleFactor * 14.0,
                     ),
                     textAlign: TextAlign.center,

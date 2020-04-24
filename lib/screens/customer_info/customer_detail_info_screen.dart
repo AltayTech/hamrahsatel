@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../classes/app_theme.dart';
 
+import '../../classes/app_theme.dart';
 import '../../models/customer.dart';
 import '../../provider/customer_info.dart';
 import 'customer_detail_info_edit_screen.dart';
@@ -30,7 +30,6 @@ class _CustomerDetailInfoScreenState extends State<CustomerDetailInfoScreen> {
   void didChangeDependencies() {
     customer = Provider.of<CustomerInfo>(context).customer;
 
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -269,7 +268,10 @@ class InfoItem extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: bgColor,
-                border: Border.all(color: Colors.grey.withOpacity(0.0,)),
+                border: Border.all(
+                    color: Colors.grey.withOpacity(
+                  0.0,
+                )),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Padding(

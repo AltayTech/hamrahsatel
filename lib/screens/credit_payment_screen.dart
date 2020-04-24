@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../classes/app_theme.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
@@ -26,8 +27,9 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
     double totalPrice = 0;
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {
-         shoppItems[i].price.isNotEmpty
-            ? totalPrice = totalPrice + int.parse(shoppItems[i].price)*shoppItems[i].productCount
+        shoppItems[i].price.isNotEmpty
+            ? totalPrice = totalPrice +
+                int.parse(shoppItems[i].price) * shoppItems[i].productCount
             : totalPrice = totalPrice;
       }
     }
@@ -54,7 +56,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                     child: Text(
                       'پرداخت اقساطی',
                       style: TextStyle(
-                        color: Colors.blueGrey,
+                        color: AppTheme.primary,
                         fontFamily: 'Iransans',
                         fontSize: textScaleFactor * 14,
                       ),
@@ -63,7 +65,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:10.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Card(
                     child: Container(
                       child: Padding(
@@ -75,7 +77,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                               child: Text(
                                 'مراحل خرید اقساطی',
                                 style: TextStyle(
-                                  color: Colors.black54,
+                                  color: AppTheme.h1,
                                   fontFamily: 'Iransans',
                                   fontSize: textScaleFactor * 12,
                                 ),
@@ -87,11 +89,11 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                                 Icon(Icons.arrow_right),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
+                                    padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
                                       'خرید اقساطی تنها از طریق ارائه دسته چک امکان پذیر است.',
                                       style: TextStyle(
-                                        color: Colors.black54,
+                                        color: AppTheme.h1,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
                                       ),
@@ -107,11 +109,11 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                                 Icon(Icons.arrow_right),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
+                                    padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
                                       'پس از ارسال شناسه 16 رقمی چک صیادی و تایید آن توسط ما، شما می توانید محصولتان را به صورت اقساطی از ما بخرید.',
                                       style: TextStyle(
-                                        color: Colors.black54,
+                                        color: AppTheme.h1,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
                                       ),
@@ -127,36 +129,15 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                                 Icon(Icons.arrow_right),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
+                                    padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
                                       'مشتری در تعیین تعداد اقساط و فاصله ما بین اقساط کاملا آزاد است.',
                                       style: TextStyle(
-                                        color: Colors.black54,
+                                        color: AppTheme.h1,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
                                       ),
                                       textAlign: TextAlign.justify,
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(Icons.arrow_right),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top:5.0),
-                                    child: Text(
-                                      'کارمزد خرید اقساطی به ازای هر ماه 5 درصد است. در صورتی که مقدار پیش پرداخت بیشتر از 50% کل خرید باشد و مدت زمان بازپرداخت اقساط کمتر از 6 ماه باشد، کارمزد خرید اقساطی 4 درصد است.',
-                                      style: TextStyle(
-                                        color: Colors.black54,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 12,
-                                      ),
-                                      textAlign: TextAlign.right,
                                       overflow: TextOverflow.clip,
                                     ),
                                   ),
@@ -170,42 +151,11 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Icon(Icons.warning, color: Colors.deepOrange),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'در حال حاضر خرید اقساطی تنها برای مشتریان ساکن در شهر تبریز امکان پذیر است. امیدوارم به زودی این امکان را برای سایر شهرها هم میسر سازیم.',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontFamily: 'Iransans',
-                                fontSize: textScaleFactor * 12,
-                              ),
-                              overflow: TextOverflow.clip,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: Text(
                     'تعیین اقساط خرید اقساطی',
                     style: TextStyle(
-                      color: Colors.blueGrey,
+                      color: AppTheme.primary,
                       fontFamily: 'Iransans',
                       fontSize: textScaleFactor * 15,
                     ),
@@ -213,7 +163,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:10.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -222,15 +172,13 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                     child: QestCalculation(0.toString()),
                   ),
                 ),
-//              QestCalculation(totalPrice.toString()),
-
                 Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     height: deviceHeight * 0.08,
                     decoration: BoxDecoration(
-                      color: Color(0xff3F9B12),
+                      color: AppTheme.primary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
@@ -247,7 +195,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                               content: Text(
                                 _snackBarMessage,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppTheme.bg,
                                   fontFamily: 'Iransans',
                                   fontSize: textScaleFactor * 14.0,
                                 ),
@@ -276,7 +224,7 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
                             child: Text(
                               'ادامه',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppTheme.bg,
                                 fontFamily: 'Iransans',
                                 fontSize: textScaleFactor * 20.0,
                               ),

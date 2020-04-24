@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:hamrahsatel/models/shop.dart';
 import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:provider/provider.dart';
@@ -7,14 +8,14 @@ import '../classes/app_theme.dart';
 import '../widgets/commission_calculator.dart';
 import '../widgets/main_drawer.dart';
 
-class AboutUsScreen extends StatefulWidget {
-  static const routeName = '/AboutUsScreen';
+class GuideScreen extends StatefulWidget {
+  static const routeName = '/guideScreen';
 
   @override
-  _AboutUsScreenState createState() => _AboutUsScreenState();
+  _GuideScreenState createState() => _GuideScreenState();
 }
 
-class _AboutUsScreenState extends State<AboutUsScreen> {
+class _GuideScreenState extends State<GuideScreen> {
   bool _isInit = true;
 
   Shop shopData;
@@ -30,7 +31,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
       shopData = Provider.of<CustomerInfo>(context).shop;
 
       aboutInfoContent = [
-        shopData.about_shop,
         shopData.return_policy,
         shopData.privacy,
         shopData.how_to_order,
@@ -38,7 +38,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         shopData.pay_methods_desc
       ];
       aboutInfotitle = [
-        'درباره فروشگاه',
         'قوانین بازگردانی',
         'حریم خصوصی',
         'نحوه سفارش',
@@ -56,11 +55,12 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    Provider.of<CommissionCalculator>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'درباره ما',
+          'راهنما',
           style: TextStyle(
             color: AppTheme.bg,
             fontFamily: 'Iransans',
@@ -115,49 +115,25 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                      shopData.about_shop,
-                      style: TextStyle(
-                        color: AppTheme.primary,
-                        fontFamily: 'Iransans',
-                        fontSize: textScaleFactor * 15.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                      '',
-                      style: TextStyle(
-                        color: AppTheme.primary,
-                        fontFamily: 'Iransans',
-                        fontSize: textScaleFactor * 15.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                   Container(
                     height: deviceHeight * 0.7,
                     width: deviceWidth,
                     child: ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: shopData.shop_features.length,
+                      itemCount: aboutInfotitle.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: Card(
-                            child: Text(
-                              shopData.shop_features[index],
-                              style: TextStyle(
-                                color: AppTheme.primary,
-                                fontFamily: 'Iransans',
-                                fontSize: textScaleFactor * 15.0,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: ExpansionTile(
+                              title: Text(aboutInfotitle[index]),
+                              children: <Widget>[
+//                              Text(aboutInfoContent[index]),
+                                HtmlWidget(
+                                  aboutInfoContent[index],
+                                ),
+                              ],
                             ),
                           ),
                         );

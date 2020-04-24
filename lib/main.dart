@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/product_detail_more_details_screen.dart';
+import 'package:hamrahsatel/provider/messages.dart';
+import 'package:hamrahsatel/screens/messages_create_screen.dart';
 import 'package:provider/provider.dart';
 
 import './provider/auth.dart';
@@ -16,12 +17,6 @@ import './screens/customer_info/customer_orders_screen.dart';
 import './screens/customer_info/customer_user_info_screen.dart';
 import './screens/home_screen.dart';
 import './screens/navigation_bottom_screen.dart';
-import 'screens/order_view_screen.dart';
-import 'screens/product_detail_screen.dart';
-import 'screens/product_screen.dart';
-import 'screens/rules_screen.dart';
-import 'widgets/commission_calculator.dart';
-import 'widgets/favorite_view.dart';
 import 'classes/strings.dart';
 import 'provider/Products.dart';
 import 'screens/customer_info/customer_detail_info_edit_screen.dart';
@@ -29,7 +24,18 @@ import 'screens/customer_info/login_screen.dart';
 import 'screens/customer_info/profile_screen.dart';
 import 'screens/enter_cheque_screen.dart';
 import 'screens/favorite_screen.dart';
+import 'screens/guide_screen.dart';
+import 'screens/message_detail_screen.dart';
+import 'screens/messages_create_reply_screen.dart';
+import 'screens/messages_screen.dart';
+import 'screens/order_view_screen.dart';
+import 'screens/product_detail_more_details_screen.dart';
+import 'screens/product_detail_screen.dart';
+import 'screens/product_screen.dart';
+import 'screens/rules_screen.dart';
 import 'screens/splash_Screen.dart';
+import 'widgets/commission_calculator.dart';
+import 'widgets/favorite_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => CommissionCalculator(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Messages(),
         ),
       ],
       child: MaterialApp(
@@ -106,7 +115,11 @@ class MyApp extends StatelessWidget {
               CustomerNotificationScreen(),
           ProductDetailMoreDetailScreen.routeName: (ctx) =>
               ProductDetailMoreDetailScreen(),
-          // '/': (ctx) => NavigationBottomScreen(),
+          GuideScreen.routeName: (ctx) => GuideScreen(),
+          MessageScreen.routeName: (ctx) => MessageScreen(),
+          MessageCreateScreen.routeName: (ctx) => MessageCreateScreen(),
+          MessageCreateReplyScreen.routeName: (ctx) => MessageCreateReplyScreen(),
+          MessageDetailScreen.routeName: (ctx) => MessageDetailScreen(),
         },
       ),
     );

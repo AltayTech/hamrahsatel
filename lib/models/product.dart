@@ -10,6 +10,7 @@ class Product with ChangeNotifier {
   final String date;
   final bool show;
   final String title;
+  final String url;
   final Price price;
   final String featured_image;
   final List<String> gallery;
@@ -28,6 +29,7 @@ class Product with ChangeNotifier {
     this.date,
     this.show,
     this.title,
+    this.url,
     this.price,
     this.featured_image,
     this.gallery,
@@ -69,6 +71,7 @@ class Product with ChangeNotifier {
       date: parsedJson['date'],
       show: parsedJson['show'],
       title: parsedJson['title'],
+      url: parsedJson['url'],
       price: Price.fromJson(parsedJson['price']),
       featured_image: parsedJson['featured_image'],
       gallery: galleryRaw,

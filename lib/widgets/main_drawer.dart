@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/screens/guide_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -16,7 +17,6 @@ import '../screens/customer_info/profile_screen.dart';
 import '../screens/favorite_screen.dart';
 import '../screens/navigation_bottom_screen.dart';
 import '../screens/product_screen.dart';
-import '../screens/rules_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, Function tapHandler) {
@@ -85,7 +85,6 @@ class MainDrawer extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 fontSize: 24,
                                 fontFamily: 'BFarnaz',
-
                                 color: AppTheme.bg),
                             textAlign: TextAlign.center,
                           ),
@@ -260,7 +259,7 @@ class MainDrawer extends StatelessWidget {
                               Navigator.of(context).pop();
 
                               Navigator.of(context)
-                                  .pushNamed(RulesScreen.routeName);
+                                  .pushNamed(GuideScreen.routeName);
                             },
                           ),
                           ListTile(
@@ -329,7 +328,7 @@ class MainDrawer extends StatelessWidget {
                               Provider.of<CustomerInfo>(context).customer =
                                   Provider.of<CustomerInfo>(context)
                                       .customer_zero;
-                           await Provider.of<Auth>(context).removeToken();
+                              await Provider.of<Auth>(context).removeToken();
                               Provider.of<Auth>(context, listen: false)
                                   .isFirstLogout = true;
                               Navigator.of(context).pop();

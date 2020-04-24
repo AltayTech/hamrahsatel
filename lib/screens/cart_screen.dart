@@ -12,7 +12,6 @@ import '../provider/customer_info.dart';
 import '../screens/cash_payment_screen.dart';
 import '../screens/credit_payment_screen.dart';
 import '../widgets/card_item.dart';
-import '../widgets/commission_calculator.dart';
 import '../widgets/custom_dialog_enter.dart';
 import '../widgets/custom_dialog_profile.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
@@ -27,11 +26,14 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<ProductCart> shoppItems = [];
-  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   bool _isInit = true;
 
   var _isLoading = true;
   Customer customer;
+  int totalPrice = 0;
+  int transportCost = 10000;
+
+  int totalPricePure;
 
   void _showLogindialog() {
     showDialog(
@@ -58,14 +60,29 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      Provider.of<CustomerInfo>(context, listen: false).getCustomer().then((_) {
-        bool isLogin = Provider.of<Auth>(context).isAuth;
-        if (isLogin) {
+      _isLoading = true;
+      bool isLogin = Provider.of<Auth>(context).isAuth;
+      if (isLogin) {
+        Provider.of<CustomerInfo>(context, listen: false)
+            .getCustomer()
+            .then((value) {
           customer = Provider.of<CustomerInfo>(context).customer;
-          print(customer.personal_data.personal_data_complete.toString());
+        });
+      }
+      shoppItems = Provider.of<Products>(context).cartItems;
+
+      if (shoppItems.isNotEmpty) {
+        for (int i = 0; i < shoppItems.length; i++) {
+          shoppItems[i].price.isNotEmpty
+              ? totalPrice = totalPrice +
+                  int.parse(shoppItems[i].price) * shoppItems[i].productCount
+              : totalPrice = totalPrice;
         }
-      });
+      }
+      totalPricePure = totalPrice + transportCost;
+
       _isLoading = false;
+      setState(() {});
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -79,20 +96,7 @@ class _CartScreenState extends State<CartScreen> {
     var currencyFormat = intl.NumberFormat.decimalPattern();
     bool isLogin = Provider.of<Auth>(context).isAuth;
 
-    shoppItems = Provider.of<Products>(context).cartItems;
-    int totalPrice = 0;
-    int transportCost = 10000;
-    if (shoppItems.isNotEmpty) {
-      for (int i = 0; i < shoppItems.length; i++) {
-        shoppItems[i].price.isNotEmpty
-            ? totalPrice = totalPrice +
-                int.parse(shoppItems[i].price) * shoppItems[i].productCount
-            : totalPrice = totalPrice;
-      }
-    }
-    int totalPricePure = totalPrice + transportCost;
-
-    Provider.of<CommissionCalculator>(context).totalPrice = totalPrice;
+//    Provider.of<CommissionCalculator>(context).totalPrice = totalPrice;
 
     return Scaffold(
       appBar: AppBar(
@@ -174,10 +178,9 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0),
-                          child: (shoppItems.length != 0)
+                          child: shoppItems.length != 0
                               ? Container(
                                   child: ListView.builder(
-                                    key: listKey,
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),

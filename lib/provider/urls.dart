@@ -3,6 +3,7 @@ class Urls {
   static const productsEndPoint = '/products';
   static const homeEndPoint = '/home';
   static const shopEndPoint = '/shop';
+  static const messageEndPoint = '/message';
 
   static const loginEndPoint = '/login';
   static const tokenEndPoint = '/login/token';

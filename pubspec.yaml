@@ -27,6 +27,7 @@ dependencies:
   #  back_button_interceptor: ^4.2.3
   flutter_masked_text: ^0.7.0
   #  splashscreen: ^1.2.0
+  shamsi_date: ^0.5.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,23 +41,12 @@ flutter:
 
   uses-material-design: true
   assets:
-    - assets/images/cal_image.JPG
-    - assets/images/start_aghsat.JPG
-    - assets/images/main_item1.JPG
-    - assets/images/main_item2.JPG
-    - assets/images/main_item3.JPG
-    - assets/images/main_item4.JPG
-    - assets/images/balloons.png
-    - assets/images/login_header1.png
     - assets/images/logo.png
     - assets/images/logo.jpg
     - assets/images/phone_icon.png
-    - assets/images/login_footer1.png
     - assets/images/cheque.jpg
     - assets/images/instagram.png
     - assets/images/telegram.png
-    - assets/images/cafe_bazar.png
-    - assets/images/google_play.jpg
     - assets/images/circle.gif
     - assets/images/circle2.gif
     - assets/images/drawer_header.jpg

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../widgets/custom_dialog.dart';
 
 import '../classes/app_theme.dart';
 import '../provider/customer_info.dart';
 import '../widgets/commission_calculator.dart';
+import '../widgets/custom_dialog.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/main_drawer.dart';
 import 'navigation_bottom_screen.dart';
@@ -95,6 +95,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
       ),
     );
   }
+
   void _showLogindialog_exit(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialog<String>(
@@ -102,8 +103,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
         builder: (ctx) => CustomDialog(
           title: 'کاربر گرامی',
           buttonText: 'متوجه شدم ',
-          description:
-          'شما با موفقیت از اکانت کاربری خارج شدید',
+          description: 'شما با موفقیت از اکانت کاربری خارج شدید',
         ),
       );
     });
@@ -115,13 +115,11 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
 
       return;
     }
-//    _formKey.currentState.save();
     setState(() {
       _isLoading = true;
     });
     try {
       if (_isAgree) {
-
         print(qestCount.toString());
         print(monthCount.toString());
         print(deposit.toString());
@@ -210,7 +208,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                         child: Text(
                           'تایید اقساطی',
                           style: TextStyle(
-                            color: Colors.blueGrey,
+                            color: AppTheme.primary,
                             fontFamily: 'Iransans',
                             fontSize: textScaleFactor * 14,
                           ),
@@ -220,8 +218,10 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Color(0xff399A0A)),
+                          color: AppTheme.bg,
+                          border: Border.all(
+                            color: AppTheme.secondary,
+                          ),
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -323,7 +323,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.deepPurpleAccent,
+                                    color: AppTheme.secondary,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
@@ -351,7 +351,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                                 .toString()),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppTheme.primary,
                                           fontFamily: 'Iransans',
                                           fontSize: textScaleFactor * 15,
                                         ),
@@ -370,7 +370,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.deepPurpleAccent,
+                                    color: AppTheme.secondary,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
@@ -398,7 +398,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                                 .toString()),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppTheme.primary,
                                           fontFamily: 'Iransans',
                                           fontSize: textScaleFactor * 15,
                                         ),
@@ -417,7 +417,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.deepPurpleAccent,
+                                    color: AppTheme.secondary,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
@@ -445,7 +445,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                                 .toString()),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppTheme.primary,
                                           fontFamily: 'IransansNonEn',
                                           fontSize: textScaleFactor * 15,
                                         ),
@@ -522,7 +522,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               border: Border.all(
-                                                  color: Colors.blue,
+                                                  color: AppTheme.secondary,
                                                   width: 0.6)),
                                           height: _isBankValide
                                               ? deviceHeight * 0.05
@@ -552,7 +552,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                         child: Text(
                                           'بانک',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: AppTheme.h1,
                                             fontFamily: 'Iransans',
                                             fontSize: textScaleFactor * 12,
                                           ),
@@ -575,7 +575,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               border: Border.all(
-                                                  color: Colors.blue,
+                                                  color: AppTheme.secondary,
                                                   width: 0.6)),
                                           height: _isBranchValide
                                               ? deviceHeight * 0.05
@@ -605,7 +605,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                         child: Text(
                                           'شعبه',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: AppTheme.h1,
                                             fontFamily: 'Iransans',
                                             fontSize: textScaleFactor * 12,
                                           ),
@@ -628,7 +628,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               border: Border.all(
-                                                  color: Colors.blue,
+                                                  color: AppTheme.secondary,
                                                   width: 0.6)),
                                           height: _isownerValide
                                               ? deviceHeight * 0.05
@@ -658,7 +658,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                         child: Text(
                                           'صاحب حساب',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: AppTheme.h1,
                                             fontFamily: 'Iransans',
                                             fontSize: textScaleFactor * 12,
                                           ),
@@ -680,7 +680,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               border: Border.all(
-                                                  color: Colors.blue,
+                                                  color: AppTheme.secondary,
                                                   width: 0.6)),
                                           height: _isShenasehValide
                                               ? deviceHeight * 0.05
@@ -710,7 +710,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                                         child: Text(
                                           'شناسه 16 رقمی',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: AppTheme.h1,
                                             fontFamily: 'Iransans',
                                             fontSize: textScaleFactor * 12,
                                           ),
@@ -754,7 +754,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                               Text(
                                 'شرایط خرید اقساطی را قبول دارم',
                                 style: TextStyle(
-                                  color: Colors.black54,
+                                  color: AppTheme.h1,
                                   fontFamily: 'Iransans',
                                   fontSize: textScaleFactor * 12,
                                 ),
@@ -771,7 +771,7 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                       child: Container(
                         height: deviceHeight * 0.08,
                         decoration: BoxDecoration(
-                          color: Color(0xff3F9B12),
+                          color: AppTheme.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
@@ -811,17 +811,15 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
                   alignment: Alignment.center,
                   child: _isLoading
                       ? SpinKitFadingCircle(
-                    itemBuilder: (BuildContext context, int index) {
-                      return DecoratedBox(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: index.isEven
-                              ? Colors.grey
-                              : Colors.grey,
-                        ),
-                      );
-                    },
-                  )
+                          itemBuilder: (BuildContext context, int index) {
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: index.isEven ? Colors.grey : Colors.grey,
+                              ),
+                            );
+                          },
+                        )
                       : Container()),
             ),
           ],

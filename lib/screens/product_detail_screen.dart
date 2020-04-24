@@ -7,6 +7,7 @@ import 'package:hamrahsatel/screens/product_detail_more_details_screen.dart';
 import 'package:hamrahsatel/widgets/custom_dialog_select_color.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../classes/app_theme.dart';
 import '../classes/flutter_carousel_slider.dart';
@@ -122,6 +123,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         function: addToCart,
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -474,7 +483,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       tag: 'share',
                     ),
                     onPressed: () {
-//                          _showColorSelectiondialog();
+                      _launchURL(loadedProduct.url);
                     },
                     backgroundColor: AppTheme.bg,
                     child: Icon(

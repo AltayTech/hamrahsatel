@@ -42,6 +42,8 @@ class CustomerInfo with ChangeNotifier {
         city: '',
         address: '',
         postcode: '',
+        phone: '',
+        personal_data_complete: false,
       ),
       orders: [],
       favorites: []);
@@ -294,6 +296,7 @@ class CustomerInfo with ChangeNotifier {
     print('getFavorite');
 
     final url = Urls.rootUrl + Urls.favoriteEndPoint;
+    print(url);
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -307,6 +310,7 @@ class CustomerInfo with ChangeNotifier {
       });
 
       final extractedData = json.decode(response.body) as List;
+      print(extractedData);
 
       List<ProductFavorite> productFavorite = new List<ProductFavorite>();
 
