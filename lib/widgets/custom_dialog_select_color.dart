@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hamrahsatel/classes/app_theme.dart';
 import 'package:hamrahsatel/models/product.dart';
 import 'package:intl/intl.dart' as intl;
 
-import '../screens/customer_info/profile_screen.dart';
 import 'en_to_ar_number_convertor.dart';
 
 class CustomDialogSelectColor extends StatefulWidget {
@@ -42,57 +42,56 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(
-            top: Consts.avatarRadius + Consts.padding,
-            bottom: Consts.padding,
-            left: Consts.padding,
-            right: Consts.padding,
-          ),
-          margin: EdgeInsets.only(top: Consts.avatarRadius),
-          decoration: new BoxDecoration(
-            color: AppTheme.bg,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(Consts.padding),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                offset: const Offset(0.0, 10.0),
-              ),
-            ],
-          ),
+    return Padding(
+      padding: EdgeInsets.only(
+        top: Consts.avatarRadius + Consts.padding,
+        bottom: Consts.padding,
+        left: Consts.padding,
+        right: Consts.padding,
+      ),
+      child: Container(
+        decoration: new BoxDecoration(
+          color: AppTheme.bg,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 5.0,
+              offset: const Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
           child: Column(
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
-              Container(
-                  height: deviceHeight * 0.2,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: FadeInImage(
-                    placeholder: AssetImage('assets/images/circle.gif'),
-                    image: NetworkImage(widget.product.featured_image),
-                    fit: BoxFit.contain,
-                  )),
               Text(
                 widget.product.title,
+                textAlign: TextAlign.end,
                 style: TextStyle(
                   color: AppTheme.primary,
-                  fontSize: MediaQuery.of(context).textScaleFactor * 16,
+                  fontFamily: 'Iransans',
+                  fontSize: MediaQuery.of(context).textScaleFactor * 15,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               SizedBox(height: 16.0),
-              Text(
-                'رنگ محصول را انتخاب نمایید',
-                style: TextStyle(
-                  color: Color(0xff0197F6),
-                  fontSize: MediaQuery.of(context).textScaleFactor * 14,
-                  fontWeight: FontWeight.w400,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'رنگ محصول را انتخاب نمایید',
+                  style: TextStyle(
+                    color: AppTheme.secondary,
+                    fontFamily: 'Iransans',
+                    fontSize: MediaQuery.of(context).textScaleFactor * 14,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-              Container(
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -186,22 +185,25 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               decoration: BoxDecoration(
                                 color: _selectedColorIndex != null
                                     ? AppTheme.primary
                                     : Colors.grey,
-                                borderRadius: BorderRadius.circular(25),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
-                                child: Text(
-                                  'افزودن به سبد خرید',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Iransans',
-                                    fontSize:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            16,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'افزودن به سبد خرید',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Iransans',
+                                      fontSize: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -212,7 +214,7 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -220,6 +222,6 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
 class Consts {
   Consts._();
 
-  static const double padding = 16.0;
-  static const double avatarRadius = 10;
+  static const double padding = 5.0;
+  static const double avatarRadius = 3;
 }

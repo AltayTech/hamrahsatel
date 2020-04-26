@@ -7,7 +7,7 @@ import 'package:hamrahsatel/screens/product_detail_more_details_screen.dart';
 import 'package:hamrahsatel/widgets/custom_dialog_select_color.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 import '../classes/app_theme.dart';
 import '../classes/flutter_carousel_slider.dart';
@@ -36,7 +36,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Product loadedProduct;
   String _snackBarMessage = '';
 
-  var _selectedColorIndex = 0;
   var _selectedColor;
 
   bool isLogin;
@@ -63,7 +62,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     setState(() {
       _isLoading = false;
-      print(_isLoading.toString());
     });
     print(_isLoading.toString());
   }
@@ -79,7 +77,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     setState(() {
       _isLoading = false;
-      print(_isLoading.toString());
     });
     print(_isLoading.toString());
   }
@@ -110,7 +107,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     setState(() {
       _isLoading = false;
-      print(_isLoading.toString());
     });
     print(_isLoading.toString());
   }
@@ -123,14 +119,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         function: addToCart,
       ),
     );
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   @override
@@ -151,8 +139,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontFamily: 'Iransans',
+            fontWeight: FontWeight.bold,
+
             fontSize: textScaleFactor * 20.0,
           ),
         );
@@ -165,8 +155,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontFamily: 'Iransans',
+            fontWeight: FontWeight.bold,
+
             fontSize: textScaleFactor * 20.0,
           ),
         );
@@ -180,8 +172,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontFamily: 'Iransans',
+            fontWeight: FontWeight.bold,
             fontSize: textScaleFactor * 20.0,
           ),
         );
@@ -198,7 +191,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
                 decoration: TextDecoration.lineThrough,
-                color: AppTheme.text,
+                color: AppTheme.accent,
                 fontFamily: 'Iransans',
                 fontSize: textScaleFactor * 16.0,
               ),
@@ -210,8 +203,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         .toString())
                     : EnArConvertor().replaceArNumber('0'),
                 style: TextStyle(
-                  color: AppTheme.primary,
+                  color: AppTheme.secondary,
                   fontFamily: 'Iransans',
+                  fontWeight: FontWeight.bold,
                   fontSize: textScaleFactor * 20.0,
                 ))
           ],
@@ -231,7 +225,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Consumer<Products>(
               builder: (_, products, ch) => Badge(
                 color: products.cartItemsCount == 0
-                    ? AppTheme.text
+                    ? AppTheme.accent
                     : AppTheme.secondary,
                 value: products.cartItemsCount.toString(),
                 child: ch,
@@ -263,201 +257,205 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       );
                     },
                   )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0, right: 15),
-                          child: Text(
-                            loadedProduct.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppTheme.h1,
-                              fontFamily: 'Iransans',
-                              fontSize: textScaleFactor * 16.0,
+                : Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        loadedProduct.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+
+                        style: TextStyle(
+                          color: AppTheme.primary,
+                          fontFamily: 'Iransans',
+                          fontWeight: FontWeight.bold,
+
+                          fontSize: textScaleFactor * 16.0,
+
+                        ),
+                        textAlign: TextAlign.right,
+                        textDirection: TextDirection.rtl,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:20.0,right:20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  'تومان',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 10.0,
+                                  ),
+                                ),
+                                priceWidget(),
+                              ],
                             ),
-                            textAlign: TextAlign.right,
-                            textDirection: TextDirection.rtl,
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(
-                                    'تومان',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 16.0,
-                                    ),
-                                  ),
-                                  priceWidget(),
-                                ],
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              loadedProduct.brand[0].title,
+                              style: TextStyle(
+                                color: AppTheme.h1,
+                                fontFamily: 'Iransans',
+                                fontSize: textScaleFactor * 16.0,
                               ),
                             ),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text(
-                                loadedProduct.brand[0].title,
-                                style: TextStyle(
-                                  color: AppTheme.primary,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 16.0,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  ProductDetailMoreDetailScreen.routeName,
-                                  arguments: loadedProduct,
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: AppTheme.secondary),
-                                  color: AppTheme.bg,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 8.0,
-                                    bottom: 4,
-                                    left: 15,
-                                    right: 15,
-                                  ),
-                                  child: Text(
-                                    'جزئیات',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 16.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: deviceHeight * 0.55,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Stack(
-                            children: [
-                              CarouselSlider(
-                                aspectRatio: 11 / 9,
-                                viewportFraction: 1.0,
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                autoPlay: false,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                pauseAutoPlayOnTouch: Duration(seconds: 10),
-                                enlargeCenterPage: true,
-                                scrollDirection: Axis.horizontal,
-                                onPageChanged: (index) {
-                                  _current = index;
-                                  setState(() {});
-                                },
-                                items: loadedProduct.gallery.map((gallery) {
-                                  return Builder(
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                          width: deviceWidth,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 5.0),
-                                          child: FadeInImage(
-                                            placeholder: AssetImage(
-                                                'assets/images/circle.gif'),
-                                            image: NetworkImage(gallery),
-                                            fit: BoxFit.contain,
-                                          ));
-                                    },
-                                  );
-                                }).toList(),
-                              ),
-                              Positioned(
-                                bottom: -10.0,
-                                left: 0.0,
-                                right: 0.0,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: loadedProduct.gallery.map<Widget>(
-                                    (index) {
-                                      return Container(
-                                        width: 10.0,
-                                        height: 10.0,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 2.0),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: AppTheme.h1, width: 0.4),
-                                            color: _current ==
-                                                    loadedProduct.gallery
-                                                        .indexOf(index)
-                                                ? AppTheme.secondary
-                                                : AppTheme.bg),
-                                      );
-                                    },
-                                  ).toList(),
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
-                        Spacer(),
-                        Container(
-                          height: deviceHeight * 0.1,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: loadedProduct.color.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Container(
-                                      width: 25,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: Colors.black, width: 0.2),
-                                        color: Color(
-                                          int.parse(
-                                            '0xff' +
-                                                loadedProduct
-                                                    .color[index].color_code
-                                                    .replaceRange(0, 1, ''),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProductDetailMoreDetailScreen.routeName,
+                                arguments: loadedProduct,
                               );
                             },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: AppTheme.secondary),
+                                color: AppTheme.bg,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 8.0,
+                                  bottom: 4,
+                                  left: 15,
+                                  right: 18,
+                                ),
+                                child: Text(
+                                  'جزئیات',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 16.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                    Container(
+                      width: double.infinity,
+                      height: deviceHeight * 0.55,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Stack(
+                        children: [
+                          CarouselSlider(
+                            aspectRatio: 1,
+                            viewportFraction: 1.0,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: false,
+                            height: deviceHeight * 0.55,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            pauseAutoPlayOnTouch: Duration(seconds: 10),
+                            enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (index) {
+                              _current = index;
+                              setState(() {});
+                            },
+                            items: loadedProduct.gallery.map((gallery) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                      width: deviceWidth,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 5.0),
+                                      child: FadeInImage(
+                                        placeholder: AssetImage(
+                                            'assets/images/circle.gif'),
+                                        image: NetworkImage(gallery),
+                                        fit: BoxFit.contain,
+                                      ));
+                                },
+                              );
+                            }).toList(),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0.0,
+                            right: 0.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: loadedProduct.gallery.map<Widget>(
+                                (index) {
+                                  return Container(
+                                    width: 10.0,
+                                    height: 10.0,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: AppTheme.h1, width: 0.4),
+                                        color: _current ==
+                                                loadedProduct.gallery
+                                                    .indexOf(index)
+                                            ? AppTheme.secondary
+                                            : AppTheme.bg),
+                                  );
+                                },
+                              ).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom:20.0,right:20),
+                      child: Container(
+                        height: deviceHeight * 0.04,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: loadedProduct.color.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                width: deviceHeight * 0.03,
+                                height: deviceHeight * 0.03,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Colors.black, width: 0.2),
+                                  color: Color(
+                                    int.parse(
+                                      '0xff' +
+                                          loadedProduct
+                                              .color[index].color_code
+                                              .replaceRange(0, 1, ''),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
           ),
         ),
         drawer: Theme(
@@ -483,7 +481,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       tag: 'share',
                     ),
                     onPressed: () {
-                      _launchURL(loadedProduct.url);
+                      Share.share(loadedProduct.url,
+                          subject: 'محصول :${loadedProduct.title} ');
                     },
                     backgroundColor: AppTheme.bg,
                     child: Icon(
@@ -542,8 +541,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         _snackBarMessage = 'قیمت محصول صفر میباشد';
                       } else {
                         await _showColorSelectiondialog(addtoshopFromDialogBox);
-                        _snackBarMessage =
-                            'محصول با موفقیت به سبد اضافه گردید!';
+                        if(_selectedColor!=null) {
+                          _snackBarMessage =
+                          'محصول با موفقیت به سبد اضافه گردید!';
+                        }else{
+                          _snackBarMessage =
+                          'محصول به سبد اضافه نگردید!';
+                        }
                       }
 
                       SnackBar addToCartSnackBar = SnackBar(

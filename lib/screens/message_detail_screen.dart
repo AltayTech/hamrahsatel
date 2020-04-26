@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hamrahsatel/models/customer.dart';
 import 'package:hamrahsatel/models/message.dart';
 import 'package:hamrahsatel/provider/auth.dart';
+import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:hamrahsatel/provider/messages.dart';
-import 'package:hamrahsatel/screens/messages_create_screen.dart';
-import 'package:hamrahsatel/widgets/message_item.dart';
+import 'package:hamrahsatel/widgets/message_reply_item.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
 import '../widgets/main_drawer.dart';
+import 'messages_create_reply_screen.dart';
 
 class MessageDetailScreen extends StatefulWidget {
   static const routeName = '/messageDetailScreen';
@@ -18,28 +21,44 @@ class MessageDetailScreen extends StatefulWidget {
 
 class _MessageDetailScreenState extends State<MessageDetailScreen> {
   bool _isInit = true;
+  bool _isLoading = false;
 
-  List<Message> messages;
+  List<Message> messages = [];
 
   Message message;
 
+  Customer customer;
+
   @override
   void didChangeDependencies() async {
-    if (_isInit) {
-      bool isLogin = Provider.of<Auth>(context).isAuth;
-      message = ModalRoute.of(context).settings.arguments as Message;
+    messages = Provider.of<Messages>(context).allMessagesDetail;
 
-      if (isLogin) {
-        await Provider.of<Messages>(context, listen: false)
-            .getMessages(message.comment_post_ID, isLogin)
-            .then((value) {
-          messages = Provider.of<Messages>(context).allMessages;
-        });
-      }
+    if (_isInit) {
+      message = ModalRoute.of(context).settings.arguments as Message;
+      customer = Provider.of<CustomerInfo>(context).customer;
+
+      loadMessages();
     }
     _isInit = false;
 
     super.didChangeDependencies();
+  }
+
+  Future<void> loadMessages() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    bool isLogin = Provider.of<Auth>(context).isAuth;
+
+    await Provider.of<Messages>(context, listen: false)
+        .getMessages(message.comment_post_ID, isLogin);
+    messages = Provider.of<Messages>(context).allMessagesDetail;
+    setState(() {
+      _isLoading = false;
+      print(_isLoading.toString());
+    });
+    print(_isLoading.toString());
   }
 
   @override
@@ -67,26 +86,60 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
         textDirection: TextDirection.rtl,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: deviceHeight * 0.9,
-                    width: deviceWidth,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: messages.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MessageItem(message: messages[index]);
-                      },
-                    ),
+          child: Stack(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: Container(
+                  height: deviceHeight * 0.8,
+                  width: deviceWidth,
+                  child: ListView.builder(
+
+                    reverse: true,
+                    itemCount: messages.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MessageReplyItem(
+                        message: messages[index],
+                        isReply: customer.personal_data.id !=
+                            int.parse(
+                              messages[index].user_id,
+                            ),
+                      );
+                    },
                   ),
-                ],
+                ),
               ),
-            ),
+              Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: _isLoading
+                          ? SpinKitFadingCircle(
+                              itemBuilder: (BuildContext context, int index) {
+                                return DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: index.isEven
+                                        ? Colors.grey
+                                        : Colors.grey,
+                                  ),
+                                );
+                              },
+                            )
+                          : Container(
+                              child: messages.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                      'سوالی وجود ندارد',
+                                      style: TextStyle(
+                                        fontFamily: 'Iransans',
+                                        fontSize: textScaleFactor * 15.0,
+                                      ),
+                                    ))
+                                  : Container())))
+            ],
           ),
         ),
       ),
@@ -99,9 +152,14 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
         child: MainDrawer(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        backgroundColor: AppTheme.h1,
+        child: Icon(
+          Icons.reply,
+          color: AppTheme.bg,
+        ),
         onPressed: () {
-          Navigator.pushNamed(context, MessageCreateScreen.routeName);
+          Navigator.pushNamed(context, MessageCreateReplyScreen.routeName,
+              arguments: messages.last);
         },
       ),
     );

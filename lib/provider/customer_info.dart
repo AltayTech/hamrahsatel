@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/color_code.dart';
+import 'package:hamrahsatel/models/price.dart';
 import 'package:hamrahsatel/models/shop.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +19,6 @@ import '../models/order_details.dart';
 import '../models/order_details_aghsat.dart';
 import '../models/personal_data.dart';
 import '../models/productFavorite.dart';
-import '../models/rule_data.dart';
 import 'urls.dart';
 
 class CustomerInfo with ChangeNotifier {
@@ -25,28 +26,27 @@ class CustomerInfo with ChangeNotifier {
 
   int _currentOrderId;
 
-  List<RuleData> _ruleList = [RuleData(id: 0, title: '', content: '')];
-
   Shop _shop;
 
   String get payUrl => _payUrl;
   List<File> chequeImageList = [];
 
   static Customer _customer_zero = Customer(
-      personal_data: PersonalData(
-        id: 0,
-        first_name: '',
-        last_name: '',
-        email: '',
-        ostan: '',
-        city: '',
-        address: '',
-        postcode: '',
-        phone: '',
-        personal_data_complete: false,
-      ),
-      orders: [],
-      favorites: []);
+    personal_data: PersonalData(
+      id: 0,
+      first_name: '',
+      last_name: '',
+      email: '',
+      ostan: '',
+      city: '',
+      address: '',
+      postcode: '',
+      phone: '',
+      personal_data_complete: false,
+    ),
+    orders: [Order()],
+//      favorites: [ProductFavorite()],
+  );
   Customer _customer = _customer_zero;
   String _token;
 
@@ -68,10 +68,9 @@ class CustomerInfo with ChangeNotifier {
     ProductFavorite(
       id: 0,
       title: '',
-      price_low: '',
-      price: '',
-      colors: [],
-      img_url: '',
+      price: Price(price: '', price_without_discount: ''),
+      colors: [ColorCode(title: '', price: '', color_code: '', id: 0)],
+      featured_image: '',
     ),
   ];
   OrderDetails _order = OrderDetails(
@@ -138,7 +137,6 @@ class CustomerInfo with ChangeNotifier {
       customers = Customer.fromJson(extractedData);
 
       _customer = customers;
-      print(customers.personal_data.first_name);
 
       _orders = customers.orders;
 
@@ -445,34 +443,6 @@ class CustomerInfo with ChangeNotifier {
     });
   }
 
-  Future<void> getRules() async {
-    print('getFavorite');
-
-    final url = Urls.rootUrl + Urls.rulesEndPoint;
-
-    try {
-      final response = await get(url, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      });
-
-      final extractedData = json.decode(response.body) as List;
-
-      List<RuleData> ruleList = new List<RuleData>();
-
-      ruleList = extractedData.map((i) => RuleData.fromJson(i)).toList();
-
-      _ruleList = ruleList;
-
-      print(extractedData);
-
-      notifyListeners();
-    } catch (error) {
-      print(error.toString());
-      throw (error);
-    }
-  }
-
   Future<void> fetchShopData() async {
     print('fetchShopData');
 
@@ -531,8 +501,6 @@ class CustomerInfo with ChangeNotifier {
 
   int get currentOrderId => _currentOrderId;
 
-  List<RuleData> get ruleList => _ruleList;
-
   set customer(Customer value) {
     _customer = value;
   }
@@ -552,6 +520,4 @@ class CustomerInfo with ChangeNotifier {
   set shop(Shop value) {
     _shop = value;
   }
-
-
 }

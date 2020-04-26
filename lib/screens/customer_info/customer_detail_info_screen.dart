@@ -21,12 +21,6 @@ class _CustomerDetailInfoScreenState extends State<CustomerDetailInfoScreen> {
   Customer customer;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     customer = Provider.of<CustomerInfo>(context).customer;
 

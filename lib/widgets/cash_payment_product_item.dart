@@ -82,7 +82,7 @@ class CashPaymentProductItem extends StatelessWidget {
               style: TextStyle(
                 decoration: TextDecoration.lineThrough,
                 fontFamily: 'Iransans',
-                color: AppTheme.text,
+                color: AppTheme.accent,
                 fontSize: textScaleFactor * 15.0,
               ),
             ),

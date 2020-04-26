@@ -31,7 +31,7 @@ class _SplashScreensState extends State<SplashScreens> {
       seconds: 3,
       navigateAfterSeconds: new NavigationBottomScreen(),
       title: new Text(
-        ' همراه ساتل',
+        'نسخه آزمایشی \n همراه ساتل',
         style: new TextStyle(
           fontFamily: 'BFarnaz',
           fontSize: MediaQuery.of(context).textScaleFactor * 30,
@@ -39,7 +39,7 @@ class _SplashScreensState extends State<SplashScreens> {
         ),
       ),
       loadingText: Text(
-        EnArConvertor().replaceArNumber('نسخه 1.0'),
+        EnArConvertor().replaceArNumber('نسخه آزمایشی 1.0'),
         style: new TextStyle(
           fontFamily: 'Iransans',
           fontWeight: FontWeight.w400,

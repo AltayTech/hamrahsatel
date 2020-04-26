@@ -74,7 +74,7 @@ class ProductItemProductScreen extends StatelessWidget {
               style: TextStyle(
                 decoration: TextDecoration.lineThrough,
                 fontFamily: 'Iransans',
-                color: AppTheme.text,
+                color: AppTheme.accent,
                 fontSize: textScaleFactor * 15.0,
               ),
             ),
@@ -120,13 +120,11 @@ class ProductItemProductScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            child: FadeInImage(
-                              placeholder:
-                                  AssetImage('assets/images/circle.gif'),
-                              image: NetworkImage(product.featured_image),
-                              fit: BoxFit.cover,
-                            ),
+                          FadeInImage(
+                            placeholder:
+                                AssetImage('assets/images/circle.gif'),
+                            image: NetworkImage(product.featured_image),
+                            fit: BoxFit.cover,
                           ),
                           Container(
                             height: constraints.maxHeight * 0.08,
@@ -219,7 +217,7 @@ class ProductItemProductScreen extends StatelessWidget {
                                       'تومان',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AppTheme.text,
+                                        color: AppTheme.accent,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 9.0,
                                       ),

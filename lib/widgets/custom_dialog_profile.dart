@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/classes/app_theme.dart';
 import '../screens/customer_info/profile_screen.dart';
 
 class CustomDialogProfile extends StatelessWidget {
@@ -80,7 +81,7 @@ class CustomDialogProfile extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.06,
                       width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
-                        color: Color(0xffFF6D6B),
+                        color:AppTheme.secondary,
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Center(

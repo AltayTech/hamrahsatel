@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/category.dart';
+import 'package:hamrahsatel/models/home_slider.dart';
 import 'package:hamrahsatel/models/price.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +21,17 @@ import 'urls.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [];
-  List<ProductCart> _cartItems = [];
+  List<ProductCart> _cartItems = [
+    ProductCart(
+      id: 0,
+      title: '',
+      featured_media_url: '',
+      brand: Brandc(id: 0, title: '', img_url: ''),
+      price: '',
+      colors: [ColorCode(id: 0, title: '', color_code: '')],
+      color_selected: ColorCode(id: 0, title: '', color_code: ''),
+    ),
+  ];
   List<String> filterTitle = [];
 
   HomePage _homeItems = HomePage(
@@ -34,6 +46,7 @@ class Products with ChangeNotifier {
       Productm(
           id: 0,
           title: '',
+          featured_image: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
           price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
@@ -43,6 +56,7 @@ class Products with ChangeNotifier {
       Productm(
           id: 0,
           title: '',
+          featured_image: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
           price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
@@ -52,11 +66,24 @@ class Products with ChangeNotifier {
       Productm(
           id: 0,
           title: '',
+          featured_image: '',
           brand: Brand(id: 0, title: '', brand_img_url: ''),
           price: Price(),
           colors: [ColorCode(id: 0, title: '', color_code: '')],
           status: meta.MetaData(id: 0, title: ''))
     ],
+    categories: [
+      Category(
+          cat_ID: 0,
+          cat_name: '',
+          category_count: 0,
+          category_description: '',
+          image_url: '',
+          term_id: 0,
+          name: '')
+    ],
+    colors: [ColorCode(id: 0, title: '', color_code: '', price: '')],
+    sliders: [HomeSlider(title: '', featured_image: '')],
   );
 
   String searchEndPoint = '';
@@ -238,15 +265,10 @@ class Products with ChangeNotifier {
           productCount: quantity,
         ));
       } else {
-//        Product pro = _items.firstWhere((prod) => prod.id == productId);
-//        await retrieveToShoppItem(productId);
-//        Product pro = _itemShopp;
-        print(product.title.toString());
-
         _cartItems.add(ProductCart(
             id: product.id,
             title: product.title,
-            price: product.price.price_without_discount,
+            price: colorId.price,
             brand: Brandc(
                 id: product.brand[0].id,
                 title: product.brand[0].title,
@@ -291,7 +313,7 @@ class Products with ChangeNotifier {
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.color_selected.price,
+          price: product.price,
           brand: Brandc(
               id: product.brand.id,
               title: product.brand.title,
@@ -307,7 +329,7 @@ class Products with ChangeNotifier {
         _cartItems.add(ProductCart(
           id: product.id,
           title: product.title,
-          price: product.color_selected.price,
+          price: product.price,
           brand: Brandc(
               id: product.brand.id,
               title: product.brand.title,
@@ -469,7 +491,6 @@ class Products with ChangeNotifier {
 
         ProductMain productMain = ProductMain.fromJson(extractedData);
         print(productMain.productsDetail.max_page.toString());
-//        print(response.headers.toString());
 
         _items = productMain.products;
         _searchDetails = productMain.productsDetail;

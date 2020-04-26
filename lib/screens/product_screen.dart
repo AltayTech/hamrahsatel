@@ -83,7 +83,6 @@ class _ProductsScreenState extends State<ProductsScreen>
   void dispose() {
     _scrollController.dispose();
 
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -119,7 +118,6 @@ class _ProductsScreenState extends State<ProductsScreen>
       searchItems();
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -199,7 +197,7 @@ class _ProductsScreenState extends State<ProductsScreen>
             Consumer<Products>(
               builder: (_, products, ch) => Badge(
                 color: products.cartItemsCount == 0
-                    ? AppTheme.text
+                    ? AppTheme.accent
                     : AppTheme.secondary,
                 value: products.cartItemsCount.toString(),
                 child: ch,

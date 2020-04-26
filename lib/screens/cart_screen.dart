@@ -60,32 +60,63 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
+      _isInit = false;
+      getShopItems();
+      customer = Provider.of<CustomerInfo>(context).customer;
       _isLoading = true;
-      bool isLogin = Provider.of<Auth>(context).isAuth;
-      if (isLogin) {
-        Provider.of<CustomerInfo>(context, listen: false)
-            .getCustomer()
-            .then((value) {
-          customer = Provider.of<CustomerInfo>(context).customer;
-        });
-      }
-      shoppItems = Provider.of<Products>(context).cartItems;
 
-      if (shoppItems.isNotEmpty) {
-        for (int i = 0; i < shoppItems.length; i++) {
-          shoppItems[i].price.isNotEmpty
-              ? totalPrice = totalPrice +
-                  int.parse(shoppItems[i].price) * shoppItems[i].productCount
-              : totalPrice = totalPrice;
+//      await getShopItems();
+      bool isLogin = Provider.of<Auth>(context).isAuth;
+      print(isLogin.toString() +
+          'dsfsdfffffffffffffffffffffffffffffffffffffffffff');
+
+      if (isLogin) {
+        try {
+          await Provider.of<CustomerInfo>(context, listen: false).getCustomer();
+          customer = Provider.of<CustomerInfo>(context).customer;
+        } catch (error) {
+          print(error);
+
+          throw (error);
         }
       }
-      totalPricePure = totalPrice + transportCost;
 
       _isLoading = false;
       setState(() {});
     }
     _isInit = false;
+
     super.didChangeDependencies();
+  }
+
+  Future<void> getShopItems() async {
+    setState(() {
+      _isLoading = true;
+    });
+    shoppItems = Provider.of<Products>(context).cartItems;
+    totalPrice = 0;
+    transportCost = 10000;
+
+    totalPricePure = 0;
+    if (shoppItems.isNotEmpty) {
+      for (int i = 0; i < shoppItems.length; i++) {
+        shoppItems[i].price.isNotEmpty
+            ? totalPrice = totalPrice +
+                int.parse(shoppItems[i].price) * shoppItems[i].productCount
+            : totalPrice = totalPrice;
+      }
+    }
+    totalPricePure = totalPrice + transportCost;
+
+    setState(() {
+      _isLoading = false;
+      print(_isLoading.toString());
+    });
+    print(_isLoading.toString());
+  }
+
+  void setStateFun() {
+    getShopItems();
   }
 
   @override
@@ -95,8 +126,6 @@ class _CartScreenState extends State<CartScreen> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
     bool isLogin = Provider.of<Auth>(context).isAuth;
-
-//    Provider.of<CommissionCalculator>(context).totalPrice = totalPrice;
 
     return Scaffold(
       appBar: AppBar(
@@ -186,8 +215,8 @@ class _CartScreenState extends State<CartScreen> {
                                         const NeverScrollableScrollPhysics(),
                                     itemCount: shoppItems.length,
                                     itemBuilder: (ctx, i) => CardItem(
-                                      index: i,
-                                      shoppItems: shoppItems,
+                                      shoppItem: shoppItems[i],
+                                      callFunction: setStateFun,
                                     ),
                                   ),
                                 )
@@ -401,7 +430,7 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                                 color: shoppItems.isEmpty
-                                    ? AppTheme.text
+                                    ? AppTheme.accent
                                     : AppTheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -486,7 +515,7 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                                 color: shoppItems.isEmpty
-                                    ? AppTheme.text
+                                    ? AppTheme.accent
                                     : AppTheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),

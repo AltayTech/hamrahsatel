@@ -6,12 +6,12 @@ import 'productFavorite.dart';
 class Customer with ChangeNotifier {
   final PersonalData personal_data;
   final List<Order> orders;
-  final List<ProductFavorite> favorites;
+//  final List<ProductFavorite> favorites;
 
   Customer({
     this.personal_data,
     this.orders,
-    this.favorites,
+//    this.favorites,
   });
 
   factory Customer.fromJson(Map<String, dynamic> parsedJson) {
@@ -20,15 +20,15 @@ class Customer with ChangeNotifier {
 
     orderRaw = orderList.map((i) => Order.fromJson(i)).toList();
 
-    var favoritesList = parsedJson['favorites'] as List;
-    List<ProductFavorite> favoritesRaw = new List<ProductFavorite>();
-
-    favoritesRaw =
-        favoritesList.map((i) => ProductFavorite.fromJson(i)).toList();
+//    var favoritesList = parsedJson['favorites'] as List;
+//    List<ProductFavorite> favoritesRaw = new List<ProductFavorite>();
+//
+//    favoritesRaw =
+//        favoritesList.map((i) => ProductFavorite.fromJson(i)).toList();
     return Customer(
       personal_data: PersonalData.fromJson(parsedJson['personal_data']),
       orders: orderRaw,
-      favorites: favoritesRaw,
+//      favorites: favoritesRaw,
     );
   }
 }

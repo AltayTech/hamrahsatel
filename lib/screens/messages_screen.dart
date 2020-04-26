@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hamrahsatel/models/message.dart';
 import 'package:hamrahsatel/provider/auth.dart';
 import 'package:hamrahsatel/provider/messages.dart';
@@ -19,28 +20,43 @@ class MessageScreen extends StatefulWidget {
 
 class _MessageScreenState extends State<MessageScreen> {
   bool _isInit = true;
+  bool _isLoading = false;
 
-  List<Message> messages;
+  List<Message> messages = [];
 
   List<String> aboutInfotitle = [];
 
   List<String> aboutInfoContent = [];
 
   @override
-  void didChangeDependencies() async {
+  void didChangeDependencies() {
+    messages = Provider.of<Messages>(context).allMessages;
+
     if (_isInit) {
-      bool isLogin = Provider.of<Auth>(context).isAuth;
-      if (isLogin) {
-        await Provider.of<Messages>(context, listen: false)
-            .getMessages('0', isLogin)
-            .then((value) {
-          messages = Provider.of<Messages>(context).allMessages;
-        });
-      }
+      loadMessages();
     }
     _isInit = false;
 
     super.didChangeDependencies();
+  }
+
+  Future<void> loadMessages() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    bool isLogin = Provider.of<Auth>(context).isAuth;
+
+    await Provider.of<Messages>(context, listen: false)
+        .getMessages('0', isLogin);
+
+    messages = Provider.of<Messages>(context).allMessages;
+
+    setState(() {
+      _isLoading = false;
+      print(_isLoading.toString());
+    });
+    print(_isLoading.toString());
   }
 
   @override
@@ -69,11 +85,10 @@ class _MessageScreenState extends State<MessageScreen> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
+            child: Stack(
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Container(
                     height: deviceHeight * 0.9,
                     width: deviceWidth,
                     child: ListView.builder(
@@ -82,17 +97,56 @@ class _MessageScreenState extends State<MessageScreen> {
                       itemCount: messages.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, MessageDetailScreen.routeName,
-                                  arguments: messages[index],);
-                            },
-                            child: MessageItem(message: messages[index]));
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              MessageDetailScreen.routeName,
+                              arguments: messages[index],
+                            );
+                          },
+                          child: MessageItem(
+                            message: messages[index],
+                            bgColor: AppTheme.bg,
+                          ),
+                        );
                       },
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: _isLoading
+                        ? SpinKitFadingCircle(
+                            itemBuilder: (BuildContext context, int index) {
+                              return DecoratedBox(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:
+                                      index.isEven ? Colors.grey : Colors.grey,
+                                ),
+                              );
+                            },
+                          )
+                        : Container(
+                            child: messages.isEmpty
+                                ? Center(
+                                    child: Text(
+                                    'سوالی وجود ندارد',
+                                    style: TextStyle(
+                                      fontFamily: 'Iransans',
+                                      fontSize: textScaleFactor * 15.0,
+                                    ),
+                                  ))
+                                : Container(),
+                          ),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -106,7 +160,11 @@ class _MessageScreenState extends State<MessageScreen> {
         child: MainDrawer(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        backgroundColor: AppTheme.h1,
+        child: Icon(
+          Icons.add,
+          color: AppTheme.bg,
+        ),
         onPressed: () {
           Navigator.pushNamed(context, MessageCreateScreen.routeName);
         },

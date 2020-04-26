@@ -32,6 +32,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
 
@@ -44,7 +46,7 @@ class ProductItem extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w600,
             fontSize: textScaleFactor * 15.0,
           ),
@@ -57,7 +59,7 @@ class ProductItem extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w600,
             fontSize: textScaleFactor * 15.0,
           ),
@@ -70,66 +72,58 @@ class ProductItem extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
+            color: AppTheme.secondary,
             fontWeight: FontWeight.w600,
             fontSize: textScaleFactor * 15.0,
           ),
         );
       } else {
-        return Wrap(
-          direction: Axis.vertical,
-          children: <Widget>[
-//            Text(
-//              price.isNotEmpty
-//                  ? EnArConvertor().replaceArNumber(
-//                      currencyFormat.format(double.parse(price)).toString())
-//                  : EnArConvertor().replaceArNumber('0'),
-//              style: TextStyle(
-//                decoration: TextDecoration.lineThrough,
-//                fontFamily: 'Iransans',
-//                color: AppTheme.h1,
-//                fontSize: textScaleFactor * 15.0,
-//              ),
-//            ),
-            Text(
-              price_low.isNotEmpty
-                  ? EnArConvertor().replaceArNumber(
-                      currencyFormat.format(double.parse(price_low)).toString())
-                  : EnArConvertor().replaceArNumber('0'),
-              style: TextStyle(
-                fontFamily: 'Iransans',
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primary,
-                fontSize: textScaleFactor * 15.0,
-              ),
-            )
-          ],
+        return Text(
+          price_low.isNotEmpty
+              ? EnArConvertor().replaceArNumber(
+                  currencyFormat.format(double.parse(price_low)).toString())
+              : EnArConvertor().replaceArNumber('0'),
+          style: TextStyle(
+            fontFamily: 'Iransans',
+            fontWeight: FontWeight.w600,
+            color: AppTheme.secondary,
+            fontSize: textScaleFactor * 15.0,
+          ),
         );
       }
     }
 
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
-      height: MediaQuery.of(context).size.width * 0.6,
-      child: LayoutBuilder(
-        builder: (ctx, constraints) {
-          return InkWell(
-              onTap: () {
-                Provider.of<Products>(context).item =
-                    Provider.of<Products>(context).item_zero;
-                Navigator.of(context).pushNamed(
-                  ProductDetailScreen.routeName,
-                  arguments: id,
-                );
-              },
-              child: Card(
+    return Padding(
+      padding: EdgeInsets.only(right:deviceWidth * 0.04),
+      child: Container(
+        width: deviceWidth * 0.45,
+        height: deviceHeight * 0.7,
+        decoration: BoxDecoration(
+          border:
+              Border.all(color: AppTheme.primary.withOpacity(0.3), width: 0.1),
+          borderRadius: BorderRadius.circular(2),
+          color: AppTheme.white,
+        ),
+        child: LayoutBuilder(
+          builder: (ctx, constraints) {
+            return InkWell(
+                onTap: () {
+                  Provider.of<Products>(context).item =
+                      Provider.of<Products>(context).item_zero;
+                  Navigator.of(context).pushNamed(
+                    ProductDetailScreen.routeName,
+                    arguments: id,
+                  );
+                },
                 child: Stack(
                   children: <Widget>[
                     Column(
                       children: <Widget>[
                         Expanded(
                           flex: 14,
-                          child: Container(
+                          child: Padding(
+                            padding:
+                                EdgeInsets.all(constraints.maxWidth * 0.04),
                             child: FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/circle.gif'),
@@ -139,74 +133,56 @@ class ProductItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 10,
-                          child: Column(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5),
+                          child: Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: AppTheme.primary,
+                              fontFamily: 'Iransans',
+                              fontSize: textScaleFactor * 12.0,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:constraints.maxWidth * 0.01,left: constraints.maxWidth * 0.08),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Expanded(
-                                flex: 6,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5),
-                                  child: Text(
-                                    title,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: AppTheme.primary,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 12.0,
-                                    ),
+                                    horizontal: 10,
+                                  ),
+                                  child: Image.network(
+                                    brandImageUrl != null ? brandImageUrl : '',
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.all(
-                                    constraints.maxWidth * 0.005),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    Expanded(
-                                      child: Wrap(
-                                        direction: Axis.vertical,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 4,
-                                              horizontal: 10,
-                                            ),
-                                            child: Image.network(
-                                              brandImageUrl != null
-                                                  ? brandImageUrl
-                                                  : '',
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                    Padding(
+                                      padding: EdgeInsets.all(
+                                          constraints.maxWidth * 0.014),
+                                      child: FittedBox(child: priceWidget()),
                                     ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Wrap(
-                                          direction: Axis.vertical,
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          children: <Widget>[
-                                            FittedBox(child: priceWidget()),
-                                            Text(
-                                              'تومان',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: AppTheme.text,
-                                                fontFamily: 'Iransans',
-                                                fontSize: textScaleFactor * 9.0,
-                                              ),
-                                            ),
-                                          ],
+                                    FittedBox(
+                                      child: Text(
+                                        'تومان',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AppTheme.h1,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 7.0,
                                         ),
                                       ),
                                     ),
@@ -216,11 +192,16 @@ class ProductItem extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.05,
+                        )
                       ],
                     ),
                     Positioned(
+                      left: constraints.maxWidth * 0.03,
+                      top: constraints.maxHeight * 0.03,
                       child: Container(
-                        height: constraints.maxHeight * 0.08,
+                        height: constraints.maxHeight * 0.10,
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
@@ -228,14 +209,14 @@ class ProductItem extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                            child: GridView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: productColor.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  padding: EdgeInsets.all(10),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: productColor.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Container(
                                   width: 10.0,
                                   height: 10.0,
                                   decoration: BoxDecoration(
@@ -243,32 +224,23 @@ class ProductItem extends StatelessWidget {
                                     border: Border.all(
                                         color: Colors.black, width: 0.2),
                                     color: Color(
-                                      int.parse(
-                                        '0xff' +
-                                            productColor[index]
-                                                .color_code
-                                                .replaceRange(0, 1, ''),
-                                      ),
+                                      int.parse('0xff' +
+                                          productColor[index]
+                                              .color_code
+                                              .replaceRange(0, 1, '')),
                                     ),
                                   ),
-                                );
-                              },
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1,
-                                childAspectRatio: 1,
-                                crossAxisSpacing: 1,
-                                mainAxisSpacing: 3,
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
                     )
                   ],
-                ),
-              ));
-        },
+                ));
+          },
+        ),
       ),
     );
   }

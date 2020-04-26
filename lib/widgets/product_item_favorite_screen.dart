@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
-import '../classes/app_theme.dart';
-import '../provider/Products.dart';
 
+import '../classes/app_theme.dart';
 import '../models/productFavorite.dart';
+import '../provider/Products.dart';
 import '../provider/customer_info.dart';
 import '../screens/product_detail_screen.dart';
 import 'en_to_ar_number_convertor.dart';
@@ -28,7 +27,6 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
       _isLoading = false;
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -48,31 +46,18 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var heightDevice = MediaQuery.of(context).size.height;
-    var deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final product = Provider.of<ProductFavorite>(context, listen: false);
     var currencyFormat = intl.NumberFormat.decimalPattern();
+    final product = Provider.of<ProductFavorite>(context, listen: false);
 
     Widget priceWidget() {
-      if (product.price == product.price_low) {
+      if (product.price.price == product.price.price) {
         return Text(
-          product.price.isNotEmpty
-              ? EnArConvertor().replaceArNumber(
-                  currencyFormat.format(double.parse(product.price)).toString())
-              : EnArConvertor().replaceArNumber('0'),
-          style: TextStyle(
-            fontFamily: 'Iransans',
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w600,
-            fontSize: textScaleFactor * 15.0,
-          ),
-        );
-      } else if (product.price == '0' || product.price.isEmpty) {
-        return Text(
-          product.price_low.isNotEmpty
+          product.price.price.isNotEmpty
               ? EnArConvertor().replaceArNumber(currencyFormat
-                  .format(double.parse(product.price_low))
+                  .format(double.parse(product.price.price))
                   .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
@@ -82,11 +67,26 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
             fontSize: textScaleFactor * 15.0,
           ),
         );
-      } else if (product.price_low == '0' || product.price_low.isEmpty) {
+      } else if (product.price.price == '0' || product.price.price.isEmpty) {
         return Text(
-          product.price.isNotEmpty
-              ? EnArConvertor().replaceArNumber(
-                  currencyFormat.format(double.parse(product.price)).toString())
+          product.price.price.isNotEmpty
+              ? EnArConvertor().replaceArNumber(currencyFormat
+                  .format(double.parse(product.price.price))
+                  .toString())
+              : EnArConvertor().replaceArNumber('0'),
+          style: TextStyle(
+            fontFamily: 'Iransans',
+            color: AppTheme.primary,
+            fontWeight: FontWeight.w600,
+            fontSize: textScaleFactor * 15.0,
+          ),
+        );
+      } else if (product.price.price == '0' || product.price.price.isEmpty) {
+        return Text(
+          product.price.price.isNotEmpty
+              ? EnArConvertor().replaceArNumber(currencyFormat
+                  .format(double.parse(product.price.price))
+                  .toString())
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
@@ -100,22 +100,22 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
           direction: Axis.vertical,
           children: <Widget>[
             Text(
-              product.price.isNotEmpty
+              product.price.price.isNotEmpty
                   ? EnArConvertor().replaceArNumber(currencyFormat
-                      .format(double.parse(product.price))
+                      .format(double.parse(product.price.price))
                       .toString())
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
                 decoration: TextDecoration.lineThrough,
                 fontFamily: 'Iransans',
-                color: AppTheme.text,
+                color: AppTheme.accent,
                 fontSize: textScaleFactor * 15.0,
               ),
             ),
             Text(
-              product.price_low.isNotEmpty
+              product.price.price.isNotEmpty
                   ? EnArConvertor().replaceArNumber(currencyFormat
-                      .format(double.parse(product.price_low))
+                      .format(double.parse(product.price.price))
                       .toString())
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
@@ -130,206 +130,77 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
       }
     }
 
-    return LayoutBuilder(builder: (ctx, constraints) {
-      return Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 0.010,
-                    // has the effect of softening the shadow
-                    spreadRadius: 0.0510,
-                    // has the effect of extending the shadow
-                    offset: Offset(
-                      0.5, // horizontal, move right 10
-                      0.5, // vertical, move down 10
-                    ),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(5)),
-            child: Stack(
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    Provider.of<Products>(context).item =
-                        Provider.of<Products>(context).item_zero;
-                    Navigator.of(context).pushNamed(
-                      ProductDetailScreen.routeName,
-                      arguments: product.id,
-                    );
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 5,
-                        child: Stack(
-                          children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              child: FadeInImage(
-                                placeholder:
-                                    AssetImage('assets/images/logo.png'),
-                                image: NetworkImage(product.img_url),
-                                fit: BoxFit.contain,
-                              ),
+    return Container(
+      width: deviceWidth * 0.45,
+      height: deviceHeight * 0.6,
+      child: LayoutBuilder(
+        builder: (ctx, constraints) {
+          return InkWell(
+              onTap: () {
+                Provider.of<Products>(context).item =
+                    Provider.of<Products>(context).item_zero;
+                Navigator.of(context).pushNamed(
+                  ProductDetailScreen.routeName,
+                  arguments: product.id,
+                );
+              },
+              child: Card(
+                child: Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 14,
+                          child: Padding(
+                            padding:
+                                EdgeInsets.all(constraints.maxWidth * 0.04),
+                            child: FadeInImage(
+                              placeholder:
+                                  AssetImage('assets/images/circle.gif'),
+                              image: NetworkImage(product.featured_image != null
+                                  ? product.featured_image
+                                  : ''),
+                              fit: BoxFit.cover,
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              child: Directionality(
-                                textDirection: TextDirection.ltr,
-                                child: Container(
-                                  height: 15,
-                                  width: 40,
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    color: Colors.white70,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: GridView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: product.colors.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Container(
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            width: 8.0,
-                                            height: 8.0,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 0.2),
-                                              color: Color(
-                                                int.parse(
-                                                  '0xff' +
-                                                      product.colors[index]
-                                                          .color_code
-                                                          .replaceRange(
-                                                              0, 1, ''),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 1,
-                                        mainAxisSpacing: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5),
                           child: Text(
                             product.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,                          style: TextStyle(
-                              color: Colors.blueGrey,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: AppTheme.primary,
                               fontFamily: 'Iransans',
                               fontSize: textScaleFactor * 12.0,
                             ),
-
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                        Padding(
+                          padding: EdgeInsets.all(constraints.maxWidth * 0.005),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Expanded(
-                                flex: 4,
-                                child: Container(
-                                  height: constraints.maxHeight * 0.08,
-                                  alignment: Alignment.centerRight,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(3),
-                                    color: Colors.white70,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: GridView.builder(
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: product.colors.length,
-                                      itemBuilder:
-                                          (BuildContext context,
-                                          int index) {
-                                        return Container(
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            width: 10.0,
-                                            height: 10.0,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 0.2),
-                                              color: Color(
-                                                int.parse(
-                                                  '0xff' +
-                                                      product
-                                                          .colors[index]
-                                                          .color_code
-                                                          .replaceRange(
-                                                          0, 1, ''),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 1,
-                                        mainAxisSpacing: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              Expanded(
-                                flex: 4,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(0.0),
+                                  padding: const EdgeInsets.all(4.0),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       FittedBox(child: priceWidget()),
-                                      Text(
-                                        'تومان',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontFamily: 'Iransans',
-                                          fontSize:
-                                          textScaleFactor * 9.0,
+                                      FittedBox(
+                                        child: Text(
+                                          'تومان',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: AppTheme.h1,
+                                            fontFamily: 'Iransans',
+                                            fontSize: textScaleFactor * 9.0,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -339,55 +210,73 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  height: deviceWidth * 0.07,
-                  width: deviceWidth * 0.07,
-                  child: InkWell(
-                    onTap: () {
-                      removeItem(product.id);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: Colors.white70,
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        color: AppTheme.primary,
+                      ],
+                    ),
+                    Positioned(
+                      left: 2,
+                      top: 2,
+                      child: Container(
+                        height: constraints.maxHeight * 0.08,
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          color: Colors.white70,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: product.colors.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.black, width: 0.2),
+                                    color: Color(
+                                      int.parse('0xff' +
+                                          product.colors[index].color_code
+                                              .replaceRange(0, 1, '')),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      height: deviceWidth * 0.07,
+                      width: deviceWidth * 0.07,
+                      child: InkWell(
+                        onTap: () {
+                          removeItem(product.id);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: Colors.white70,
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: AppTheme.primary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Positioned(
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Align(
-                  alignment: Alignment.center,
-                  child: _isLoading
-                      ? SpinKitFadingCircle(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: index.isEven ? Colors.grey : Colors.grey,
-                              ),
-                            );
-                          },
-                        )
-                      : Container()))
-        ],
-      );
-    });
+              ));
+        },
+      ),
+    );
   }
 }

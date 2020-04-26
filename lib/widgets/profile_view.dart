@@ -9,11 +9,9 @@ import '../models/customer.dart';
 import '../provider/auth.dart';
 import '../provider/customer_info.dart';
 import '../screens/customer_info/customer_favorite_screen.dart';
-import '../screens/customer_info/customer_notification_screen.dart';
 import '../screens/customer_info/customer_orders_screen.dart';
 import '../screens/customer_info/customer_user_info_screen.dart';
 import '../screens/customer_info/login_screen.dart';
-import 'en_to_ar_number_convertor.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -54,7 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
     double deviceSizeHeight = MediaQuery.of(context).size.height;
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     Customer customer = Provider.of<CustomerInfo>(context).customer;
-
+    double itemPaddingF = 0.05;
     return !isLogin
         ? Container(
             child: Center(
@@ -108,27 +106,23 @@ class _ProfileViewState extends State<ProfileView> {
                       height: deviceSizeHeight,
                       child: Stack(
                         children: <Widget>[
-
                           Positioned(
-                            top: deviceSizeHeight * 0,
-                            width: deviceSizeWidth,
-                            child: TopBar()
-                          ),
-
+                              top: deviceSizeHeight * 0,
+                              width: deviceSizeWidth,
+                              child: TopBar()),
 
                           Positioned(
                             top: deviceSizeHeight * 0.070,
-                            width: deviceSizeWidth*0.4,
+                            width: deviceSizeWidth * 0.4,
                             right: 20,
                             child: Text(
                               'پروفایل کاربری',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: AppTheme.bg,
-                                fontFamily: 'Iransans',
-                                fontSize: textScaleFactor * 24.0,
-                                fontWeight: FontWeight.w600
-                              ),
+                                  color: AppTheme.bg,
+                                  fontFamily: 'Iransans',
+                                  fontSize: textScaleFactor * 24.0,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
 
@@ -138,9 +132,9 @@ class _ProfileViewState extends State<ProfileView> {
                               left: 0,
                               child: Container(
                                 height: deviceSizeHeight * 0.7,
-                                width: deviceSizeWidth * 0.7,
+                                width: deviceSizeWidth * 0.9,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(35.0),
+                                  padding: const EdgeInsets.all(15.0),
                                   child: GridView(
                                     children: <Widget>[
                                       InkWell(
@@ -149,14 +143,15 @@ class _ProfileViewState extends State<ProfileView> {
                                               CustomerOrdersScreen.routeName);
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(20.0),
+                                          padding: EdgeInsets.all(
+                                              deviceSizeWidth * itemPaddingF),
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
+                                                    color: AppTheme.primary
+                                                        .withOpacity(0.08),
 
                                                     blurRadius: 10.10,
                                                     // has the effect of softening the shadow
@@ -189,7 +184,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                       fontFamily: 'Iransans',
                                                       fontSize:
                                                           textScaleFactor *
-                                                              21.0,
+                                                              18.0,
                                                     ),
                                                   ),
                                                 ),
@@ -205,14 +200,15 @@ class _ProfileViewState extends State<ProfileView> {
                                         },
                                         child: Container(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.all(
+                                                deviceSizeWidth * itemPaddingF),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.3),
+                                                      color: AppTheme.primary
+                                                          .withOpacity(0.08),
 
                                                       blurRadius: 10.10,
                                                       // has the effect of softening the shadow
@@ -269,14 +265,15 @@ class _ProfileViewState extends State<ProfileView> {
                                         },
                                         child: Container(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.all(
+                                                deviceSizeWidth * itemPaddingF),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.3),
+                                                      color: AppTheme.primary
+                                                          .withOpacity(0.08),
 
                                                       blurRadius: 10.10,
                                                       // has the effect of softening the shadow
@@ -312,7 +309,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                         fontFamily: 'Iransans',
                                                         fontSize:
                                                             textScaleFactor *
-                                                                21.0,
+                                                                18.0,
                                                       ),
                                                     ),
                                                   ),
@@ -329,14 +326,15 @@ class _ProfileViewState extends State<ProfileView> {
                                         },
                                         child: Container(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.all(
+                                                deviceSizeWidth * itemPaddingF),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.3),
+                                                      color: AppTheme.primary
+                                                          .withOpacity(0.08),
 
                                                       blurRadius: 10.10,
                                                       // has the effect of softening the shadow
@@ -373,7 +371,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                         fontFamily: 'Iransans',
                                                         fontSize:
                                                             textScaleFactor *
-                                                                21.0,
+                                                                18.0,
                                                       ),
                                                     ),
                                                   ),
@@ -388,8 +386,8 @@ class _ProfileViewState extends State<ProfileView> {
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       childAspectRatio: 1,
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 2,
+                                      mainAxisSpacing: 2,
                                     ),
                                   ),
                                 ),

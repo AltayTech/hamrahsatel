@@ -12,12 +12,12 @@ import '../screens/product_detail_screen.dart';
 import 'en_to_ar_number_convertor.dart';
 
 class CardItem extends StatefulWidget {
-  final int index;
-  List<ProductCart> shoppItems;
+  final ProductCart shoppItem;
+  final Function callFunction;
 
   CardItem({
-    this.index,
-    this.shoppItems,
+    this.shoppItem,
+    this.callFunction,
   });
 
   @override
@@ -38,11 +38,10 @@ class _CardItemState extends State<CardItem> {
     if (_isInit) {
       _isLoading = false;
 
-      productCount = widget.shoppItems[widget.index].productCount;
+      productCount = widget.shoppItem.productCount;
       print('productCount' + productCount.toString());
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -51,8 +50,7 @@ class _CardItemState extends State<CardItem> {
       _isLoading = true;
     });
     await Provider.of<Products>(context, listen: false).removeShopCart(
-        widget.shoppItems[widget.index].id,
-        widget.shoppItems[widget.index].color_selected.id);
+        widget.shoppItem.id, widget.shoppItem.color_selected.id);
 
     setState(() {
       _isLoading = false;
@@ -75,37 +73,37 @@ class _CardItemState extends State<CardItem> {
           decoration: BoxDecoration(
               border:
                   Border(bottom: BorderSide(width: 0.3, color: Colors.grey))),
-          height: deviceWidth * 0.4,
+          height: deviceWidth * 0.45,
           child: InkWell(
             onTap: () {
               Provider.of<Products>(context).item =
                   Provider.of<Products>(context).item_zero;
               Navigator.of(context).pushNamed(
                 ProductDetailScreen.routeName,
-                arguments: widget.shoppItems[widget.index].id,
+                arguments: widget.shoppItem.id,
               );
             },
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Container(
                     width: deviceWidth,
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                          flex: 1,
+                          flex: 3,
                           child: Container(
                             child: FadeInImage(
                               placeholder: AssetImage('assets/images/logo.jpg'),
-                              image: NetworkImage(widget
-                                  .shoppItems[widget.index].featured_media_url),
+                              image: NetworkImage(
+                                  widget.shoppItem.featured_media_url),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 6,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -114,14 +112,12 @@ class _CardItemState extends State<CardItem> {
                                   height: deviceWidth * 0.03,
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 5,
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      widget.shoppItems[widget.index].title !=
-                                              null
-                                          ? widget
-                                              .shoppItems[widget.index].title
+                                      widget.shoppItem.title != null
+                                          ? widget.shoppItem.title
                                           : 'ندارد',
                                       style: TextStyle(
                                         color: Colors.blue,
@@ -148,10 +144,10 @@ class _CardItemState extends State<CardItem> {
                                           Padding(
                                             padding: const EdgeInsets.all(4.0),
                                             child: Text(
-                                              widget.shoppItems[widget.index]
-                                                  .color_selected.title,
+                                              widget.shoppItem.color_selected
+                                                  .title,
                                               style: TextStyle(
-                                                color: Colors.blue,
+                                                color: AppTheme.primary,
                                                 fontFamily: 'Iransans',
                                                 fontSize: textScaleFactor * 12,
                                               ),
@@ -171,8 +167,7 @@ class _CardItemState extends State<CardItem> {
                                                 int.parse(
                                                   '0xff' +
                                                       widget
-                                                          .shoppItems[
-                                                              widget.index]
+                                                          .shoppItem
                                                           .color_selected
                                                           .color_code
                                                           .replaceRange(
@@ -187,16 +182,18 @@ class _CardItemState extends State<CardItem> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 3,
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(5),
                                         child: Container(
-                                          height: constraints.maxHeight * 0.2,
-                                          width: constraints.maxWidth * 0.2,
+                                          height: constraints.maxHeight * 0.23,
+                                          width: constraints.maxWidth * 0.23,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                                 color: AppTheme.h1, width: 0.2),
@@ -216,15 +213,13 @@ class _CardItemState extends State<CardItem> {
                                                   Provider.of<Products>(context,
                                                           listen: false)
                                                       .updateShopCart(
-                                                          widget.shoppItems[
-                                                              widget.index],
-                                                          widget
-                                                              .shoppItems[
-                                                                  widget.index]
+                                                          widget.shoppItem,
+                                                          widget.shoppItem
                                                               .color_selected,
                                                           productCount,
                                                           isLogin)
                                                       .then((_) {
+                                                    widget.callFunction();
                                                     setState(() {
                                                       _isLoading = false;
                                                       print(_isLoading
@@ -243,8 +238,7 @@ class _CardItemState extends State<CardItem> {
                                                 child: Text(
                                                   EnArConvertor()
                                                       .replaceArNumber(widget
-                                                          .shoppItems[
-                                                              widget.index]
+                                                          .shoppItem
                                                           .productCount
                                                           .toString())
                                                       .toString(),
@@ -268,15 +262,14 @@ class _CardItemState extends State<CardItem> {
                                                   Provider.of<Products>(context,
                                                           listen: false)
                                                       .updateShopCart(
-                                                          widget.shoppItems[
-                                                              widget.index],
-                                                          widget
-                                                              .shoppItems[
-                                                                  widget.index]
+                                                          widget.shoppItem,
+                                                          widget.shoppItem
                                                               .color_selected,
                                                           productCount,
                                                           isLogin)
                                                       .then((_) {
+                                                    widget.callFunction();
+
                                                     setState(() {
                                                       _isLoading = false;
                                                       print(_isLoading
@@ -298,29 +291,27 @@ class _CardItemState extends State<CardItem> {
                                       Spacer(),
                                       Container(
                                         height: constraints.maxHeight * 0.2,
-                                        width: constraints.maxWidth * 0.30,
+                                        width: constraints.maxWidth * 0.330,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: <Widget>[
                                             Text(
-                                              widget.shoppItems[widget.index]
-                                                      .price.isNotEmpty
-                                                  ? EnArConvertor().replaceArNumber(
-                                                      currencyFormat
-                                                          .format(double.parse(
-                                                              widget
-                                                                  .shoppItems[
-                                                                      widget
-                                                                          .index]
-                                                                  .price))
-                                                          .toString())
+                                              widget.shoppItem.price.isNotEmpty
+                                                  ? EnArConvertor()
+                                                      .replaceArNumber(
+                                                          currencyFormat
+                                                              .format(double
+                                                                  .parse(widget
+                                                                      .shoppItem
+                                                                      .price))
+                                                              .toString())
                                                   : EnArConvertor()
                                                       .replaceArNumber('0'),
                                               style: TextStyle(
-                                                color: Colors.redAccent,
+                                                color: AppTheme.secondary,
                                                 fontFamily: 'Iransans',
-                                                fontSize: textScaleFactor * 16,
+                                                fontSize: textScaleFactor * 15,
                                               ),
                                             ),
                                             Text(
@@ -346,8 +337,8 @@ class _CardItemState extends State<CardItem> {
                   ),
                 ),
                 Positioned(
-                  top: 5,
-                  left: 4,
+                  top: 2,
+                  left: 2,
                   child: Container(
                     height: deviceWidth * 0.10,
                     width: deviceWidth * 0.1,

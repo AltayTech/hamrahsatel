@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hamrahsatel/classes/app_theme.dart';
 import 'package:provider/provider.dart';
-import '../provider/auth.dart';
-import '../screens/customer_info/login_screen.dart';
 
 import '../models/productFavorite.dart';
+import '../provider/auth.dart';
 import '../provider/customer_info.dart';
+import '../screens/customer_info/login_screen.dart';
 import 'product_item_favorite_screen.dart';
 
 class FavoriteView extends StatefulWidget {
@@ -20,13 +21,14 @@ class _FavoriteViewState extends State<FavoriteView> {
 
   bool _isInit = true;
 
+  List<ProductFavorite> loadedProducts = [];
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
       getFavProducts();
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -36,7 +38,7 @@ class _FavoriteViewState extends State<FavoriteView> {
     });
 
     await Provider.of<CustomerInfo>(context, listen: false).getFavorite();
-
+    loadedProducts = Provider.of<CustomerInfo>(context).favoriteProducts;
     setState(() {
       _isLoading = false;
       print(_isLoading.toString());
@@ -49,8 +51,7 @@ class _FavoriteViewState extends State<FavoriteView> {
     bool isLogin = Provider.of<Auth>(context).isAuth;
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
-    List<ProductFavorite> loadedProducts =
-        Provider.of<CustomerInfo>(context).favoriteProducts;
+
     return !isLogin
         ? Container(
             child: Center(
@@ -75,7 +76,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                         ),
                       ),
                       decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: AppTheme.primary,
                           borderRadius: BorderRadius.circular(5)),
                     ),
                   )
@@ -88,6 +89,7 @@ class _FavoriteViewState extends State<FavoriteView> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                  height: deviceHeight * 0.9,
                   child: GridView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: loadedProducts.length,

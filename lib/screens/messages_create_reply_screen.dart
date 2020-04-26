@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hamrahsatel/models/customer.dart';
 import 'package:hamrahsatel/models/message.dart';
 import 'package:hamrahsatel/provider/auth.dart';
+import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:hamrahsatel/provider/messages.dart';
+import 'package:hamrahsatel/widgets/message_reply_item.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -12,7 +15,8 @@ class MessageCreateReplyScreen extends StatefulWidget {
   static const routeName = '/messageCreateReplyScreen';
 
   @override
-  _MessageCreateReplyScreenState createState() => _MessageCreateReplyScreenState();
+  _MessageCreateReplyScreenState createState() =>
+      _MessageCreateReplyScreenState();
 }
 
 class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
@@ -26,24 +30,20 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
   List<String> aboutInfoContent = [];
 
   final contentTextController = TextEditingController();
-  final subjectTextController = TextEditingController();
 
   bool isLogin;
+
+  Message message;
+  Customer customer;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       contentTextController.text = '';
-      subjectTextController.text = '';
+      message = ModalRoute.of(context).settings.arguments as Message;
+      customer = Provider.of<CustomerInfo>(context).customer;
 
       isLogin = Provider.of<Auth>(context).isAuth;
-      if (isLogin) {
-        await Provider.of<Messages>(context, listen: false)
-            .getMessages('0', isLogin)
-            .then((value) {
-          messages = Provider.of<Messages>(context).allMessages;
-        });
-      }
     }
     _isInit = false;
 
@@ -53,9 +53,35 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
   @override
   void dispose() {
     contentTextController.dispose();
-    subjectTextController.dispose();
 
     super.dispose();
+  }
+
+  Future<void> createMessageReply() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Provider.of<Messages>(context, listen: false)
+        .createMessage(
+      message.subject,
+      contentTextController.text,
+      message.comment_post_ID,
+      message.comment_ID,
+      isLogin,
+    )
+        .then((value) async {
+      await Provider.of<Messages>(context, listen: false).getMessages(
+        message.comment_post_ID,
+        isLogin,
+      );
+      Navigator.of(context).pop();
+    });
+    setState(() {
+      _isLoading = false;
+      print(_isLoading.toString());
+    });
+    print(_isLoading.toString());
   }
 
   @override
@@ -67,7 +93,7 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'درباره ما',
+          'جواب',
           style: TextStyle(
             color: AppTheme.bg,
             fontFamily: 'Iransans',
@@ -84,63 +110,59 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
           textDirection: TextDirection.rtl,
           child: Container(
             height: deviceHeight * 0.9,
+            color: AppTheme.primary.withOpacity(0.05),
             child: Stack(
               children: <Widget>[
                 Container(
                   color: Colors.transparent,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: SingleChildScrollView(
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(top: 35),
+                            padding: const EdgeInsets.only(
+                              top: 30,
+                              bottom: 8.0,
+                            ),
+                            child: MessageReplyItem(
+                              message: message,
+                              isReply: customer.personal_data.id !=
+                                  int.parse(
+                                    message.user_id,
+                                  ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              color: Colors.white,
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    height: deviceHeight * 0.1,
-                                    child: TextFormField(
-                                      maxLines: 10,
-                                      controller: subjectTextController,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        labelStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontFamily: 'Iransans',
-                                          fontSize: textScaleFactor * 15.0,
-                                        ),
-                                        labelText: 'عنوان',
-                                      ),
+                              height: deviceHeight * 0.6,
+                              child: TextFormField(
+                                maxLines: 10,
+                                controller: contentTextController,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: AppTheme.bg,
                                     ),
                                   ),
-                                  Container(
-                                    height: deviceHeight * 0.3,
-                                    child: TextFormField(
-                                      maxLines: 10,
-                                      controller: contentTextController,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        labelStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontFamily: 'Iransans',
-                                          fontSize: textScaleFactor * 15.0,
-                                        ),
-                                        labelText:
-                                            'نظر خود را در اینجا بنویسید',
-                                      ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: AppTheme.bg,
                                     ),
                                   ),
-                                ],
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 15.0,
+                                  ),
+                                  labelText: 'جواب خود را در اینجا بنویسید',
+                                ),
                               ),
                             ),
                           ),
@@ -173,20 +195,12 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
                 ),
                 Positioned(
                   bottom: 18,
-                  left: 18,
+                  right: 18,
                   child: FloatingActionButton(
                     onPressed: () async {
-                      await Provider.of<Messages>(context, listen: false)
-                          .createMessage(
-                        subjectTextController.text,
-                        contentTextController.text,
-                        isLogin,
-                      )
-                          .then((value) {
-                        Navigator.of(context).pop();
-                      });
+                      createMessageReply();
                     },
-                    backgroundColor: Color(0xff3F9B12),
+                    backgroundColor: AppTheme.secondary,
                     child: Icon(
                       Icons.check,
                       color: Colors.white,

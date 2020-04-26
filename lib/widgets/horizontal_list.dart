@@ -49,7 +49,8 @@ class HorizontalList extends StatelessWidget {
                     listTitle,
                     style: TextStyle(
                       fontFamily: 'Iransans',
-                      color: AppTheme.h1,
+                      color: AppTheme.black,
+                      fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).textScaleFactor * 14.0,
                     ),
                   ),

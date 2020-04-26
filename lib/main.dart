@@ -32,7 +32,6 @@ import 'screens/order_view_screen.dart';
 import 'screens/product_detail_more_details_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/product_screen.dart';
-import 'screens/rules_screen.dart';
 import 'screens/splash_Screen.dart';
 import 'widgets/commission_calculator.dart';
 import 'widgets/favorite_view.dart';
@@ -106,7 +105,6 @@ class MyApp extends StatelessWidget {
           ContactWithUs.routeName: (ctx) => ContactWithUs(),
           CustomerDetailInfoEditScreen.routeName: (ctx) =>
               CustomerDetailInfoEditScreen(),
-          RulesScreen.routeName: (ctx) => RulesScreen(),
           NavigationBottomScreen.routeName: (ctx) => NavigationBottomScreen(),
           CustomerOrdersScreen.routeName: (ctx) => CustomerOrdersScreen(),
           CustomerUserInfoScreen.routeName: (ctx) => CustomerUserInfoScreen(),

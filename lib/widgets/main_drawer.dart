@@ -80,7 +80,7 @@ class MainDrawer extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Text(
-                            'فروشگاه  \n همراه ساتل',
+                            'نسخه آزمایشی فروشگاه \n همراه ساتل',
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 24,

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hamrahsatel/classes/flutter_carousel_slider.dart';
 import 'package:hamrahsatel/models/home_slider.dart';
-import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -28,6 +27,10 @@ class _HomeScreeenState extends State<HomeScreeen> {
 
   List<ProductCart> shoppItems;
 
+  List<HomeSlider> slider = [];
+
+  HomePage loadedHomePage;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<Products>(context, listen: false).fetchAndSetHomeData();
+      loadedHomePage = Provider.of<Products>(context).homeItems;
+      slider = loadedHomePage.sliders;
+      Provider.of<Auth>(context, listen: false).getToken();
     }
     _isInit = false;
     bool _isFirstLogin = Provider.of<Auth>(context, listen: false).isFirstLogin;
@@ -46,18 +52,16 @@ class _HomeScreeenState extends State<HomeScreeen> {
     bool _isFirstLogout =
         Provider.of<Auth>(context, listen: false).isFirstLogout;
     if (_isFirstLogout) {
-      _showLogindialog_exit(context);
+      _showLoginDialog_exit(context);
     }
 
     Provider.of<Auth>(context, listen: false).isFirstLogin = false;
-    Provider.of<Auth>(context, listen: false).isFirstLogout = false;
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     searchTextController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -75,7 +79,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     });
   }
 
-  void _showLogindialog_exit(BuildContext context) {
+  void _showLoginDialog_exit(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialog<String>(
         context: context,
@@ -111,18 +115,14 @@ class _HomeScreeenState extends State<HomeScreeen> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final HomePage loadedHomePage = Provider.of<Products>(context).homeItems;
-    List<HomeSlider> slider = loadedHomePage.sliders;
-    Provider.of<Auth>(context, listen: false).getToken();
 
     return SingleChildScrollView(
       child: Container(
         color: AppTheme.bg,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: deviceWidth * 0.6,
+              height: deviceWidth * 0.7,
               child: InkWell(
                 onTap: () {
                   cleanFilters(context);
@@ -132,41 +132,38 @@ class _HomeScreeenState extends State<HomeScreeen> {
                       .pushNamed(ProductsScreen.routeName, arguments: 0);
                 },
                 child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Positioned.fill(
-
-                      child: CarouselSlider(
-                        viewportFraction: 1.0,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 5),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        pauseAutoPlayOnTouch: Duration(seconds: 10),
-                        enlargeCenterPage: true,
-                        scrollDirection: Axis.horizontal,
-                        onPageChanged: (index) {
-                          _current = index;
-                          setState(() {});
-                        },
-                        items: slider.map((gallery) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                  width: deviceWidth,
-                                  child: FadeInImage(
-                                    placeholder:
-                                        AssetImage('assets/images/circle.gif'),
-                                    image: NetworkImage(gallery.featured_image),
-                                    fit: BoxFit.cover,
-                                    height: deviceWidth*0.7,
-                                  ));
-                            },
-                          );
-                        }).toList(),
-                      ),
+                  children: <Widget>[
+                    CarouselSlider(
+                      viewportFraction: 1.0,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      height: double.infinity,
+                      autoPlayInterval: Duration(seconds: 5),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      pauseAutoPlayOnTouch: Duration(seconds: 10),
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.horizontal,
+                      onPageChanged: (index) {
+                        _current = index;
+                        setState(() {});
+                      },
+                      items: slider.map((gallery) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: deviceWidth,
+                              child: FadeInImage(
+                                placeholder:
+                                    AssetImage('assets/images/circle.gif'),
+                                image: NetworkImage(gallery.featured_image),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
                     ),
                     Positioned(
                       bottom: 3,
@@ -218,7 +215,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
             ),
             HorizontalList(
               list: loadedHomePage.discount_products,
-              listTitle: 'باورنرکدنی',
+              listTitle: 'باورنکردنی',
               isAd: true,
               isDiscounted: true,
             ),

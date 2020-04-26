@@ -160,7 +160,7 @@ class OrderItem extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: AppTheme.text, width: 0.4)),
+            border: Border.all(color: AppTheme.accent, width: 0.4)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

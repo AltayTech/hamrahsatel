@@ -5,7 +5,9 @@ class AppTheme {
   static const Color secondary = Color(0xffCD8D7B);
   static const Color bg = Color(0xffF6F6F6);
   static const Color h1 = Color(0xff687466);
-  static  Color text = Color(0xffFBC490);
+  static  Color accent = Color(0xffFBC490);
+  static  Color white = Colors.white;
+  static  Color black = Colors.black;
 
   static const Color appBarColor = primary;
 

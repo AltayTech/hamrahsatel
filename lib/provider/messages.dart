@@ -16,8 +16,8 @@ class Messages with ChangeNotifier {
 
   List<Message> get allMessagesDetail => _allMessagesDetail;
 
-  Future<void> createMessage(
-      String subject, String content, bool isLogin) async {
+  Future<void> createMessage(String subject, String content,
+      String comment_post_ID, String parent_id, bool isLogin) async {
     print('createMessage');
     try {
       if (isLogin) {
@@ -25,9 +25,13 @@ class Messages with ChangeNotifier {
 
         _token = prefs.getString('token');
 
-        final url = Urls.rootUrl +
-            Urls.messageEndPoint +
-            '?subject=$subject&content=$content';
+        final url = comment_post_ID == '0'
+            ? Urls.rootUrl +
+                Urls.messageEndPoint +
+                '?subject=$subject&content=$content'
+            : Urls.rootUrl +
+                Urls.messageEndPoint +
+                '?subject=$subject&content=$content&comment_post_ID=$comment_post_ID&parent_id=$parent_id';
 
         final response = await post(url, headers: {
           'Authorization': 'Bearer $_token',
