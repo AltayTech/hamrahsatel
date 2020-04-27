@@ -28,8 +28,8 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w600,
+            color: AppTheme.secondary,
+            fontWeight: FontWeight.bold,
             fontSize: textScaleFactor * 15.0,
           ),
         );
@@ -42,8 +42,8 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w600,
+            color: AppTheme.secondary,
+            fontWeight: FontWeight.bold,
             fontSize: textScaleFactor * 15.0,
           ),
         );
@@ -56,8 +56,8 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.primary,
-            fontWeight: FontWeight.w600,
+            color: AppTheme.secondary,
+            fontWeight: FontWeight.bold,
             fontSize: textScaleFactor * 15.0,
           ),
         );
@@ -86,8 +86,8 @@ class ProductItemProductScreen extends StatelessWidget {
                   : EnArConvertor().replaceArNumber('0'),
               style: TextStyle(
                 fontFamily: 'Iransans',
-                fontWeight: FontWeight.w600,
-                color: AppTheme.primary,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.secondary,
                 fontSize: textScaleFactor * 15.0,
               ),
             )
@@ -121,8 +121,7 @@ class ProductItemProductScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FadeInImage(
-                            placeholder:
-                                AssetImage('assets/images/circle.gif'),
+                            placeholder: AssetImage('assets/images/circle.gif'),
                             image: NetworkImage(product.featured_image),
                             fit: BoxFit.cover,
                           ),
@@ -194,9 +193,9 @@ class ProductItemProductScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 10,
+                                padding: const EdgeInsets.only(
+                                  bottom: 12,
+                                  right: 10,
                                 ),
                                 child: Image.network(
                                   product.brand[0].brand_img_url,

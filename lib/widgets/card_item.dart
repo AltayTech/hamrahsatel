@@ -120,7 +120,8 @@ class _CardItemState extends State<CardItem> {
                                           ? widget.shoppItem.title
                                           : 'ندارد',
                                       style: TextStyle(
-                                        color: Colors.blue,
+                                        color: AppTheme.primary,
+                                        fontWeight: FontWeight.bold,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
                                       ),
@@ -128,56 +129,51 @@ class _CardItemState extends State<CardItem> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black45, width: 0.4),
-                                        borderRadius: BorderRadius.circular(4)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Wrap(
-                                        alignment: WrapAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Text(
-                                              widget.shoppItem.color_selected
-                                                  .title,
-                                              style: TextStyle(
-                                                color: AppTheme.primary,
-                                                fontFamily: 'Iransans',
-                                                fontSize: textScaleFactor * 12,
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                      children: <Widget>[
+
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          padding: EdgeInsets.all(10),
+                                          width: 15.0,
+                                          height: 15.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                width: 0.2),
+                                            color: Color(
+                                              int.parse(
+                                                '0xff' +
+                                                    widget
+                                                        .shoppItem
+                                                        .color_selected
+                                                        .color_code
+                                                        .replaceRange(
+                                                            0, 1, ''),
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            padding: EdgeInsets.all(10),
-                                            width: 15.0,
-                                            height: 15.0,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 0.2),
-                                              color: Color(
-                                                int.parse(
-                                                  '0xff' +
-                                                      widget
-                                                          .shoppItem
-                                                          .color_selected
-                                                          .color_code
-                                                          .replaceRange(
-                                                              0, 1, ''),
-                                                ),
-                                              ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            widget.shoppItem.color_selected
+                                                .title,
+                                            style: TextStyle(
+                                              color: AppTheme.primary,
+                                              fontFamily: 'Iransans',
+                                              fontSize: textScaleFactor * 12,
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

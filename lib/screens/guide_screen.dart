@@ -82,8 +82,8 @@ class _GuideScreenState extends State<GuideScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                      width: deviceWidth * 0.5,
-                      height: deviceWidth * 0.5,
+                      width: deviceWidth * 0.3,
+                      height: deviceWidth * 0.3,
                       color: AppTheme.bg,
                       child: FadeInImage(
                         placeholder: AssetImage('assets/images/circle.gif'),

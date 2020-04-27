@@ -6,7 +6,7 @@ import '../../classes/app_theme.dart';
 import '../../models/customer.dart';
 import '../../provider/customer_info.dart';
 import '../../widgets/main_drawer.dart';
-import 'profile_screen.dart';
+import 'customer_user_info_screen.dart';
 
 class CustomerDetailInfoEditScreen extends StatefulWidget {
   static const routeName = '/customerDetailInfoEditScreen';
@@ -181,7 +181,6 @@ class _CustomerDetailInfoEditScreenState
                           Divider(
                             color: Colors.grey,
                           ),
-
                           SizedBox(
                             height: deviceHeight * 0.02,
                           )
@@ -228,7 +227,7 @@ class _CustomerDetailInfoEditScreenState
                           .then((v) {
                         Scaffold.of(context).showSnackBar(addToCartSnackBar);
                         Navigator.of(context)
-                            .popAndPushNamed(ProfileScreen.routeName);
+                            .popAndPushNamed(CustomerUserInfoScreen.routeName);
                       });
                     },
                     backgroundColor: AppTheme.primary,

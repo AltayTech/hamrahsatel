@@ -203,7 +203,7 @@ class _ContactWithUsState extends State<ContactWithUs> {
                         ),
                       ),
                       Container(
-                        height: deviceHeight * 0.18,
+                        height: deviceHeight * 0.10,
                         child: Card(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

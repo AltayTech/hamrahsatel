@@ -230,12 +230,15 @@ class _CartScreenState extends State<CartScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Text(
-                                    'فاکتور فروش ',
-                                    style: TextStyle(
-                                      color: AppTheme.h1,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 12,
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:8.0,bottom: 4),
+                                    child: Text(
+                                      'فاکتور فروش ',
+                                      style: TextStyle(
+                                        color: AppTheme.black,
+                                        fontFamily: 'Iransans',
+                                        fontSize: textScaleFactor * 16,
+                                      ),
                                     ),
                                   ),
                                   Spacer(),
@@ -255,110 +258,116 @@ class _CartScreenState extends State<CartScreen> {
                                     borderRadius: BorderRadius.circular(5),
                                     border: Border.all(
                                         color: Colors.grey, width: 0.2)),
-                                child: Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text(
-                                            'هزینه محصولات ',
-                                            style: TextStyle(
-                                              color: AppTheme.h1,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 12,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text(
+                                              'هزینه محصولات ',
+                                              style: TextStyle(
+                                                color: AppTheme.h1,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 14,
+                                              ),
                                             ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            totalPrice.toString().isNotEmpty
-                                                ? EnArConvertor()
-                                                    .replaceArNumber(
-                                                        currencyFormat
-                                                            .format(totalPrice)
-                                                            .toString())
-                                                : EnArConvertor()
-                                                    .replaceArNumber('0'),
-                                            style: TextStyle(
-                                              color: AppTheme.h1,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 18,
+                                            Spacer(),
+                                            Text(
+                                              totalPrice.toString().isNotEmpty
+                                                  ? EnArConvertor()
+                                                      .replaceArNumber(
+                                                          currencyFormat
+                                                              .format(totalPrice)
+                                                              .toString())
+                                                  : EnArConvertor()
+                                                      .replaceArNumber('0'),
+                                              style: TextStyle(
+                                                color: AppTheme.h1,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 18,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text(
-                                            'حمل و نقل ',
-                                            style: TextStyle(
-                                              color: AppTheme.h1,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 12,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text(
+                                              'حمل و نقل ',
+                                              style: TextStyle(
+                                                color: AppTheme.h1,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 14,
+                                              ),
                                             ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            transportCost.toString().isNotEmpty
-                                                ? EnArConvertor()
-                                                    .replaceArNumber(
-                                                        currencyFormat
-                                                            .format(
-                                                                transportCost)
-                                                            .toString())
-                                                : EnArConvertor()
-                                                    .replaceArNumber('0'),
-                                            style: TextStyle(
-                                              color: AppTheme.h1,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 18,
+                                            Spacer(),
+                                            Text(
+                                              transportCost.toString().isNotEmpty
+                                                  ? EnArConvertor()
+                                                      .replaceArNumber(
+                                                          currencyFormat
+                                                              .format(
+                                                                  transportCost)
+                                                              .toString())
+                                                  : EnArConvertor()
+                                                      .replaceArNumber('0'),
+                                              style: TextStyle(
+                                                color: AppTheme.h1,
+                                                fontFamily: 'Iransans',
+                                                fontSize: textScaleFactor * 18,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text(
-                                            'هزینه کل ',
-                                            style: TextStyle(
-                                              color: AppTheme.h1,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 12,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text(
+                                              'هزینه کل ',
+                                              style: TextStyle(
+                                                color: AppTheme.h1,
+                                                fontFamily: 'Iransans',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: textScaleFactor * 14,
+                                              ),
                                             ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            totalPricePure.toString().isNotEmpty
-                                                ? EnArConvertor()
-                                                    .replaceArNumber(
-                                                        currencyFormat
-                                                            .format(
-                                                                totalPricePure)
-                                                            .toString())
-                                                : EnArConvertor()
-                                                    .replaceArNumber('0'),
-                                            style: TextStyle(
-                                              color: AppTheme.primary,
-                                              fontFamily: 'Iransans',
-                                              fontSize: textScaleFactor * 18,
+                                            Spacer(),
+                                            Text(
+                                              totalPricePure.toString().isNotEmpty
+                                                  ? EnArConvertor()
+                                                      .replaceArNumber(
+                                                          currencyFormat
+                                                              .format(
+                                                                  totalPricePure)
+                                                              .toString())
+                                                  : EnArConvertor()
+                                                      .replaceArNumber('0'),
+                                              style: TextStyle(
+                                                color: AppTheme.primary,
+                                                fontFamily: 'Iransans',
+                                                fontWeight: FontWeight.bold,
+
+                                                fontSize: textScaleFactor * 18,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -419,9 +428,9 @@ class _CartScreenState extends State<CartScreen> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    blurRadius: 2.0,
+                                    blurRadius: 0.0,
                                     // has the effect of softening the shadow
-                                    spreadRadius: 1.50,
+                                    spreadRadius: 0,
                                     // has the effect of extending the shadow
                                     offset: Offset(
                                       1.0, // horizontal, move right 10
@@ -431,32 +440,19 @@ class _CartScreenState extends State<CartScreen> {
                                 ],
                                 color: shoppItems.isEmpty
                                     ? AppTheme.accent
-                                    : AppTheme.secondary,
+                                    : AppTheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Icon(
-                                      Icons.monetization_on,
-                                      color: Colors.white,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  'پرداخت نقدی',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 13.0,
                                   ),
-                                  Center(
-                                    child: Text(
-                                      'پرداخت نقدی',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 13.0,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                           ),
@@ -504,9 +500,9 @@ class _CartScreenState extends State<CartScreen> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    blurRadius: 2.0,
+                                    blurRadius: 0.0,
                                     // has the effect of softening the shadow
-                                    spreadRadius: 1.50,
+                                    spreadRadius: 0.0,
                                     // has the effect of extending the shadow
                                     offset: Offset(
                                       1.0, // horizontal, move right 10
@@ -519,29 +515,16 @@ class _CartScreenState extends State<CartScreen> {
                                     : AppTheme.primary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Icon(
-                                      Icons.credit_card,
-                                      color: Colors.white,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  'پرداخت اقساطی',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 13.0,
                                   ),
-                                  Center(
-                                    child: Text(
-                                      'پرداخت اقساطی',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 13.0,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                           ),

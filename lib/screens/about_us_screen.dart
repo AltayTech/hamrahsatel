@@ -4,7 +4,6 @@ import 'package:hamrahsatel/provider/customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
-import '../widgets/commission_calculator.dart';
 import '../widgets/main_drawer.dart';
 
 class AboutUsScreen extends StatefulWidget {
@@ -19,32 +18,11 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
 
   Shop shopData;
 
-  List<String> aboutInfotitle = [];
-
-  List<String> aboutInfoContent = [];
-
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       await Provider.of<CustomerInfo>(context, listen: false).fetchShopData();
       shopData = Provider.of<CustomerInfo>(context).shop;
-
-      aboutInfoContent = [
-        shopData.about_shop,
-        shopData.return_policy,
-        shopData.privacy,
-        shopData.how_to_order,
-        shopData.faq,
-        shopData.pay_methods_desc
-      ];
-      aboutInfotitle = [
-        'درباره فروشگاه',
-        'قوانین بازگردانی',
-        'حریم خصوصی',
-        'نحوه سفارش',
-        'سوالات متداول',
-        'شیوه پرداخت',
-      ];
     }
     _isInit = false;
 
@@ -82,8 +60,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                      width: deviceWidth * 0.5,
-                      height: deviceWidth * 0.5,
+                      width: deviceWidth * 0.3,
+                      height: deviceWidth * 0.3,
                       color: AppTheme.bg,
                       child: FadeInImage(
                         placeholder: AssetImage('assets/images/circle.gif'),
@@ -115,28 +93,19 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                      shopData.about_shop,
-                      style: TextStyle(
-                        color: AppTheme.primary,
-                        fontFamily: 'Iransans',
-                        fontSize: textScaleFactor * 15.0,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        shopData.about_shop,
+                        style: TextStyle(
+                          color: AppTheme.black,
+                          fontFamily: 'Iransans',
+                          fontSize: textScaleFactor * 15.0,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                      '',
-                      style: TextStyle(
-                        color: AppTheme.primary,
-                        fontFamily: 'Iransans',
-                        fontSize: textScaleFactor * 15.0,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                   Container(
@@ -148,17 +117,21 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       itemCount: shopData.shop_features.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Card(
-                            child: Text(
-                              shopData.shop_features[index],
-                              style: TextStyle(
-                                color: AppTheme.primary,
-                                fontFamily: 'Iransans',
-                                fontSize: textScaleFactor * 15.0,
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.arrow_right,color: AppTheme.secondary,),
+                              Text(
+                                shopData.shop_features[index],
+                                style: TextStyle(
+                                  color: AppTheme.primary,
+                                  fontFamily: 'Iransans',
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: textScaleFactor * 15.0,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
+                            ],
                           ),
                         );
                       },
