@@ -216,7 +216,7 @@ class ProductItemProductScreen extends StatelessWidget {
                                       'تومان',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: AppTheme.accent,
+                                        color: AppTheme.grey,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 9.0,
                                       ),

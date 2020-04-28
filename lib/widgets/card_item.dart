@@ -97,7 +97,9 @@ class _CardItemState extends State<CardItem> {
                             child: FadeInImage(
                               placeholder: AssetImage('assets/images/logo.jpg'),
                               image: NetworkImage(
-                                  widget.shoppItem.featured_media_url),
+                                  widget.shoppItem.featured_media_url != null
+                                      ? widget.shoppItem.featured_media_url
+                                      : ''),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -137,7 +139,6 @@ class _CardItemState extends State<CardItem> {
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: <Widget>[
-
                                         Container(
                                           alignment: Alignment.centerLeft,
                                           padding: EdgeInsets.all(10),
@@ -155,8 +156,7 @@ class _CardItemState extends State<CardItem> {
                                                         .shoppItem
                                                         .color_selected
                                                         .color_code
-                                                        .replaceRange(
-                                                            0, 1, ''),
+                                                        .replaceRange(0, 1, ''),
                                               ),
                                             ),
                                           ),
@@ -164,8 +164,8 @@ class _CardItemState extends State<CardItem> {
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Text(
-                                            widget.shoppItem.color_selected
-                                                .title,
+                                            widget
+                                                .shoppItem.color_selected.title,
                                             style: TextStyle(
                                               color: AppTheme.primary,
                                               fontFamily: 'Iransans',
@@ -185,103 +185,108 @@ class _CardItemState extends State<CardItem> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(5),
-                                        child: Container(
-                                          height: constraints.maxHeight * 0.23,
-                                          width: constraints.maxWidth * 0.23,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: AppTheme.h1, width: 0.2),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Expanded(
-                                                  child: InkWell(
-                                                onTap: () {
-                                                  productCount =
-                                                      productCount + 1;
+                                      Container(
+                                        height: constraints.maxHeight * 0.23,
+                                        width: constraints.maxWidth * 0.23,
 
-                                                  Provider.of<Products>(context,
-                                                          listen: false)
-                                                      .updateShopCart(
-                                                          widget.shoppItem,
-                                                          widget.shoppItem
-                                                              .color_selected,
-                                                          productCount,
-                                                          isLogin)
-                                                      .then((_) {
-                                                    widget.callFunction();
-                                                    setState(() {
-                                                      _isLoading = false;
-                                                      print(_isLoading
-                                                          .toString());
-                                                    });
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Expanded(
+                                                child: InkWell(
+                                              onTap: () async {
+                                                productCount =
+                                                    productCount + 1;
+
+                                                await Provider.of<Products>(
+                                                        context,
+                                                        listen: false)
+                                                    .updateShopCart(
+                                                        widget.shoppItem,
+                                                        widget.shoppItem
+                                                            .color_selected,
+                                                        productCount,
+                                                        isLogin)
+                                                    .then((_) {
+                                                  widget.callFunction();
+                                                  setState(() {
+                                                    _isLoading = false;
+                                                    print(_isLoading
+                                                        .toString());
                                                   });
-                                                },
-                                                child: Container(
-                                                    color: AppTheme.primary,
-                                                    child: Icon(
-                                                      Icons.add,
-                                                      color: AppTheme.bg,
-                                                    )),
-                                              )),
-                                              Expanded(
-                                                child: Text(
-                                                  EnArConvertor()
-                                                      .replaceArNumber(widget
-                                                          .shoppItem
-                                                          .productCount
-                                                          .toString())
-                                                      .toString(),
-                                                  style: TextStyle(
+                                                });
+                                              },
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
                                                     color: AppTheme.secondary,
-                                                    fontFamily: 'Iransans',
-                                                    fontSize:
-                                                        textScaleFactor * 14,
                                                   ),
-                                                  textAlign: TextAlign.center,
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    color: AppTheme.bg,
+                                                  )),
+                                            )),
+                                            Expanded(
+                                              child: Text(
+                                                EnArConvertor()
+                                                    .replaceArNumber(widget
+                                                        .shoppItem
+                                                        .productCount
+                                                        .toString())
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: AppTheme.primary,
+                                                  fontFamily: 'Iransans',
+                                                  fontSize:
+                                                      textScaleFactor * 14,
                                                 ),
+                                                textAlign: TextAlign.center,
                                               ),
-                                              Expanded(
-                                                  child: InkWell(
-                                                onTap: () {
-                                                  productCount =
-                                                      productCount - 1;
-                                                  print('productCount' +
-                                                      productCount.toString());
+                                            ),
+                                            Expanded(
+                                                child: InkWell(
+                                              onTap: () {
+                                                productCount =
+                                                    productCount - 1;
+                                                print('productCount' +
+                                                    productCount.toString());
 
-                                                  Provider.of<Products>(context,
-                                                          listen: false)
-                                                      .updateShopCart(
-                                                          widget.shoppItem,
-                                                          widget.shoppItem
-                                                              .color_selected,
-                                                          productCount,
-                                                          isLogin)
-                                                      .then((_) {
-                                                    widget.callFunction();
+                                                Provider.of<Products>(context,
+                                                        listen: false)
+                                                    .updateShopCart(
+                                                        widget.shoppItem,
+                                                        widget.shoppItem
+                                                            .color_selected,
+                                                        productCount,
+                                                        isLogin)
+                                                    .then((_) {
+                                                  widget.callFunction();
 
-                                                    setState(() {
-                                                      _isLoading = false;
-                                                      print(_isLoading
-                                                          .toString());
-                                                    });
+                                                  setState(() {
+                                                    _isLoading = false;
+                                                    print(_isLoading
+                                                        .toString());
                                                   });
-                                                },
-                                                child: Container(
-                                                    color: AppTheme.primary,
-                                                    child: Icon(
-                                                      Icons.remove,
-                                                      color: AppTheme.bg,
-                                                    )),
-                                              )),
-                                            ],
-                                          ),
+                                                });
+                                              },
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    color: AppTheme.secondary,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    color: AppTheme.bg,
+                                                  )),
+                                            )),
+                                          ],
                                         ),
                                       ),
                                       Spacer(),

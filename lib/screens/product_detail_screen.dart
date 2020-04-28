@@ -267,6 +267,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
+                            height:2 ,
                             color: AppTheme.primary,
                             fontFamily: 'Iransans',
                             fontWeight: FontWeight.bold,
@@ -338,7 +339,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   child: Text(
                                     'جزئیات',
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      color: AppTheme.primary,
                                       fontFamily: 'Iransans',
                                       fontSize: textScaleFactor * 16.0,
                                     ),
@@ -424,7 +425,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       Spacer(),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0, right: 20),
+                        padding:  EdgeInsets.only(bottom: deviceHeight*0.035, right: 20,),
                         child: Container(
                           height: deviceHeight * 0.04,
                           child: ListView.builder(

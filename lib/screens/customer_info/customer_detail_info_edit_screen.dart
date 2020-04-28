@@ -40,7 +40,6 @@ class _CustomerDetailInfoEditScreenState
     addressController.text = customer.personal_data.address;
     postCodeController.text = customer.personal_data.postcode;
 
-    // TODO: implement initState
     super.initState();
   }
 
@@ -61,9 +60,6 @@ class _CustomerDetailInfoEditScreenState
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-
-//    nameController.text = customer.personal_data.first_name;
-//    familyController.text = customer.personal_data.last_name;
 
     return Directionality(
       textDirection: TextDirection.rtl,

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hamrahsatel/screens/product_screen.dart';
@@ -27,9 +28,17 @@ class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
   bool isLogin;
   int _selectedPageIndex = 0;
 
+  final TextEditingController _filter = new TextEditingController();
+  final dio = new Dio(); // for http requests
+  String _searchText = "";
+  List names = new List(); // names we get from API
+  List filteredNames = new List(); // names filtered by search text
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text( 'Search Example' );
+
+
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     Provider.of<Products>(context, listen: false).retrieveShopCart();
   }

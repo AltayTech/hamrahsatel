@@ -26,7 +26,7 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      await Provider.of<CustomerInfo>(context, listen: false).getCustomer();
+//      await Provider.of<CustomerInfo>(context, listen: false).getCustomer();
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -77,8 +77,9 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {
         shoppItems[i].price.isNotEmpty
-                ? totalPrice = totalPrice + int.parse(shoppItems[i].price)*shoppItems[i].productCount
-                : totalPrice = totalPrice;
+            ? totalPrice = totalPrice +
+                int.parse(shoppItems[i].price) * shoppItems[i].productCount
+            : totalPrice = totalPrice;
       }
     }
 

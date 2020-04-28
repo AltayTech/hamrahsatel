@@ -52,7 +52,6 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     bankFocusNode = FocusNode();
     branchFocusNode = FocusNode();
     ownerFocusNode = FocusNode();
@@ -74,7 +73,6 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
     branchFocusNode.dispose();
     ownerFocusNode.dispose();
     chequeShenasehFocusNode.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 

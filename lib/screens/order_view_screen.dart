@@ -68,7 +68,6 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
     _payIsActive = false;
     _uploadIsOk = false;
 
-    // TODO: implement initState
     super.initState();
   }
 

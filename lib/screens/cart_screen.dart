@@ -60,9 +60,8 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      _isInit = false;
       getShopItems();
-      customer = Provider.of<CustomerInfo>(context).customer;
+//      customer = Provider.of<CustomerInfo>(context).customer;
       _isLoading = true;
 
 //      await getShopItems();
@@ -231,7 +230,8 @@ class _CartScreenState extends State<CartScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(top:8.0,bottom: 4),
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 4),
                                     child: Text(
                                       'فاکتور فروش ',
                                       style: TextStyle(
@@ -282,7 +282,8 @@ class _CartScreenState extends State<CartScreen> {
                                                   ? EnArConvertor()
                                                       .replaceArNumber(
                                                           currencyFormat
-                                                              .format(totalPrice)
+                                                              .format(
+                                                                  totalPrice)
                                                               .toString())
                                                   : EnArConvertor()
                                                       .replaceArNumber('0'),
@@ -311,7 +312,9 @@ class _CartScreenState extends State<CartScreen> {
                                             ),
                                             Spacer(),
                                             Text(
-                                              transportCost.toString().isNotEmpty
+                                              transportCost
+                                                      .toString()
+                                                      .isNotEmpty
                                                   ? EnArConvertor()
                                                       .replaceArNumber(
                                                           currencyFormat
@@ -346,7 +349,9 @@ class _CartScreenState extends State<CartScreen> {
                                             ),
                                             Spacer(),
                                             Text(
-                                              totalPricePure.toString().isNotEmpty
+                                              totalPricePure
+                                                      .toString()
+                                                      .isNotEmpty
                                                   ? EnArConvertor()
                                                       .replaceArNumber(
                                                           currencyFormat
@@ -359,7 +364,6 @@ class _CartScreenState extends State<CartScreen> {
                                                 color: AppTheme.primary,
                                                 fontFamily: 'Iransans',
                                                 fontWeight: FontWeight.bold,
-
                                                 fontSize: textScaleFactor * 18,
                                               ),
                                             ),
@@ -439,9 +443,9 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                                 color: shoppItems.isEmpty
-                                    ? AppTheme.accent
+                                    ? AppTheme.grey
                                     : AppTheme.primary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                               child: Center(
                                 child: Text(
@@ -511,9 +515,9 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                                 color: shoppItems.isEmpty
-                                    ? AppTheme.accent
+                                    ? AppTheme.grey
                                     : AppTheme.primary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                               child: Center(
                                 child: Text(

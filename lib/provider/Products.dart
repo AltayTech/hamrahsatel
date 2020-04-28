@@ -1,89 +1,97 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/models/category.dart';
-import 'package:hamrahsatel/models/home_slider.dart';
-import 'package:hamrahsatel/models/price.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/brand.dart';
 import '../models/brandc.dart';
 import '../models/color_code.dart';
 import '../models/home_page.dart';
-import '../models/meta_data.dart' as meta;
 import '../models/product.dart';
 import '../models/product_cart.dart';
 import '../models/product_main.dart';
-import '../models/productm.dart';
 import '../models/products_detail.dart';
 import 'urls.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [];
-  List<ProductCart> _cartItems = [
-    ProductCart(
-      id: 0,
-      title: '',
-      featured_media_url: '',
-      brand: Brandc(id: 0, title: '', img_url: ''),
-      price: '',
-      colors: [ColorCode(id: 0, title: '', color_code: '')],
-      color_selected: ColorCode(id: 0, title: '', color_code: ''),
-    ),
-  ];
+  List<ProductCart> _cartItems = [];
   List<String> filterTitle = [];
 
   HomePage _homeItems = HomePage(
     brands: [
-      Brand(
-        id: 0,
-        title: '',
-        brand_img_url: '',
-      ),
+//      Brand(
+//        id: 0,
+//        title: '',
+//        brand_img_url: '',
+//      ),
     ],
     new_products: [
-      Productm(
-          id: 0,
-          title: '',
-          featured_image: '',
-          brand: Brand(id: 0, title: '', brand_img_url: ''),
-          price: Price(),
-          colors: [ColorCode(id: 0, title: '', color_code: '')],
-          status: meta.MetaData(id: 0, title: ''))
+//      Productm(
+//        id: 0,
+//        title: '',
+//        featured_image: '',
+//        brand: Brand(id: 0, title: '', brand_img_url: ''),
+//        price: Price(),
+//        colors: [ColorCode(id: 0, title: '', color_code: '')],
+//        status: meta.MetaData(
+//          id: 0,
+//          title: '',
+//        ),
+//      ),
     ],
     ads_products: [
-      Productm(
-          id: 0,
-          title: '',
-          featured_image: '',
-          brand: Brand(id: 0, title: '', brand_img_url: ''),
-          price: Price(),
-          colors: [ColorCode(id: 0, title: '', color_code: '')],
-          status: meta.MetaData(id: 0, title: ''))
+//      Productm(
+//        id: 0,
+//        title: '',
+//        featured_image: '',
+//        brand: Brand(id: 0, title: '', brand_img_url: ''),
+//        price: Price(),
+//        colors: [ColorCode(id: 0, title: '', color_code: '')],
+//        status: meta.MetaData(
+//          id: 0,
+//          title: '',
+//        ),
+//      ),
     ],
     discount_products: [
-      Productm(
-          id: 0,
-          title: '',
-          featured_image: '',
-          brand: Brand(id: 0, title: '', brand_img_url: ''),
-          price: Price(),
-          colors: [ColorCode(id: 0, title: '', color_code: '')],
-          status: meta.MetaData(id: 0, title: ''))
+//      Productm(
+//        id: 0,
+//        title: '',
+//        featured_image: '',
+//        brand: Brand(id: 0, title: '', brand_img_url: ''),
+//        price: Price(),
+//        colors: [ColorCode(id: 0, title: '', color_code: '')],
+//        status: meta.MetaData(
+//          id: 0,
+//          title: '',
+//        ),
+//      )
     ],
     categories: [
-      Category(
-          cat_ID: 0,
-          cat_name: '',
-          category_count: 0,
-          category_description: '',
-          image_url: '',
-          term_id: 0,
-          name: '')
+//      Category(
+//          cat_ID: 0,
+//          cat_name: '',
+//          category_count: 0,
+//          category_description: '',
+//          image_url: '',
+//          term_id: 0,
+//          name: '')
     ],
-    colors: [ColorCode(id: 0, title: '', color_code: '', price: '')],
-    sliders: [HomeSlider(title: '', featured_image: '')],
+    colors: [
+//      ColorCode(
+//        id: 0,
+//        title: '',
+//        color_code: '',
+//        price: '',
+//      ),
+    ],
+    sliders: [
+//      HomeSlider(
+//        title: '',
+//        featured_image: '',
+//      ),
+    ],
   );
 
   String searchEndPoint = '';
@@ -308,37 +316,28 @@ class Products with ChangeNotifier {
         final extractedData = json.decode(response.body);
 
         print(extractedData.toString());
-        _cartItems
-            .remove(_cartItems.firstWhere((prod) => prod.id == product.id));
-        _cartItems.add(ProductCart(
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          brand: Brandc(
-              id: product.brand.id,
-              title: product.brand.title,
-              img_url: product.brand.img_url),
-          colors: product.colors,
-          featured_media_url: product.featured_media_url,
-          color_selected: colorId,
-          productCount: quantity,
-        ));
+
+        _cartItems.firstWhere((prod) => prod.id == product.id).productCount =
+            quantity;
       } else {
-        _cartItems
-            .remove(_cartItems.firstWhere((prod) => prod.id == product.id));
-        _cartItems.add(ProductCart(
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          brand: Brandc(
-              id: product.brand.id,
-              title: product.brand.title,
-              img_url: product.brand.img_url),
-          colors: product.colors,
-          featured_media_url: product.featured_media_url,
-          color_selected: colorId,
-          productCount: quantity,
-        ));
+        _cartItems.firstWhere((prod) => prod.id == product.id).productCount =
+            quantity;
+//¹
+//        _cartItems
+//            .remove(_cartItems.firstWhere((prod) => prod.id == product.id));
+//        _cartItems.add(ProductCart(
+//          id: product.id,
+//          title: product.title,
+//          price: product.price,
+//          brand: Brandc(
+//              id: product.brand.id,
+//              title: product.brand.title,
+//              img_url: product.brand.img_url),
+//          colors: product.colors,
+//          featured_media_url: product.featured_media_url,
+//          color_selected: colorId,
+//          productCount: quantity,
+//        ));
       }
       notifyListeners();
     } catch (error) {

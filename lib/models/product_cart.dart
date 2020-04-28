@@ -11,7 +11,7 @@ class ProductCart with ChangeNotifier {
   final Brandc brand;
   final List<ColorCode> colors;
 
-  final int productCount;
+   int productCount;
   final ColorCode color_selected;
 
   ProductCart(

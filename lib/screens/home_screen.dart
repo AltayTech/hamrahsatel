@@ -43,19 +43,21 @@ class _HomeScreeenState extends State<HomeScreeen> {
       loadedHomePage = Provider.of<Products>(context).homeItems;
       slider = loadedHomePage.sliders;
       Provider.of<Auth>(context, listen: false).getToken();
+
+      bool _isFirstLogin = Provider.of<Auth>(context, listen: false).isFirstLogin;
+      if (_isFirstLogin) {
+        _showLogindialog(context);
+      }
+      bool _isFirstLogout =
+          Provider.of<Auth>(context, listen: false).isFirstLogout;
+      if (_isFirstLogout) {
+        _showLoginDialog_exit(context);
+      }
+
+      Provider.of<Auth>(context, listen: false).isFirstLogin = false;
     }
     _isInit = false;
-    bool _isFirstLogin = Provider.of<Auth>(context, listen: false).isFirstLogin;
-    if (_isFirstLogin) {
-      _showLogindialog(context);
-    }
-    bool _isFirstLogout =
-        Provider.of<Auth>(context, listen: false).isFirstLogout;
-    if (_isFirstLogout) {
-      _showLoginDialog_exit(context);
-    }
 
-    Provider.of<Auth>(context, listen: false).isFirstLogin = false;
     super.didChangeDependencies();
   }
 

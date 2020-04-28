@@ -69,10 +69,11 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
             children: <Widget>[
               Text(
                 widget.product.title,
-                textAlign: TextAlign.end,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.primary,
                   fontFamily: 'Iransans',
+                  height: 2,
                   fontSize: MediaQuery.of(context).textScaleFactor * 15,
                   fontWeight: FontWeight.w700,
                 ),
@@ -138,6 +139,7 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
                                 widget.product.color[index].title,
+
                                 style: TextStyle(
                                   color: AppTheme.primary,
                                   fontFamily: 'Iransans',

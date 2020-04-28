@@ -84,6 +84,7 @@ class MainDrawer extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 24,
+                                height: 2,
                                 fontFamily: 'BFarnaz',
                                 color: AppTheme.bg),
                             textAlign: TextAlign.center,
