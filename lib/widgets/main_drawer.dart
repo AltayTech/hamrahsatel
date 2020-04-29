@@ -126,7 +126,7 @@ class MainDrawer extends StatelessWidget {
                     thickness: 2,
                   ),
                   Container(
-                    height: deviceHeight * 0.6,
+                    height: deviceHeight * 0.63,
                     child: SingleChildScrollView(
                       child: Wrap(
                         children: <Widget>[
@@ -337,47 +337,45 @@ class MainDrawer extends StatelessWidget {
                                   .pushNamed(NavigationBottomScreen.routeName);
                             },
                           ),
+                          Container(
+                            height: 20,
+                            color: Colors.black54,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+
+
+                                Text(
+                                  'تبریزاپس',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Iransans',
+                                    color: Colors.green,
+                                    fontSize: textScaleFactor * 11.0,
+                                  ),
+                                ),
+                                Text(
+                                  'طراحی شده توسط',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Iransans',
+                                    color: textColor,
+                                    fontSize: textScaleFactor * 11.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
+
+
                 ],
               ),
 //        ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  color: Colors.black54,
-                  child: Column(
-                    children: <Widget>[
-                      Divider(
-                        height: 1,
-                        color: Colors.grey.withOpacity(0.6),
-                      ),
-                      Text(
-                        'طراحی شده توسط',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Iransans',
-                          color: textColor,
-                          fontSize: textScaleFactor * 11.0,
-                        ),
-                      ),
-                      Text(
-                        'تبریزاپس',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Iransans',
-                          color: Colors.green,
-                          fontSize: textScaleFactor * 11.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+
             ],
           ),
         ),

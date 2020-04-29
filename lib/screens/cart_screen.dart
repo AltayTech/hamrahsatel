@@ -71,8 +71,8 @@ class _CartScreenState extends State<CartScreen> {
 
       if (isLogin) {
         try {
-          await Provider.of<CustomerInfo>(context, listen: false).getCustomer();
-          customer = Provider.of<CustomerInfo>(context).customer;
+           Provider.of<CustomerInfo>(context, listen: false).getCustomer().then((_){  customer = Provider.of<CustomerInfo>(context).customer;});
+
         } catch (error) {
           print(error);
 

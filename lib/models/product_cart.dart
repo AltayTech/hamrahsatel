@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:hamrahsatel/models/color_code_card.dart';
 
 import '../models/color_code.dart';
 import 'brandc.dart';
@@ -9,10 +10,9 @@ class ProductCart with ChangeNotifier {
   final String price;
   final String featured_media_url;
   final Brandc brand;
-  final List<ColorCode> colors;
 
    int productCount;
-  final ColorCode color_selected;
+  final ColorCodeCard color_selected;
 
   ProductCart(
       {this.id,
@@ -20,14 +20,13 @@ class ProductCart with ChangeNotifier {
       this.price,
       this.featured_media_url,
       this.brand,
-      this.colors,
       this.productCount,
       this.color_selected});
 
   factory ProductCart.fromJson(Map<String, dynamic> parsedJson) {
-    var colorList = parsedJson['colors'] as List;
-    List<ColorCode> colorRaw =
-        colorList.map((i) => ColorCode.fromJson(i)).toList();
+//    var colorList = parsedJson['colors'] as List;
+//    List<ColorCodeCard> colorRaw =
+//        colorList.map((i) => ColorCodeCard.fromJson(i)).toList();
 
     return ProductCart(
       id: parsedJson['id'],
@@ -35,9 +34,9 @@ class ProductCart with ChangeNotifier {
       price: parsedJson['price'],
       featured_media_url: parsedJson['featured_media_url'],
       brand: Brandc.fromJson(parsedJson['brand']),
-      colors: colorRaw,
+//      colors: colorRaw,
       productCount: parsedJson['how_many'],
-      color_selected: ColorCode.fromJson(parsedJson['color_selected']),
+      color_selected: ColorCodeCard.fromJson(parsedJson['color_selected']),
     );
   }
 }

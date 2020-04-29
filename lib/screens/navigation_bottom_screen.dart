@@ -1,9 +1,7 @@
 import 'dart:ui';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/screens/product_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
@@ -16,6 +14,7 @@ import '../widgets/main_drawer.dart';
 import '../widgets/profile_view.dart';
 import '../widgets/qest_calculation.dart';
 import 'home_screen.dart';
+import 'product_screen.dart';
 
 class NavigationBottomScreen extends StatefulWidget {
   static const routeName = '/NBS';
@@ -27,15 +26,8 @@ class NavigationBottomScreen extends StatefulWidget {
 class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
   bool isLogin;
   int _selectedPageIndex = 0;
-
-  final TextEditingController _filter = new TextEditingController();
-  final dio = new Dio(); // for http requests
-  String _searchText = "";
-  List names = new List(); // names we get from API
-  List filteredNames = new List(); // names filtered by search text
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text( 'Search Example' );
-
+  bool inSearch = false;
+  final searchTextController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -49,6 +41,12 @@ class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
         _selectedPageIndex = index;
       },
     );
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
   }
 
   final List<Map<String, Object>> _pages = [
@@ -119,91 +117,10 @@ class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
             iconTheme: new IconThemeData(color: AppTheme.appBarIconColor),
             centerTitle: true,
             actions: <Widget>[
-//              SafeArea(
-//                child: SearchBar<Post>(
-//                  searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-//                  headerPadding: EdgeInsets.symmetric(horizontal: 10),
-//                  listPadding: EdgeInsets.symmetric(horizontal: 10),
-//                  onSearch: _getALlPosts,
-//                  searchBarController: _searchBarController,
-//                  placeHolder: Text("placeholder"),
-//                  cancellationWidget: Text("Cancel"),
-//                  emptyWidget: Text("empty"),
-//                  indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-//                  header: Row(
-//                    children: <Widget>[
-//                      RaisedButton(
-//                        child: Text("sort"),
-//                        onPressed: () {
-//                          _searchBarController.sortList((Post a, Post b) {
-//                            return a.body.compareTo(b.body);
-//                          });
-//                        },
-//                      ),
-//                      RaisedButton(
-//                        child: Text("Desort"),
-//                        onPressed: () {
-//                          _searchBarController.removeSort();
-//                        },
-//                      ),
-//                      RaisedButton(
-//                        child: Text("Replay"),
-//                        onPressed: () {
-//                          isReplay = !isReplay;
-//                          _searchBarController.replayLastSearch();
-//                        },
-//                      ),
-//                    ],
-//                  ),
-//                  onCancelled: () {
-//                    print("Cancelled triggered");
-//                  },
-//                  mainAxisSpacing: 10,
-//                  crossAxisSpacing: 10,
-//                  crossAxisCount: 2,
-//                  onItemFound: (Post post, int index) {
-//                    return Container(
-//                      color: Colors.lightBlue,
-//                      child: ListTile(
-//                        title: Text(post.title),
-//                        isThreeLine: true,
-//                        subtitle: Text(post.body),
-//                        onTap: () {
-//                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
-//                        },
-//                      ),
-//                    );
-//                  },
-//                ),
-//              ),
               IconButton(
                 onPressed: () {
-                  String brandsEndpoint = '';
-                  String colorsEndpoint = '';
-                  String sellcaseEndpoint = '';
-                  String priceRange = '';
-                  Provider.of<Products>(context, listen: false)
-                      .filterTitle
-                      .clear();
-
-                  Provider.of<Products>(context, listen: false).searchKey = '';
-
-                  Provider.of<Products>(context, listen: false).sbrand =
-                      brandsEndpoint;
-                  Provider.of<Products>(context, listen: false).scolor =
-                      colorsEndpoint;
-                  Provider.of<Products>(context, listen: false).spriceRange =
-                      priceRange;
-                  Provider.of<Products>(context, listen: false).spage = 1;
-                  Provider.of<Products>(context, listen: false).ssellcase =
-                      sellcaseEndpoint;
-                  Provider.of<Products>(context, listen: false).searchBuilder();
-                  Provider.of<Products>(context, listen: false).checkfiltered();
-
-                  Provider.of<Products>(context, listen: false).searchBuilder();
-                  Provider.of<Products>(context, listen: false).checkfiltered();
-                  Navigator.of(context)
-                      .pushNamed(ProductsScreen.routeName, arguments: 0);
+                  inSearch = true;
+                  setState(() {});
                 },
                 color: AppTheme.bg,
                 icon: Icon(
@@ -238,7 +155,148 @@ class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
             ),
             child: MainDrawer(),
           ),
-          body: _pages[_selectedPageIndex]['page'],
+          body: Stack(
+            children: <Widget>[
+              GestureDetector(
+                onVerticalDragDown: (_) {
+                  if (inSearch) {
+                    inSearch = false;
+                    setState(() {});
+                  }
+                },
+                onTap: () {
+                  if (inSearch) {
+                    inSearch = false;
+                    setState(() {});
+                  }
+                },
+                child: _pages[_selectedPageIndex]['page'],
+              ),
+              inSearch
+                  ? Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: AppBar().preferredSize.height,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: AppTheme.secondary,
+                              width: 0.6,
+                            ),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                    onTap: () {
+                                      String brandsEndpoint = '';
+                                      String colorsEndpoint = '';
+                                      String sellcaseEndpoint = '';
+                                      String priceRange = '';
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .filterTitle
+                                          .clear();
+
+                                      Provider.of<Products>(context,
+                                                  listen: false)
+                                              .searchKey =
+                                          searchTextController.text;
+
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .sbrand = brandsEndpoint;
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .scolor = colorsEndpoint;
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .spriceRange = priceRange;
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .spage = 1;
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .ssellcase = sellcaseEndpoint;
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .searchBuilder();
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .checkfiltered();
+
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .searchBuilder();
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .checkfiltered();
+                                      Navigator.of(context).pushNamed(
+                                          ProductsScreen.routeName,
+                                          arguments: 0);
+                                    },
+                                    child: Icon(Icons.search)),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  textInputAction: TextInputAction.search,
+                                  onFieldSubmitted: (_) {
+                                    Provider.of<Products>(context,
+                                            listen: false)
+                                        .searchKey = searchTextController.text;
+                                    Provider.of<Products>(context,
+                                            listen: false)
+                                        .searchBuilder();
+
+                                    return Navigator.of(context).pushNamed(
+                                        ProductsScreen.routeName,
+                                        arguments: 0);
+                                  },
+                                  controller: searchTextController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      color: Colors.blue,
+                                      fontFamily: 'Iransans',
+                                      fontSize: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          12.0,
+                                    ),
+                                    hintText: 'جستجوی محصولات ...',
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue,
+                                      fontFamily: 'Iransans',
+                                      fontSize: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          10.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                    onTap: () {
+                                      inSearch = false;
+                                      setState(() {});
+                                    },
+                                    child: Icon(Icons.clear)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
           bottomNavigationBar: BottomNavigationBar(
             elevation: 8,
             selectedLabelStyle: TextStyle(
@@ -281,7 +339,6 @@ class _NavigationBottomScreenState extends State<NavigationBottomScreen> {
               ),
             ],
           ),
-
         ),
       ),
     );

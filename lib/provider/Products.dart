@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/color_code_card.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -267,9 +268,8 @@ class Products with ChangeNotifier {
               id: product.brand[0].id,
               title: product.brand[0].title,
               img_url: product.brand[0].brand_img_url),
-          colors: product.color,
           featured_media_url: product.featured_image,
-          color_selected: colorId,
+          color_selected: ColorCodeCard(id:colorId.id ,color_code:colorId.color_code,title: colorId.title ),
           productCount: quantity,
         ));
       } else {
@@ -281,9 +281,8 @@ class Products with ChangeNotifier {
                 id: product.brand[0].id,
                 title: product.brand[0].title,
                 img_url: product.brand[0].brand_img_url),
-            colors: product.color,
             featured_media_url: product.featured_image,
-            color_selected: colorId,
+            color_selected: ColorCodeCard(id:colorId.id ,color_code:colorId.color_code,title: colorId.title ),
             productCount: quantity));
       }
       notifyListeners();
@@ -293,7 +292,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> updateShopCart(ProductCart product, ColorCode colorId,
+  Future<void> updateShopCart(ProductCart product, ColorCodeCard colorId,
       int quantity, bool isLogin) async {
     print('updateShopCart');
     try {

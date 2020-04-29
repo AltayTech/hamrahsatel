@@ -37,14 +37,19 @@ class _HomeScreeenState extends State<HomeScreeen> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (_isInit) {
-      Provider.of<Products>(context, listen: false).fetchAndSetHomeData();
+      _isInit = false;
+
+      loadedHomePage = Provider.of<Products>(context).homeItems;
+
+      await Provider.of<Products>(context, listen: false).fetchAndSetHomeData();
       loadedHomePage = Provider.of<Products>(context).homeItems;
       slider = loadedHomePage.sliders;
       Provider.of<Auth>(context, listen: false).getToken();
 
-      bool _isFirstLogin = Provider.of<Auth>(context, listen: false).isFirstLogin;
+      bool _isFirstLogin =
+          Provider.of<Auth>(context, listen: false).isFirstLogin;
       if (_isFirstLogin) {
         _showLogindialog(context);
       }
@@ -124,7 +129,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
         child: Column(
           children: <Widget>[
             Container(
-              height: deviceWidth * 0.7,
+              height: deviceWidth * 0.6,
               child: InkWell(
                 onTap: () {
                   cleanFilters(context);
@@ -194,6 +199,77 @@ class _HomeScreeenState extends State<HomeScreeen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: (){  String brandsEndpoint = '';
+              String colorsEndpoint = '';
+              String sellcaseEndpoint = '';
+              String priceRange = '';
+              Provider.of<Products>(context, listen: false)
+                  .filterTitle
+                  .clear();
+
+              Provider.of<Products>(context, listen: false).searchKey = '';
+
+              Provider.of<Products>(context, listen: false).sbrand =
+                  brandsEndpoint;
+              Provider.of<Products>(context, listen: false).scolor =
+                  colorsEndpoint;
+              Provider.of<Products>(context, listen: false).spriceRange =
+                  priceRange;
+              Provider.of<Products>(context, listen: false).spage = 1;
+              Provider.of<Products>(context, listen: false).ssellcase =
+                  sellcaseEndpoint;
+              Provider.of<Products>(context, listen: false).searchBuilder();
+              Provider.of<Products>(context, listen: false).checkfiltered();
+
+              Provider.of<Products>(context, listen: false).searchBuilder();
+              Provider.of<Products>(context, listen: false).checkfiltered();
+              Navigator.of(context)
+                  .pushNamed(ProductsScreen.routeName, arguments: 0);},
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: deviceHeight * 0.08,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 0.0,
+                        // has the effect of softening the shadow
+                        spreadRadius: 0.0,
+                        // has the effect of extending the shadow
+                        offset: Offset(
+                          1.0, // horizontal, move right 10
+                          1.0, // vertical, move down 10
+                        ),
+                      )
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        AppTheme.secondary,
+                        AppTheme.primary,
+                      ],
+                    ),
+                    color: AppTheme.secondary,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'محصولات',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Iransans',
+                        fontWeight: FontWeight.w500,
+                        fontSize: textScaleFactor * 17.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
             ),
