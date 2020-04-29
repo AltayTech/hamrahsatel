@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hamrahsatel/classes/app_theme.dart';
+import '../classes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../models/productFavorite.dart';

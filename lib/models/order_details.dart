@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../models/order_details_aghsat.dart';
 
+import '../models/order_details_aghsat.dart';
 import 'orderItem.dart';
 
 class OrderDetails with ChangeNotifier {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../models/category.dart';
 import '../widgets/categories_grid.dart';
-
 import 'en_to_ar_number_convertor.dart';
 
 class CategoriesList extends StatelessWidget {

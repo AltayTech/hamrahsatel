@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/personal_data.dart';
 import 'order.dart';
-import 'productFavorite.dart';
 
 class Customer with ChangeNotifier {
   final PersonalData personal_data;

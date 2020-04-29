@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/models/shop.dart';
-import 'package:hamrahsatel/provider/customer_info.dart';
+import '../models/shop.dart';
+import '../provider/customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';

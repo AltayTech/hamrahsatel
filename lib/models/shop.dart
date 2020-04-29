@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:hamrahsatel/models/social_media.dart';
+import '../models/social_media.dart';
 
 class Shop with ChangeNotifier {
   final String shop_name;

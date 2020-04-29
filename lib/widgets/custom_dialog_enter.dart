@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/classes/app_theme.dart';
+import '../classes/app_theme.dart';
+
 import '../screens/customer_info/login_screen.dart';
 
 class CustomDialogEnter extends StatelessWidget {

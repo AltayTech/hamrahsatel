@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/models/home_slider.dart';
+import '../models/home_slider.dart';
 
 import '../models/category.dart' as category;
 import 'brand.dart';

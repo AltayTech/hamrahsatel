@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/models/color_code.dart';
-import 'package:hamrahsatel/models/price.dart';
-import 'package:hamrahsatel/models/shop.dart';
+import '../models/color_code.dart';
+import '../models/price.dart';
+import '../models/shop.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';

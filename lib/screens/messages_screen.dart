@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hamrahsatel/models/message.dart';
-import 'package:hamrahsatel/provider/auth.dart';
-import 'package:hamrahsatel/provider/messages.dart';
-import 'package:hamrahsatel/screens/message_detail_screen.dart';
-import 'package:hamrahsatel/screens/messages_create_screen.dart';
-import 'package:hamrahsatel/widgets/message_item.dart';
+import '../models/message.dart';
+import '../provider/auth.dart';
+import '../provider/messages.dart';
+import '../screens/message_detail_screen.dart';
+import '../screens/messages_create_screen.dart';
+import '../widgets/message_item.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';

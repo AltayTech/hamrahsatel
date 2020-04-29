@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/screens/messages_screen.dart';
+import '../../screens/messages_screen.dart';
 
 import '../../classes/app_theme.dart';
 import '../../models/customer.dart';

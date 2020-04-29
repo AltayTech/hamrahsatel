@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hamrahsatel/models/message.dart';
-import 'package:hamrahsatel/provider/auth.dart';
-import 'package:hamrahsatel/provider/messages.dart';
+import '../models/message.dart';
+import '../provider/auth.dart';
+import '../provider/messages.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';

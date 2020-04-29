@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/models/color_code.dart';
+import '../models/color_code.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 

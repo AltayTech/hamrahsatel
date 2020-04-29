@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/classes/app_theme.dart';
-import 'package:hamrahsatel/models/product.dart';
+import '../classes/app_theme.dart';
+import '../models/product.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'en_to_ar_number_convertor.dart';

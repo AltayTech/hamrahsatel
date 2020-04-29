@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:hamrahsatel/models/color_code_card.dart';
+import '../models/color_code_card.dart';
 
-import '../models/color_code.dart';
 import 'brandc.dart';
 
 class ProductCart with ChangeNotifier {

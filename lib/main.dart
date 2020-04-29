@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/provider/messages.dart';
-import 'package:hamrahsatel/screens/messages_create_screen.dart';
+import './provider/messages.dart';
+import './screens/messages_create_screen.dart';
 import 'package:provider/provider.dart';
 
 import './provider/auth.dart';

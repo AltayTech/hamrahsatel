@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamrahsatel/classes/flutter_carousel_slider.dart';
-import 'package:hamrahsatel/models/home_slider.dart';
+import '../classes/flutter_carousel_slider.dart';
+import '../models/home_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../screens/customer_info/customer_detail_info_screen.dart';
 
 import '../../classes/app_theme.dart';
 import '../../models/customer.dart';
+import '../../screens/customer_info/customer_detail_info_screen.dart';
 import '../../widgets/main_drawer.dart';
 
 class CustomerUserInfoScreen extends StatefulWidget {

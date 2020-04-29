@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hamrahsatel/classes/top_bar.dart';
-import 'package:hamrahsatel/screens/messages_screen.dart';
+import '../classes/top_bar.dart';
+import '../screens/messages_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/app_theme.dart';
