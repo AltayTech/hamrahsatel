@@ -51,6 +51,8 @@ class _CardItemState extends State<CardItem> {
     });
     await Provider.of<Products>(context, listen: false).removeShopCart(
         widget.shoppItem.id, widget.shoppItem.color_selected.id);
+    widget.callFunction();
+
 
     setState(() {
       _isLoading = false;

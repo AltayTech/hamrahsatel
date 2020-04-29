@@ -11,8 +11,8 @@ class Auth with ChangeNotifier {
   String _token;
   bool _isLoggedin;
 
-  bool _isFirstLogin=false;
-  bool _isFirstLogout=false;
+  bool _isFirstLogin = false;
+  bool _isFirstLogout = false;
 
   bool get isLoggedin => _isLoggedin;
 
@@ -50,7 +50,7 @@ class Auth with ChangeNotifier {
       if (responseData != 'false') {
         try {
           _token = responseData['token'];
-          _isFirstLogin=true;
+          _isFirstLogin = true;
 
           final prefs = await SharedPreferences.getInstance();
           final userData = json.encode(
@@ -126,45 +126,4 @@ class Auth with ChangeNotifier {
   set isFirstLogin(bool value) {
     _isFirstLogin = value;
   }
-
-//  Future<bool> tryAutoLogin() async {
-//    final prefs = await SharedPreferences.getInstance();
-//    if (!prefs.containsKey('userData')) {
-//      return false;
-//    }
-//    final extractedUserData = json.decode(prefs.getString('userData')) as Map<String, Object>;
-//    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
-//
-//    if (expiryDate.isBefore(DateTime.now())) {
-//      return false;
-//    }
-//    _token = extractedUserData['token'];
-//    _userId = extractedUserData['userId'];
-//    _expiryDate = expiryDate;
-//    notifyListeners();
-//    _autoLogout();
-//    return true;
-//  }
-//
-//  Future<void> logout() async {
-//    _token = null;
-//    _userId = null;
-//    _expiryDate = null;
-//    if (_authTimer != null) {
-//      _authTimer.cancel();
-//      _authTimer = null;
-//    }
-//    notifyListeners();
-//    final prefs = await SharedPreferences.getInstance();
-//    // prefs.remove('userData');
-//    prefs.clear();
-//  }
-//
-//  void _autoLogout() {
-//    if (_authTimer != null) {
-//      _authTimer.cancel();
-//    }
-//    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
-//    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
-//  }
 }
