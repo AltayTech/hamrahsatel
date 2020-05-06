@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart' as intl;
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/product.dart';
 import '../widgets/main_drawer.dart';
 

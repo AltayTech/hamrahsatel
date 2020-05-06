@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/color_code.dart';
 import 'en_to_ar_number_convertor.dart';
 

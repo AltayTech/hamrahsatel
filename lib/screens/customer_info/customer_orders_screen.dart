@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../classes/app_theme.dart';
+import '../../provider/app_theme.dart';
 import '../../models/customer.dart';
 import '../../screens/customer_info/customer_detail_order_screen.dart';
 import '../../widgets/main_drawer.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/product.dart';
 import '../provider/Products.dart';
 import '../screens/product_detail_screen.dart';

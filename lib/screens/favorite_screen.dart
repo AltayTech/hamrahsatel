@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../provider/Products.dart';
 import '../widgets/badge.dart';
 import '../widgets/favorite_view.dart';

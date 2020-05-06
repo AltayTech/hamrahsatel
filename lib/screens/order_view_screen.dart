@@ -4,7 +4,7 @@ import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/color_code.dart';
 import '../models/gallery.dart';
 import '../models/order_details.dart';

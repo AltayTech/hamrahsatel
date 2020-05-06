@@ -1,21 +1,21 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../models/color_code.dart';
-import '../screens/product_detail_more_details_screen.dart';
-import '../widgets/custom_dialog_select_color.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
-import '../classes/app_theme.dart';
-import '../classes/flutter_carousel_slider.dart';
+import '../models/color_code.dart';
 import '../models/product.dart';
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../provider/auth.dart';
 import '../provider/customer_info.dart';
+import '../screens/product_detail_more_details_screen.dart';
 import '../widgets/badge.dart';
+import '../widgets/custom_dialog_select_color.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/main_drawer.dart';
 import 'cart_screen.dart';
@@ -267,7 +267,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            height:2 ,
+                            height: 2,
                             color: AppTheme.primary,
                             fontFamily: 'Iransans',
                             fontWeight: FontWeight.bold,
@@ -358,23 +358,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: Stack(
                           children: [
                             CarouselSlider(
-                              aspectRatio: 1,
-                              viewportFraction: 1.0,
-                              initialPage: 0,
-                              enableInfiniteScroll: true,
-                              reverse: false,
-                              autoPlay: false,
-                              height: deviceHeight * 0.55,
-                              autoPlayInterval: Duration(seconds: 3),
-                              autoPlayAnimationDuration:
-                                  Duration(milliseconds: 800),
-                              pauseAutoPlayOnTouch: Duration(seconds: 10),
-                              enlargeCenterPage: true,
-                              scrollDirection: Axis.horizontal,
-                              onPageChanged: (index) {
-                                _current = index;
-                                setState(() {});
-                              },
+                              options: CarouselOptions(
+                                aspectRatio: 1,
+                                viewportFraction: 1.0,
+                                initialPage: 0,
+                                enableInfiniteScroll: true,
+                                reverse: false,
+                                autoPlay: false,
+                                height: deviceHeight * 0.55,
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                enlargeCenterPage: true,
+                                scrollDirection: Axis.horizontal,
+                                onPageChanged: (index, _) {
+                                  _current = index;
+                                  setState(() {});
+                                },
+
+                              ),
                               items: loadedProduct.gallery.map((gallery) {
                                 return Builder(
                                   builder: (BuildContext context) {
@@ -425,7 +427,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       Spacer(),
                       Padding(
-                        padding:  EdgeInsets.only(bottom: deviceHeight*0.035, right: 20,),
+                        padding: EdgeInsets.only(
+                          bottom: deviceHeight * 0.035,
+                          right: 20,
+                        ),
                         child: Container(
                           height: deviceHeight * 0.04,
                           child: ListView.builder(

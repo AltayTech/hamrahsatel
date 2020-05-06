@@ -8,7 +8,7 @@ import '../screens/messages_create_screen.dart';
 import '../widgets/message_item.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../widgets/main_drawer.dart';
 
 class MessageScreen extends StatefulWidget {

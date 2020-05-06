@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../classes/app_theme.dart';
+import '../../provider/app_theme.dart';
 import '../../models/customer.dart';
 import '../../provider/customer_info.dart';
 import '../../widgets/main_drawer.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 

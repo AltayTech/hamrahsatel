@@ -4,7 +4,7 @@ import '../classes/top_bar.dart';
 import '../screens/messages_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/customer.dart';
 import '../provider/auth.dart';
 import '../provider/customer_info.dart';

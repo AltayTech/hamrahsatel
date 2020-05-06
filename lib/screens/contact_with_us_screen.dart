@@ -4,7 +4,7 @@ import '../provider/customer_info.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../widgets/main_drawer.dart';
 
 class ContactWithUs extends StatefulWidget {

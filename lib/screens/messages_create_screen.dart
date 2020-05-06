@@ -5,7 +5,7 @@ import '../provider/auth.dart';
 import '../provider/messages.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../widgets/main_drawer.dart';
 
 class MessageCreateScreen extends StatefulWidget {

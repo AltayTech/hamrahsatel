@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../../classes/app_theme.dart';
+import '../../provider/app_theme.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../provider/customer_info.dart';

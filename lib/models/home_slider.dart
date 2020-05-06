@@ -11,7 +11,7 @@ class HomeSlider with ChangeNotifier {
 
   factory HomeSlider.fromJson(Map<String, dynamic> parsedJson) {
     return HomeSlider(
-      title: parsedJson['title'],
+      title: parsedJson['title']==null?parsedJson['title']:'',
       featured_image: parsedJson['featured_image'],
     );
   }

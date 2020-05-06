@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../screens/guide_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../provider/auth.dart';
 import '../provider/customer_info.dart';
 import '../screens/about_us_screen.dart';

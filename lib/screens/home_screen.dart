@@ -1,13 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../classes/flutter_carousel_slider.dart';
-import '../models/home_slider.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/app_theme.dart';
 import '../models/home_page.dart';
+import '../models/home_slider.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../provider/auth.dart';
 import '../screens/product_screen.dart';
 import '../widgets/custom_dialog.dart';
@@ -41,10 +41,11 @@ class _HomeScreeenState extends State<HomeScreeen> {
     if (_isInit) {
       _isInit = false;
 
-      loadedHomePage = Provider.of<Products>(context).homeItems;
+      loadedHomePage = Provider.of<Products>(context, listen: false).homeItems;
 
       await Provider.of<Products>(context, listen: false).fetchAndSetHomeData();
-      loadedHomePage = Provider.of<Products>(context).homeItems;
+
+      loadedHomePage = Provider.of<Products>(context, listen: false).homeItems;
       slider = loadedHomePage.sliders;
       Provider.of<Auth>(context, listen: false).getToken();
 
@@ -129,7 +130,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
         child: Column(
           children: <Widget>[
             Container(
-              height: deviceWidth * 0.6,
+              height: deviceWidth * 0.4,
               child: InkWell(
                 onTap: () {
                   cleanFilters(context);
@@ -140,37 +141,45 @@ class _HomeScreeenState extends State<HomeScreeen> {
                 },
                 child: Stack(
                   children: <Widget>[
-                    CarouselSlider(
-                      viewportFraction: 1.0,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
-                      autoPlay: true,
-                      height: double.infinity,
-                      autoPlayInterval: Duration(seconds: 5),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      pauseAutoPlayOnTouch: Duration(seconds: 10),
-                      enlargeCenterPage: true,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (index) {
-                        _current = index;
-                        setState(() {});
-                      },
-                      items: slider.map((gallery) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              width: deviceWidth,
-                              child: FadeInImage(
-                                placeholder:
-                                    AssetImage('assets/images/circle.gif'),
-                                image: NetworkImage(gallery.featured_image),
-                                fit: BoxFit.cover,
-                              ),
-                            );
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.bg,
+                        border: Border.all(width: 5,color:AppTheme.bg)
+                      ),
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          viewportFraction: 1.0,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          height: double.infinity,
+                          autoPlayInterval: Duration(seconds: 5),
+                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (index, _) {
+                            _current = index;
+                            setState(() {});
                           },
-                        );
-                      }).toList(),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                        ),
+                        items: slider.map((gallery) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                width: deviceWidth,
+                                child: FadeInImage(
+                                  placeholder:
+                                      AssetImage('assets/images/circle.gif'),
+                                  image: NetworkImage(gallery.featured_image),
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
                     ),
                     Positioned(
                       bottom: 3,
@@ -203,36 +212,38 @@ class _HomeScreeenState extends State<HomeScreeen> {
               ),
             ),
             InkWell(
-              onTap: (){  String brandsEndpoint = '';
-              String colorsEndpoint = '';
-              String sellcaseEndpoint = '';
-              String priceRange = '';
-              Provider.of<Products>(context, listen: false)
-                  .filterTitle
-                  .clear();
+              onTap: () {
+                String brandsEndpoint = '';
+                String colorsEndpoint = '';
+                String sellcaseEndpoint = '';
+                String priceRange = '';
+                Provider.of<Products>(context, listen: false)
+                    .filterTitle
+                    .clear();
 
-              Provider.of<Products>(context, listen: false).searchKey = '';
+                Provider.of<Products>(context, listen: false).searchKey = '';
 
-              Provider.of<Products>(context, listen: false).sbrand =
-                  brandsEndpoint;
-              Provider.of<Products>(context, listen: false).scolor =
-                  colorsEndpoint;
-              Provider.of<Products>(context, listen: false).spriceRange =
-                  priceRange;
-              Provider.of<Products>(context, listen: false).spage = 1;
-              Provider.of<Products>(context, listen: false).ssellcase =
-                  sellcaseEndpoint;
-              Provider.of<Products>(context, listen: false).searchBuilder();
-              Provider.of<Products>(context, listen: false).checkfiltered();
+                Provider.of<Products>(context, listen: false).sbrand =
+                    brandsEndpoint;
+                Provider.of<Products>(context, listen: false).scolor =
+                    colorsEndpoint;
+                Provider.of<Products>(context, listen: false).spriceRange =
+                    priceRange;
+                Provider.of<Products>(context, listen: false).spage = 1;
+                Provider.of<Products>(context, listen: false).ssellcase =
+                    sellcaseEndpoint;
+                Provider.of<Products>(context, listen: false).searchBuilder();
+                Provider.of<Products>(context, listen: false).checkfiltered();
 
-              Provider.of<Products>(context, listen: false).searchBuilder();
-              Provider.of<Products>(context, listen: false).checkfiltered();
-              Navigator.of(context)
-                  .pushNamed(ProductsScreen.routeName, arguments: 0);},
+                Provider.of<Products>(context, listen: false).searchBuilder();
+                Provider.of<Products>(context, listen: false).checkfiltered();
+                Navigator.of(context)
+                    .pushNamed(ProductsScreen.routeName, arguments: 0);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                 child: Container(
-                  height: deviceHeight * 0.08,
+                  height: deviceHeight * 0.065,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -247,15 +258,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                         ),
                       )
                     ],
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        AppTheme.secondary,
-                        AppTheme.primary,
-                      ],
-                    ),
-                    color: AppTheme.secondary,
+                    color: AppTheme.primary,
                     borderRadius: BorderRadius.circular(3),
                   ),
                   child: Center(

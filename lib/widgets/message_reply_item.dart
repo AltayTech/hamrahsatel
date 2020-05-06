@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../classes/app_theme.dart';
+import '../provider/app_theme.dart';
 import '../models/message.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import 'package:shamsi_date/shamsi_date.dart';
