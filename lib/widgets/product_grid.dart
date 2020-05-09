@@ -11,7 +11,7 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.width * 0.6,
+      height: MediaQuery.of(context).size.width * 0.75,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: loadedSalon.length,

@@ -71,17 +71,17 @@ class CategoryItem extends StatelessWidget {
 
                 Provider.of<Products>(context, listen: false).searchKey = '';
 
-                Provider.of<Products>(context, listen: false).sbrand =
+                Provider.of<Products>(context, listen: false).sBrand =
                     brandsEndpoint;
-                Provider.of<Products>(context, listen: false).scolor =
+                Provider.of<Products>(context, listen: false).sColor =
                     colorsEndpoint;
-                Provider.of<Products>(context, listen: false).spriceRange =
+                Provider.of<Products>(context, listen: false).sPriceRange =
                     priceRange;
-                Provider.of<Products>(context, listen: false).spage = 1;
-                Provider.of<Products>(context, listen: false).ssellcase =
+                Provider.of<Products>(context, listen: false).sPage = 1;
+                Provider.of<Products>(context, listen: false).sSellCase =
                     sellcaseEndpoint;
                 Provider.of<Products>(context, listen: false).searchBuilder();
-                Provider.of<Products>(context, listen: false).checkfiltered();
+                Provider.of<Products>(context, listen: false).checkFiltered();
 
                 Provider.of<Products>(context, listen: false)
                     .filterTitle

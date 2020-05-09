@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/models/color_code_product_detail.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/brandc.dart';
-import '../models/color_code.dart';
 import '../models/color_code_card.dart';
 import '../models/home_page.dart';
 import '../models/product.dart';
@@ -32,31 +32,30 @@ class Products with ChangeNotifier {
   String searchEndPoint = '';
 
   String searchKey = '';
-  var _spage = 1;
-  var _sper_page = 10;
-  var _sorder = 'desc';
-  var _sorderby = 'date';
-  var _sbrand;
-  var _sproductcat;
-  var _ssellcase;
-  var _scolor;
-  var _sstatus;
-  var _spriceRange;
-  var _scategory;
+  var _sPage = 1;
+  var _sPerPage = 10;
+  var _sOrder = 'desc';
+  var _sOrderBy = 'date';
+  var _sBrand;
+  var _sProductCat;
+  var _sSellCase;
+  var _sColor;
+  var _sStatus;
+  var _sPriceRange;
+  var _sCategory;
 
   bool _isFiltered = false;
 
   ProductsDetail _searchDetails = ProductsDetail(max_page: 1, total: 10);
 
-
-  Future<void> checkfiltered() async {
-    if (_sbrand == '' &&
-        _sproductcat == '' &&
-        _ssellcase == '' &&
-        _scolor == '' &&
-        _sstatus == '' &&
-        _spriceRange == '' &&
-        _scategory == '') {
+  Future<void> checkFiltered() async {
+    if (_sBrand == '' &&
+        _sProductCat == '' &&
+        _sSellCase == '' &&
+        _sColor == '' &&
+        _sStatus == '' &&
+        _sPriceRange == '' &&
+        _sCategory == '') {
       _isFiltered = false;
     } else {
       _isFiltered = true;
@@ -68,44 +67,44 @@ class Products with ChangeNotifier {
       searchEndPoint = '';
 
       searchEndPoint = searchEndPoint + '?search=$searchKey';
-      searchEndPoint = searchEndPoint + '&page=$_spage&per_page=$_sper_page';
+      searchEndPoint = searchEndPoint + '&page=$_sPage&per_page=$_sPerPage';
     } else {
       searchEndPoint = '';
 
-      searchEndPoint = searchEndPoint + '?page=$_spage&per_page=$_sper_page';
+      searchEndPoint = searchEndPoint + '?page=$_sPage&per_page=$_sPerPage';
     }
-    if (!(_sorder == '')) {
-      searchEndPoint = searchEndPoint + '&order=$_sorder';
+    if (!(_sOrder == '')) {
+      searchEndPoint = searchEndPoint + '&order=$_sOrder';
     }
-    if (!(_sorderby == '')) {
-      searchEndPoint = searchEndPoint + '&orderby=$_sorderby';
+    if (!(_sOrderBy == '')) {
+      searchEndPoint = searchEndPoint + '&orderby=$_sOrderBy';
     }
-    if (!(_sbrand == null || _sbrand == '')) {
-      searchEndPoint = searchEndPoint + '&brand=$_sbrand';
+    if (!(_sBrand == null || _sBrand == '')) {
+      searchEndPoint = searchEndPoint + '&brand=$_sBrand';
     }
-    if (!(_sproductcat == '' || _sproductcat == null)) {
-      searchEndPoint = searchEndPoint + '&productcat=$_sproductcat';
+    if (!(_sProductCat == '' || _sProductCat == null)) {
+      searchEndPoint = searchEndPoint + '&productcat=$_sProductCat';
     }
-    if (!(_ssellcase == '' || _ssellcase == null)) {
-      searchEndPoint = searchEndPoint + '&sellcase=$_ssellcase';
+    if (!(_sSellCase == '' || _sSellCase == null)) {
+      searchEndPoint = searchEndPoint + '&sellcase=$_sSellCase';
     }
-    if (!(_scolor == '' || _scolor == null)) {
-      searchEndPoint = searchEndPoint + '&color=$_scolor';
+    if (!(_sColor == '' || _sColor == null)) {
+      searchEndPoint = searchEndPoint + '&color=$_sColor';
     }
-    if (!(_sstatus == '' || _sstatus == null)) {
-      searchEndPoint = searchEndPoint + '&status=$_sstatus';
+    if (!(_sStatus == '' || _sStatus == null)) {
+      searchEndPoint = searchEndPoint + '&status=$_sStatus';
     }
-    if (!(_spriceRange == '' || _spriceRange == null)) {
-      searchEndPoint = searchEndPoint + '&price_range=$_spriceRange';
+    if (!(_sPriceRange == '' || _sPriceRange == null)) {
+      searchEndPoint = searchEndPoint + '&price_range=$_sPriceRange';
     }
-    if (!(_scategory == '' || _scategory == null)) {
-      searchEndPoint = searchEndPoint + '&productcat=$_scategory';
+    if (!(_sCategory == '' || _sCategory == null)) {
+      searchEndPoint = searchEndPoint + '&productcat=$_sCategory';
     }
     print(searchEndPoint);
   }
 
-  static Product _item_zero = Product();
-  Product _item = _item_zero;
+  static Product _itemZero = Product();
+  Product _item = _itemZero;
 
   String _token;
 
@@ -129,14 +128,14 @@ class Products with ChangeNotifier {
     return _cartItems;
   }
 
-  get scategory => _scategory;
+  get sCategory => _sCategory;
 
-  set scategory(value) {
-    _scategory = value;
+  set sCategory(value) {
+    _sCategory = value;
   }
 
-  Future<void> addShopCart(
-      Product product, ColorCode colorId, int quantity, bool isLogin) async {
+  Future<void> addShopCart(Product product, ColorCodeProductDetail colorId,
+      int quantity, bool isLogin) async {
     print('addShopCart');
 //    print(colorId.toString());
     try {
@@ -171,7 +170,7 @@ class Products with ChangeNotifier {
           featured_media_url: product.featured_image,
           color_selected: ColorCodeCard(
               id: colorId.id,
-              color_code: colorId.color_code,
+              color_code: colorId.colorCode,
               title: colorId.title),
           productCount: quantity,
         ));
@@ -187,7 +186,7 @@ class Products with ChangeNotifier {
             featured_media_url: product.featured_image,
             color_selected: ColorCodeCard(
                 id: colorId.id,
-                color_code: colorId.color_code,
+                color_code: colorId.colorCode,
                 title: colorId.title),
             productCount: quantity));
       }
@@ -417,47 +416,47 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  set sper_page(value) {
-    _sper_page = value;
+  set sPerPage(value) {
+    _sPerPage = value;
   }
 
-  set sorder(value) {
-    _sorder = value;
+  set sOrder(value) {
+    _sOrder = value;
   }
 
-  set sorderby(value) {
-    _sorderby = value;
+  set sOrderBy(value) {
+    _sOrderBy = value;
   }
 
-  set sbrand(value) {
-    _sbrand = value;
+  set sBrand(value) {
+    _sBrand = value;
   }
 
-  set sproductcat(value) {
-    _sproductcat = value;
+  set sProductCat(value) {
+    _sProductCat = value;
   }
 
-  set ssellcase(value) {
-    _ssellcase = value;
+  set sSellCase(value) {
+    _sSellCase = value;
   }
 
-  set scolor(value) {
-    _scolor = value;
+  set sColor(value) {
+    _sColor = value;
   }
 
-  set sstatus(value) {
-    _sstatus = value;
+  set sStatus(value) {
+    _sStatus = value;
   }
 
-  set spage(value) {
-    _spage = value;
+  set sPage(value) {
+    _sPage = value;
   }
 
-  set spriceRange(value) {
-    _spriceRange = value;
+  set sPriceRange(value) {
+    _sPriceRange = value;
   }
 
-  get ssellcase => _ssellcase;
+  get sSellCase => _sSellCase;
 
   bool get isFiltered => _isFiltered;
 
@@ -467,5 +466,5 @@ class Products with ChangeNotifier {
     _item = value;
   }
 
-  Product get item_zero => _item_zero;
+  Product get itemZero => _itemZero;
 }

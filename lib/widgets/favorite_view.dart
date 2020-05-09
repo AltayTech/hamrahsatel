@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/productFavorite.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../screens/customer_info/login_screen.dart';
 import 'product_item_favorite_screen.dart';
 
@@ -38,7 +38,7 @@ class _FavoriteViewState extends State<FavoriteView> {
     });
 
     await Provider.of<CustomerInfo>(context, listen: false).getFavorite();
-    loadedProducts = Provider.of<CustomerInfo>(context).favoriteProducts;
+    loadedProducts = Provider.of<CustomerInfo>(context,listen:false).favoriteProducts;
     setState(() {
       _isLoading = false;
       print(_isLoading.toString());

@@ -112,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           return DecoratedBox(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: index.isEven ? Colors.white : Colors.white,
+                              color: index.isEven ? Colors.grey : Colors.grey,
                             ),
                           );
                         },

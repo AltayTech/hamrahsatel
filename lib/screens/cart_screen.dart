@@ -3,12 +3,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../provider/app_theme.dart';
+import '../customer_info.dart';
 import '../models/customer.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
 import '../screens/cash_payment_screen.dart';
 import '../screens/credit_payment_screen.dart';
 import '../widgets/card_item.dart';
@@ -61,18 +61,19 @@ class _CartScreenState extends State<CartScreen> {
   void didChangeDependencies() async {
     if (_isInit) {
       getShopItems();
-//      customer = Provider.of<CustomerInfo>(context).customer;
+      customer = Provider.of<CustomerInfo>(context, listen: false).customer;
       _isLoading = true;
 
 //      await getShopItems();
-      bool isLogin = Provider.of<Auth>(context).isAuth;
-      print(isLogin.toString() +
-          'dsfsdfffffffffffffffffffffffffffffffffffffffffff');
+      bool isLogin = Provider.of<Auth>(context, listen: false).isAuth;
 
       if (isLogin) {
         try {
-           Provider.of<CustomerInfo>(context, listen: false).getCustomer().then((_){  customer = Provider.of<CustomerInfo>(context).customer;});
-
+          Provider.of<CustomerInfo>(context, listen: false).getCustomer().then(
+            (_) {
+              customer = Provider.of<CustomerInfo>(context, listen: false).customer;
+            },
+          );
         } catch (error) {
           print(error);
 
@@ -92,7 +93,7 @@ class _CartScreenState extends State<CartScreen> {
     setState(() {
       _isLoading = true;
     });
-    shoppItems = Provider.of<Products>(context).cartItems;
+    shoppItems = Provider.of<Products>(context, listen: false).cartItems;
     totalPrice = 0;
     transportCost = 10000;
 
@@ -124,7 +125,8 @@ class _CartScreenState extends State<CartScreen> {
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
-    bool isLogin = Provider.of<Auth>(context).isAuth;
+    bool isLogin = Provider.of<Auth>(context, listen: false).isAuth;
+    getShopItems();
 
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/shop.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/app_theme.dart';
@@ -22,7 +22,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   void didChangeDependencies() async {
     if (_isInit) {
       await Provider.of<CustomerInfo>(context, listen: false).fetchShopData();
-      shopData = Provider.of<CustomerInfo>(context).shop;
     }
     _isInit = false;
 
@@ -34,6 +33,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    shopData = Provider.of<CustomerInfo>(context,
+    ).shop;
 
     return Scaffold(
       appBar: AppBar(

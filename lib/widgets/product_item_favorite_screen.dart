@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../provider/app_theme.dart';
 import '../models/productFavorite.dart';
 import '../provider/Products.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../screens/product_detail_screen.dart';
 import 'en_to_ar_number_convertor.dart';
 
@@ -138,7 +138,7 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
           return InkWell(
               onTap: () {
                 Provider.of<Products>(context).item =
-                    Provider.of<Products>(context).item_zero;
+                    Provider.of<Products>(context).itemZero;
                 Navigator.of(context).pushNamed(
                   ProductDetailScreen.routeName,
                   arguments: product.id,
@@ -173,7 +173,7 @@ class _ProductItemFavoriteScreenState extends State<ProductItemFavoriteScreen> {
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.right,
                             style: TextStyle(
-                              color: AppTheme.primary,
+                              color: AppTheme.black,
                               fontFamily: 'Iransans',
                               fontSize: textScaleFactor * 12.0,
                             ),

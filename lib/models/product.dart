@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:hamrahsatel/models/color_code_product_detail.dart';
 
 import '../models/brand.dart';
-import '../models/color_code.dart';
 import '../models/meta_data.dart';
 import 'price.dart';
 
@@ -21,7 +21,7 @@ class Product with ChangeNotifier {
   final List<Brand> brand;
   final List<MetaData> productcat;
   final List<MetaData> sellcase;
-  final List<ColorCode> color;
+  final List<ColorCodeProductDetail> color;
   final List<MetaData> status;
 
   Product({
@@ -58,9 +58,9 @@ class Product with ChangeNotifier {
     List<MetaData> sellcaseRaw =
         sellcaseList.map((i) => MetaData.fromJson(i)).toList();
 
-    var colorList = parsedJson['color'] as List;
-    List<ColorCode> colorRaw =
-        colorList.map((i) => ColorCode.fromJson(i)).toList();
+    var colorList = parsedJson['colors_prices'] as List;
+    List<ColorCodeProductDetail> colorRaw =
+        colorList.map((i) => ColorCodeProductDetail.fromJson(i)).toList();
 
     var statusList = parsedJson['status'] as List;
     List<MetaData> statusRaw =

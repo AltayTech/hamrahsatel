@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../models/customer.dart';
 import '../models/message.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../provider/messages.dart';
 import '../widgets/message_reply_item.dart';
 import 'package:provider/provider.dart';
@@ -31,11 +31,11 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
 
   @override
   void didChangeDependencies() async {
-    messages = Provider.of<Messages>(context).allMessagesDetail;
+    messages = Provider.of<Messages>(context, listen: false).allMessagesDetail;
 
     if (_isInit) {
       message = ModalRoute.of(context).settings.arguments as Message;
-      customer = Provider.of<CustomerInfo>(context).customer;
+      customer = Provider.of<CustomerInfo>(context, listen: false).customer;
 
       loadMessages();
     }
@@ -53,7 +53,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
 
     await Provider.of<Messages>(context, listen: false)
         .getMessages(message.comment_post_ID, isLogin);
-    messages = Provider.of<Messages>(context).allMessagesDetail;
+    messages = Provider.of<Messages>(context, listen: false).allMessagesDetail;
     setState(() {
       _isLoading = false;
       print(_isLoading.toString());

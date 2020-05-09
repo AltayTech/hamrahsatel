@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import '../models/shop.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/app_theme.dart';
@@ -28,7 +28,6 @@ class _GuideScreenState extends State<GuideScreen> {
   void didChangeDependencies() async {
     if (_isInit) {
       await Provider.of<CustomerInfo>(context, listen: false).fetchShopData();
-      shopData = Provider.of<CustomerInfo>(context).shop;
 
       aboutInfoContent = [
         shopData.return_policy,
@@ -56,6 +55,7 @@ class _GuideScreenState extends State<GuideScreen> {
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     Provider.of<CommissionCalculator>(context, listen: false);
+    shopData = Provider.of<CustomerInfo>(context).shop;
 
     return Scaffold(
       appBar: AppBar(

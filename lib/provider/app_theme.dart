@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // independent main colors
 //  static Color primary = Color(0xff084177);
-  static Color primary = Colors.cyan;
+  static Color primary = Colors.cyan[600];
+
+//  static Color primary = Colors.teal;
+//  static Color primary = Color(0xff00CED1);
 
   static const Color secondary = Color(0xffCD8D7B);
   static const Color bg = Color(0xffF6F6F6);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hamrahsatel/customer_info.dart';
 import '../models/shop.dart';
-import '../provider/customer_info.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +35,6 @@ class _ContactWithUsState extends State<ContactWithUs> {
   void didChangeDependencies() async {
     if (_isInit) {
       await Provider.of<CustomerInfo>(context, listen: false).fetchShopData();
-      shopData = Provider.of<CustomerInfo>(context).shop;
 
       aboutInfoContent = [
         shopData.about_shop,
@@ -64,6 +63,7 @@ class _ContactWithUsState extends State<ContactWithUs> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    shopData = Provider.of<CustomerInfo>(context).shop;
 
     return Scaffold(
       appBar: AppBar(

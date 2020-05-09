@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/app_theme.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../screens/enter_cheque_screen.dart';
 import '../widgets/commission_calculator.dart';
 import '../widgets/main_drawer.dart';
@@ -23,7 +23,8 @@ class _CreditPaymentScreenState extends State<CreditPaymentScreen> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    List<ProductCart> shoppItems = Provider.of<Products>(context).cartItems;
+    List<ProductCart> shoppItems =
+        Provider.of<Products>(context, listen: false).cartItems;
     double totalPrice = 0;
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {

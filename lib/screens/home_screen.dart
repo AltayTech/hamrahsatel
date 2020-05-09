@@ -13,19 +13,19 @@ import '../screens/product_screen.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/horizontal_list.dart';
 
-class HomeScreeen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
 
   @override
-  _HomeScreeenState createState() => _HomeScreeenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreeenState extends State<HomeScreeen> {
+class _HomeScreenState extends State<HomeScreen> {
   bool _isInit = true;
   final searchTextController = TextEditingController();
   int _current = 0;
 
-  List<ProductCart> shoppItems;
+  List<ProductCart> shopItems;
 
   List<HomeSlider> slider = [];
 
@@ -52,12 +52,12 @@ class _HomeScreeenState extends State<HomeScreeen> {
       bool _isFirstLogin =
           Provider.of<Auth>(context, listen: false).isFirstLogin;
       if (_isFirstLogin) {
-        _showLogindialog(context);
+        _showLoginDialog(context);
       }
       bool _isFirstLogout =
           Provider.of<Auth>(context, listen: false).isFirstLogout;
       if (_isFirstLogout) {
-        _showLoginDialog_exit(context);
+        _showLoginDialogExit(context);
       }
 
       Provider.of<Auth>(context, listen: false).isFirstLogin = false;
@@ -73,7 +73,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     super.dispose();
   }
 
-  void _showLogindialog(BuildContext context) {
+  void _showLoginDialog(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialog<String>(
         context: context,
@@ -87,7 +87,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     });
   }
 
-  void _showLoginDialog_exit(BuildContext context) {
+  void _showLoginDialogExit(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialog<String>(
         context: context,
@@ -108,14 +108,14 @@ class _HomeScreeenState extends State<HomeScreeen> {
 
     Provider.of<Products>(context, listen: false).searchKey = '';
     Provider.of<Products>(context, listen: false).filterTitle.clear();
-    Provider.of<Products>(context, listen: false).sproductcat = '';
-    Provider.of<Products>(context, listen: false).sbrand = brandsEndpoint;
-    Provider.of<Products>(context, listen: false).scolor = colorsEndpoint;
-    Provider.of<Products>(context, listen: false).spriceRange = priceRange;
-    Provider.of<Products>(context, listen: false).spage = 1;
-    Provider.of<Products>(context, listen: false).ssellcase = sellcaseEndpoint;
+    Provider.of<Products>(context, listen: false).sProductCat = '';
+    Provider.of<Products>(context, listen: false).sBrand = brandsEndpoint;
+    Provider.of<Products>(context, listen: false).sColor = colorsEndpoint;
+    Provider.of<Products>(context, listen: false).sPriceRange = priceRange;
+    Provider.of<Products>(context, listen: false).sPage = 1;
+    Provider.of<Products>(context, listen: false).sSellCase = sellcaseEndpoint;
     Provider.of<Products>(context, listen: false).searchBuilder();
-    Provider.of<Products>(context, listen: false).checkfiltered();
+    Provider.of<Products>(context, listen: false).checkFiltered();
   }
 
   @override
@@ -128,17 +128,18 @@ class _HomeScreeenState extends State<HomeScreeen> {
       child: Container(
         color: AppTheme.bg,
         child: Column(
+
           children: <Widget>[
             Container(
-              height: deviceWidth * 0.4,
+              height: deviceWidth * 0.45,
               child: InkWell(
-                onTap: () {
-                  cleanFilters(context);
-                  Provider.of<Products>(context).ssellcase = '71';
-
-                  Navigator.of(context)
-                      .pushNamed(ProductsScreen.routeName, arguments: 0);
-                },
+//                onTap: () {
+//                  cleanFilters(context);
+//                  Provider.of<Products>(context).sSellCase = '71';
+//
+//                  Navigator.of(context)
+//                      .pushNamed(ProductsScreen.routeName, arguments: 0);
+//                },
                 child: Stack(
                   children: <Widget>[
                     Container(
@@ -223,20 +224,20 @@ class _HomeScreeenState extends State<HomeScreeen> {
 
                 Provider.of<Products>(context, listen: false).searchKey = '';
 
-                Provider.of<Products>(context, listen: false).sbrand =
+                Provider.of<Products>(context, listen: false).sBrand =
                     brandsEndpoint;
-                Provider.of<Products>(context, listen: false).scolor =
+                Provider.of<Products>(context, listen: false).sColor =
                     colorsEndpoint;
-                Provider.of<Products>(context, listen: false).spriceRange =
+                Provider.of<Products>(context, listen: false).sPriceRange =
                     priceRange;
-                Provider.of<Products>(context, listen: false).spage = 1;
-                Provider.of<Products>(context, listen: false).ssellcase =
+                Provider.of<Products>(context, listen: false).sPage = 1;
+                Provider.of<Products>(context, listen: false).sSellCase =
                     sellcaseEndpoint;
                 Provider.of<Products>(context, listen: false).searchBuilder();
-                Provider.of<Products>(context, listen: false).checkfiltered();
+                Provider.of<Products>(context, listen: false).checkFiltered();
 
                 Provider.of<Products>(context, listen: false).searchBuilder();
-                Provider.of<Products>(context, listen: false).checkfiltered();
+                Provider.of<Products>(context, listen: false).checkFiltered();
                 Navigator.of(context)
                     .pushNamed(ProductsScreen.routeName, arguments: 0);
               },
@@ -259,7 +260,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                       )
                     ],
                     color: AppTheme.primary,
-                    borderRadius: BorderRadius.circular(3),
+//                    borderRadius: BorderRadius.circular(3),
                   ),
                   child: Center(
                     child: Text(

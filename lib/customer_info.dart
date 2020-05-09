@@ -3,23 +3,23 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import '../models/color_code.dart';
-import '../models/price.dart';
-import '../models/shop.dart';
+import 'models/color_code.dart';
+import 'models/price.dart';
+import 'models/shop.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/customer.dart';
-import '../models/order.dart';
-import '../models/orderItem.dart';
-import '../models/order_details.dart';
-import '../models/order_details_aghsat.dart';
-import '../models/personal_data.dart';
-import '../models/productFavorite.dart';
-import 'urls.dart';
+import 'models/customer.dart';
+import 'models/order.dart';
+import 'models/orderItem.dart';
+import 'models/order_details.dart';
+import 'models/order_details_aghsat.dart';
+import 'models/personal_data.dart';
+import 'models/productFavorite.dart';
+import 'provider/urls.dart';
 
 class CustomerInfo with ChangeNotifier {
   String _payUrl = '';
@@ -365,6 +365,13 @@ class CustomerInfo with ChangeNotifier {
     String shenaseh,
   }) async {
     print('sendAqsatOrder');
+    print(number_pay);
+    print(month_per_ghest);
+    print(deposit);
+    print(bank);
+    print(branch);
+    print(owner);
+    print(shenaseh);
 
     final url = Urls.rootUrl +
         Urls.orderInfoEndPoint +

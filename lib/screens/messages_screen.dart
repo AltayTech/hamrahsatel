@@ -45,12 +45,12 @@ class _MessageScreenState extends State<MessageScreen> {
       _isLoading = true;
     });
 
-    bool isLogin = Provider.of<Auth>(context).isAuth;
+    bool isLogin = Provider.of<Auth>(context, listen: false).isAuth;
 
     await Provider.of<Messages>(context, listen: false)
         .getMessages('0', isLogin);
 
-    messages = Provider.of<Messages>(context).allMessages;
+    messages = Provider.of<Messages>(context, listen: false).allMessages;
 
     setState(() {
       _isLoading = false;

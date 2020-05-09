@@ -8,7 +8,7 @@ import '../provider/app_theme.dart';
 import '../models/color_code.dart';
 import '../models/gallery.dart';
 import '../models/order_details.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/main_drawer.dart';
 import 'product_detail_screen.dart';
@@ -53,7 +53,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
         .payCashOrder(orderId);
 
     print(_isLoading.toString());
-    var payUrl = await Provider.of<CustomerInfo>(context).payUrl;
+    var payUrl = await Provider.of<CustomerInfo>(context, listen: false).payUrl;
     _launchURL(payUrl);
     setState(() {
       _isLoading = false;
@@ -127,7 +127,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
 
-    orderDetails = Provider.of<CustomerInfo>(context).getOrder();
+    orderDetails = Provider.of<CustomerInfo>(context, listen: false).getOrder();
     _imageList = orderDetails.orderDetailsAghsat.cheque_images;
     checkStatus(orderDetails);
 
@@ -215,7 +215,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                           child: Text(
                                             orderDetails.shenaseh.toString(),
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -240,7 +240,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                             orderDetails.order_register_date
                                                 .toString(),
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -271,7 +271,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                                     .toString() +
                                                 ' تومان',
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -295,7 +295,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                           child: Text(
                                             orderDetails.pay_type.toString(),
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -319,7 +319,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                           child: Text(
                                             orderDetails.pay_status.toString(),
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -352,7 +352,7 @@ class _OrderViewScreenState extends State<OrderViewScreen> {
                                                     ' تومان'
                                                 : '-',
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 14,
                                             ),
@@ -652,7 +652,7 @@ class OrderProductItem extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: 'Iransans',
                         fontSize: textScaleFactor * 14.0,
-                        color: AppTheme.primary),
+                        color: AppTheme.black),
                   ),
                 ),
                 Expanded(
@@ -686,7 +686,7 @@ class OrderProductItem extends StatelessWidget {
                                   child: Text(
                                     color.title,
                                     style: TextStyle(
-                                      color: AppTheme.primary,
+                                      color: AppTheme.black,
                                       fontFamily: 'Iransans',
                                       fontSize: textScaleFactor * 12,
                                     ),

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../provider/app_theme.dart';
-import '../models/product.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../models/product.dart';
+import '../provider/app_theme.dart';
 import 'en_to_ar_number_convertor.dart';
 
 class CustomDialogSelectColor extends StatefulWidget {
@@ -86,7 +86,7 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                   style: TextStyle(
                     color: AppTheme.secondary,
                     fontFamily: 'Iransans',
-                    fontSize: MediaQuery.of(context).textScaleFactor * 14,
+                    fontSize: textScaleFactor * 14,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -100,9 +100,11 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
-                        _selectedColorIndex = index;
-                        _selectedColor = widget.product.color[index];
-                        setState(() {});
+                        if (widget.product.color[index].available) {
+                          _selectedColorIndex = index;
+                          _selectedColor = widget.product.color[index];
+                          setState(() {});
+                        }
                       },
                       child: Container(
                         decoration: _selectedColorIndex == index
@@ -121,15 +123,22 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                             Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                widget.product.color[index].price.isNotEmpty
-                                    ? EnArConvertor().replaceArNumber(
-                                        currencyFormat
-                                            .format(double.parse(widget
-                                                .product.color[index].price))
-                                            .toString())
-                                    : EnArConvertor().replaceArNumber('0'),
+                                widget.product.color[index].available
+                                    ? widget.product.color[index].price
+                                            .isNotEmpty
+                                        ? EnArConvertor().replaceArNumber(
+                                            currencyFormat
+                                                .format(double.parse(widget
+                                                    .product
+                                                    .color[index]
+                                                    .price))
+                                                .toString())
+                                        : EnArConvertor().replaceArNumber('0')
+                                    : 'ناموجود',
                                 style: TextStyle(
-                                  color: AppTheme.primary,
+                                  color: widget.product.color[index].available
+                                      ? AppTheme.primary
+                                      : AppTheme.grey,
                                   fontFamily: 'Iransans',
                                   fontSize: textScaleFactor * 20.0,
                                 ),
@@ -139,13 +148,12 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
                                 widget.product.color[index].title,
-
                                 style: TextStyle(
-                                  color: AppTheme.primary,
+                                  color: widget.product.color[index].available
+                                      ? AppTheme.primary
+                                      : AppTheme.grey,
                                   fontFamily: 'Iransans',
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          16,
+                                  fontSize: textScaleFactor * 16,
                                 ),
                               ),
                             ),
@@ -161,7 +169,7 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                                   color: Color(
                                     int.parse(
                                       '0xff' +
-                                          widget.product.color[index].color_code
+                                          widget.product.color[index].colorCode
                                               .replaceRange(0, 1, ''),
                                     ),
                                   ),
@@ -186,8 +194,8 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: deviceHeight * 0.06,
+                              width: deviceWidth * 0.6,
                               decoration: BoxDecoration(
                                 color: _selectedColorIndex != null
                                     ? AppTheme.primary
@@ -202,8 +210,7 @@ class _CustomDialogSelectColorState extends State<CustomDialogSelectColor> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Iransans',
-                                      fontSize: MediaQuery.of(context)
-                                              .textScaleFactor *
+                                      fontSize:textScaleFactor *
                                           16,
                                     ),
                                   ),

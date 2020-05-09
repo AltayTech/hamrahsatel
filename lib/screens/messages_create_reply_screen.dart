@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../models/customer.dart';
 import '../models/message.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../provider/messages.dart';
 import '../widgets/message_reply_item.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +41,9 @@ class _MessageCreateReplyScreenState extends State<MessageCreateReplyScreen> {
     if (_isInit) {
       contentTextController.text = '';
       message = ModalRoute.of(context).settings.arguments as Message;
-      customer = Provider.of<CustomerInfo>(context).customer;
+      customer = Provider.of<CustomerInfo>(context, listen: false).customer;
 
-      isLogin = Provider.of<Auth>(context).isAuth;
+      isLogin = Provider.of<Auth>(context, listen: false).isAuth;
     }
     _isInit = false;
 

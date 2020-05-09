@@ -70,31 +70,31 @@ class HorizontalList extends StatelessWidget {
                                 .searchKey = '';
 
                             Provider.of<Products>(context, listen: false)
-                                .sbrand = brandsEndpoint;
+                                .sBrand = brandsEndpoint;
                             Provider.of<Products>(context, listen: false)
-                                .scolor = colorsEndpoint;
+                                .sColor = colorsEndpoint;
                             Provider.of<Products>(context, listen: false)
-                                .spriceRange = priceRange;
+                                .sPriceRange = priceRange;
                             Provider.of<Products>(context, listen: false)
-                                .spage = 1;
+                                .sPage = 1;
                             Provider.of<Products>(context, listen: false)
-                                .ssellcase = sellcaseEndpoint;
+                                .sSellCase = sellcaseEndpoint;
                             Provider.of<Products>(context, listen: false)
                                 .searchBuilder();
                             Provider.of<Products>(context, listen: false)
-                                .checkfiltered();
+                                .checkFiltered();
                             if (isDiscounted) {
                               sellcaseEndpoint = endPointBuilder([73]);
 
                               Provider.of<Products>(context, listen: false)
-                                  .ssellcase = sellcaseEndpoint;
+                                  .sSellCase = sellcaseEndpoint;
                             }
                             ;
 
                             Provider.of<Products>(context, listen: false)
                                 .searchBuilder();
                             Provider.of<Products>(context, listen: false)
-                                .checkfiltered();
+                                .checkFiltered();
 
                             return Navigator.of(context).pushNamed(
                                 ProductsScreen.routeName,

@@ -4,8 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
+import '../customer_info.dart';
 import '../provider/app_theme.dart';
-import '../provider/customer_info.dart';
 import '../widgets/commission_calculator.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
@@ -118,13 +118,6 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
     });
     try {
       if (_isAgree) {
-        print(qestCount.toString());
-        print(monthCount.toString());
-        print(deposit.toString());
-        print(_bankController.text.toString());
-        print(_branchController.text.toString());
-        print(_ownerController.text.toString());
-        print(_chequeShenasehController.text.toString());
         await Provider.of<CustomerInfo>(context, listen: false).sendAqsatOrder(
             number_pay: qestCount.toString(),
             month_per_ghest: monthCount.toString(),
@@ -174,14 +167,19 @@ class _EnterChequeScreenState extends State<EnterChequeScreen>
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
     List<int> qestTimeList =
-        Provider.of<CommissionCalculator>(context).qestTiming;
+        Provider.of<CommissionCalculator>(context, listen: false).qestTiming;
     double commissionPerQest =
-        Provider.of<CommissionCalculator>(context).commissionPerQest;
-    double pricePerQest = Provider.of<CommissionCalculator>(context).qest;
-    int qestCount = Provider.of<CommissionCalculator>(context).qestCount;
-    int monthCount = Provider.of<CommissionCalculator>(context).monthCount;
+        Provider.of<CommissionCalculator>(context, listen: false)
+            .commissionPerQest;
+    double pricePerQest =
+        Provider.of<CommissionCalculator>(context, listen: false).qest;
+    int qestCount =
+        Provider.of<CommissionCalculator>(context, listen: false).qestCount;
+    int monthCount =
+        Provider.of<CommissionCalculator>(context, listen: false).monthCount;
 
-    double deposit = Provider.of<CommissionCalculator>(context).deposit;
+    double deposit =
+        Provider.of<CommissionCalculator>(context, listen: false).deposit;
 
     return Scaffold(
       appBar: AppBar(

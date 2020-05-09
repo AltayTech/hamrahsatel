@@ -8,7 +8,7 @@ import '../provider/app_theme.dart';
 import '../models/customer.dart';
 import '../models/product_cart.dart';
 import '../provider/Products.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/main_drawer.dart';
 
@@ -49,11 +49,11 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
       _isLoading = true;
     });
     await Provider.of<CustomerInfo>(context, listen: false).sendNaghdOrder();
-    int orderId = await Provider.of<CustomerInfo>(context).currentOrderId;
+    int orderId = await Provider.of<CustomerInfo>(context, listen: false).currentOrderId;
     print(orderId);
     await Provider.of<CustomerInfo>(context, listen: false)
         .payCashOrder(orderId);
-    String _payUrl = await Provider.of<CustomerInfo>(context).payUrl;
+    String _payUrl = await Provider.of<CustomerInfo>(context, listen: false).payUrl;
     print('1' + _payUrl);
     _launchURL(_payUrl);
 
@@ -71,8 +71,8 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     var currencyFormat = intl.NumberFormat.decimalPattern();
 
-    Customer customer = Provider.of<CustomerInfo>(context).customer;
-    List<ProductCart> shoppItems = Provider.of<Products>(context).cartItems;
+    Customer customer = Provider.of<CustomerInfo>(context, listen: false).customer;
+    List<ProductCart> shoppItems = Provider.of<Products>(context, listen: false).cartItems;
     double totalPrice = 0;
     if (shoppItems.isNotEmpty) {
       for (int i = 0; i < shoppItems.length; i++) {

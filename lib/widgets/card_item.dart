@@ -79,7 +79,7 @@ class _CardItemState extends State<CardItem> {
           child: InkWell(
             onTap: () {
               Provider.of<Products>(context).item =
-                  Provider.of<Products>(context).item_zero;
+                  Provider.of<Products>(context).itemZero;
               Navigator.of(context).pushNamed(
                 ProductDetailScreen.routeName,
                 arguments: widget.shoppItem.id,
@@ -124,7 +124,7 @@ class _CardItemState extends State<CardItem> {
                                           ? widget.shoppItem.title
                                           : 'ندارد',
                                       style: TextStyle(
-                                        color: AppTheme.primary,
+                                        color: AppTheme.black,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Iransans',
                                         fontSize: textScaleFactor * 12,
@@ -169,7 +169,7 @@ class _CardItemState extends State<CardItem> {
                                             widget
                                                 .shoppItem.color_selected.title,
                                             style: TextStyle(
-                                              color: AppTheme.primary,
+                                              color: AppTheme.black,
                                               fontFamily: 'Iransans',
                                               fontSize: textScaleFactor * 12,
                                             ),
@@ -242,7 +242,7 @@ class _CardItemState extends State<CardItem> {
                                                         .toString())
                                                     .toString(),
                                                 style: TextStyle(
-                                                  color: AppTheme.primary,
+                                                  color: AppTheme.black,
                                                   fontFamily: 'Iransans',
                                                   fontSize:
                                                       textScaleFactor * 14,
@@ -312,7 +312,7 @@ class _CardItemState extends State<CardItem> {
                                                   : EnArConvertor()
                                                       .replaceArNumber('0'),
                                               style: TextStyle(
-                                                color: AppTheme.secondary,
+                                                color: AppTheme.primary,
                                                 fontFamily: 'Iransans',
                                                 fontSize: textScaleFactor * 15,
                                               ),

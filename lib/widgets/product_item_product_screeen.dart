@@ -28,9 +28,9 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.secondary,
+            color: AppTheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 15.0,
+            fontSize: textScaleFactor * 17.0,
           ),
         );
       } else if (product.price.price == '0' || product.price.price.isEmpty) {
@@ -42,9 +42,9 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.secondary,
+            color: AppTheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 15.0,
+            fontSize: textScaleFactor * 17.0,
           ),
         );
       } else if (product.price.price == '0' || product.price.price.isEmpty) {
@@ -56,9 +56,9 @@ class ProductItemProductScreen extends StatelessWidget {
               : EnArConvertor().replaceArNumber('0'),
           style: TextStyle(
             fontFamily: 'Iransans',
-            color: AppTheme.secondary,
+            color: AppTheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 15.0,
+            fontSize: textScaleFactor * 17.0,
           ),
         );
       } else {
@@ -74,7 +74,7 @@ class ProductItemProductScreen extends StatelessWidget {
               style: TextStyle(
                 decoration: TextDecoration.lineThrough,
                 fontFamily: 'Iransans',
-                color: AppTheme.accent,
+                color: AppTheme.grey,
                 fontSize: textScaleFactor * 15.0,
               ),
             ),
@@ -87,8 +87,8 @@ class ProductItemProductScreen extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Iransans',
                 fontWeight: FontWeight.bold,
-                color: AppTheme.secondary,
-                fontSize: textScaleFactor * 15.0,
+                color: AppTheme.primary,
+                fontSize: textScaleFactor * 17.0,
               ),
             )
           ],
@@ -103,7 +103,7 @@ class ProductItemProductScreen extends StatelessWidget {
           return InkWell(
             onTap: () {
               Provider.of<Products>(context).item =
-                  Provider.of<Products>(context).item_zero;
+                  Provider.of<Products>(context).itemZero;
               Navigator.of(context).pushNamed(
                 ProductDetailScreen.routeName,
                 arguments: product.id,
@@ -120,10 +120,15 @@ class ProductItemProductScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FadeInImage(
-                            placeholder: AssetImage('assets/images/circle.gif'),
-                            image: NetworkImage(product.featured_image),
-                            fit: BoxFit.cover,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: FadeInImage(
+                                placeholder: AssetImage('assets/images/circle.gif'),
+                                image: NetworkImage(product.featured_image),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                           Container(
                             height: constraints.maxHeight * 0.08,
@@ -154,7 +159,7 @@ class ProductItemProductScreen extends StatelessWidget {
                                             int.parse(
                                               '0xff' +
                                                   product
-                                                      .color[index].color_code
+                                                      .color[index].colorCode
                                                       .replaceRange(0, 1, ''),
                                             ),
                                           ),
@@ -173,6 +178,7 @@ class ProductItemProductScreen extends StatelessWidget {
                       flex: 10,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
                             padding:
@@ -183,9 +189,10 @@ class ProductItemProductScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.right,
                               style: TextStyle(
-                                color: AppTheme.primary,
+                                color: AppTheme.black,
                                 fontFamily: 'Iransans',
-                                fontSize: textScaleFactor * 14.0,
+//                                fontWeight: FontWeight.w500,
+                                fontSize: textScaleFactor * 16.0,
                               ),
                             ),
                           ),
@@ -197,11 +204,20 @@ class ProductItemProductScreen extends StatelessWidget {
                                   bottom: 12,
                                   right: 10,
                                 ),
-                                child: Image.network(
-                                  product.brand[0].brand_img_url,
-                                  fit: BoxFit.contain,
-                                  height: constraints.maxHeight * 0.25,
+                                child:
+
+                                Text(
+                                  product.brand[0].title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: AppTheme.grey,
+                                    fontFamily: 'Iransans',
+                                    fontSize: textScaleFactor * 14.0,
+                                  ),
                                 ),
+
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(

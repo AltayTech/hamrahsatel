@@ -4,13 +4,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../provider/app_theme.dart';
 import '../models/brand.dart';
 import '../models/color_code.dart';
 import '../models/home_page.dart';
 import '../models/product.dart';
 import '../models/products_detail.dart';
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../widgets/badge.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/filter_drawer.dart';
@@ -60,11 +60,16 @@ class _ProductsScreenState extends State<ProductsScreen>
   List<Brand> brandList = [];
   Brand selectedBrand;
 
-  bool inSearch = false;
+
+  AnimationController _controller;
+  Animation<Offset> _slideAnimation;
+  Animation<double> _opacityAnimation;
+
+
 
   @override
   void initState() {
-    Provider.of<Products>(context, listen: false).spage = 1;
+    Provider.of<Products>(context, listen: false).sPage = 1;
 
     Provider.of<Products>(context, listen: false).searchBuilder();
 
@@ -72,18 +77,40 @@ class _ProductsScreenState extends State<ProductsScreen>
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         page = page + 1;
-        Provider.of<Products>(context, listen: false).spage = page;
+        Provider.of<Products>(context, listen: false).sPage = page;
 
         searchItems();
       }
     });
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 600,
+      ),
+    );
 
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(-0.9, -3),
+      end: Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.ease,
+      ),
+    );
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.ease,
+      ),
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _controller.dispose();
 
     super.dispose();
   }
@@ -94,13 +121,13 @@ class _ProductsScreenState extends State<ProductsScreen>
       int tabIndex = ModalRoute.of(context).settings.arguments as int;
       print(_isLoading.toString());
 
-      loadedHomePage = Provider.of<Products>(context).homeItems;
+      loadedHomePage = Provider.of<Products>(context, listen: false).homeItems;
       print(_isLoading.toString());
 
       Provider.of<Products>(context, listen: false).searchBuilder();
       print(_isLoading.toString());
 
-      Provider.of<Products>(context, listen: false).checkfiltered();
+      Provider.of<Products>(context, listen: false).checkFiltered();
       print(_isLoading.toString());
 
       brandList = loadedHomePage.brands;
@@ -128,7 +155,7 @@ class _ProductsScreenState extends State<ProductsScreen>
 
   Future<void> _submit() async {
     loadedProducts.clear();
-    loadedProducts = await Provider.of<Products>(context).items;
+    loadedProducts = await Provider.of<Products>(context, listen: false).items;
     loadedProductstolist.addAll(loadedProducts);
   }
 
@@ -145,8 +172,9 @@ class _ProductsScreenState extends State<ProductsScreen>
 
     Provider.of<Products>(context, listen: false).searchBuilder();
     await Provider.of<Products>(context, listen: false).searchItem();
-    productsDetail = Provider.of<Products>(context).searchDetails;
-    filterList = Provider.of<Products>(context).filterTitle;
+    productsDetail =
+        Provider.of<Products>(context, listen: false).searchDetails;
+    filterList = Provider.of<Products>(context, listen: false).filterTitle;
 
     print(_isLoading.toString());
     print(_isLoading.toString());
@@ -174,11 +202,11 @@ class _ProductsScreenState extends State<ProductsScreen>
 
     Provider.of<Products>(context, listen: false).searchKey = '';
 
-    Provider.of<Products>(context, listen: false).sbrand = brandsEndpoint;
-    Provider.of<Products>(context, listen: false).scolor = colorsEndpoint;
-    Provider.of<Products>(context, listen: false).spriceRange = priceRange;
-    Provider.of<Products>(context, listen: false).spage = 1;
-    Provider.of<Products>(context, listen: false).ssellcase = sellcaseEndpoint;
+    Provider.of<Products>(context, listen: false).sBrand = brandsEndpoint;
+    Provider.of<Products>(context, listen: false).sColor = colorsEndpoint;
+    Provider.of<Products>(context, listen: false).sPriceRange = priceRange;
+    Provider.of<Products>(context, listen: false).sPage = 1;
+    Provider.of<Products>(context, listen: false).sSellCase = sellcaseEndpoint;
 
     Provider.of<Products>(context, listen: false).searchBuilder();
 
@@ -186,11 +214,11 @@ class _ProductsScreenState extends State<ProductsScreen>
 
     String categoriesEndpoint =
         _selectedCategoryId != 0 ? '$_selectedCategoryId' : '';
-    Provider.of<Products>(context, listen: false).scategory =
+    Provider.of<Products>(context, listen: false).sCategory =
         categoriesEndpoint;
 
     Provider.of<Products>(context, listen: false).searchBuilder();
-    Provider.of<Products>(context, listen: false).checkfiltered();
+    Provider.of<Products>(context, listen: false).checkFiltered();
     loadedProductstolist.clear();
 
     await searchItems();
@@ -225,7 +253,7 @@ class _ProductsScreenState extends State<ProductsScreen>
     var deviceAspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     var currencyFormat = intl.NumberFormat.decimalPattern();
-    loadedHomePage = Provider.of<Products>(context).homeItems;
+    loadedHomePage = Provider.of<Products>(context, listen: false).homeItems;
     print('category length ' + loadedHomePage.categories.length.toString());
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -233,6 +261,12 @@ class _ProductsScreenState extends State<ProductsScreen>
         key: scaffoldKey,
         backgroundColor: Color(0xffF9F9F9),
         appBar: AppBar(
+          title: Text(
+            'محصولات',
+            style: TextStyle(
+              fontFamily: 'Iransans',
+            ),
+          ),
           backgroundColor: AppTheme.appBarColor,
           iconTheme: new IconThemeData(color: AppTheme.appBarIconColor),
           elevation: 0,
@@ -240,7 +274,7 @@ class _ProductsScreenState extends State<ProductsScreen>
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                inSearch = true;
+                _controller.forward();
                 setState(() {});
               },
               color: AppTheme.bg,
@@ -271,17 +305,14 @@ class _ProductsScreenState extends State<ProductsScreen>
         body: Stack(
           children: <Widget>[
             GestureDetector(
-              onVerticalDragDown: (_) {
-                if (inSearch) {
-                  inSearch = false;
-                  setState(() {});
-                }
+              onVerticalDragDown: (_) async {
+                _controller.reverse();
+                setState(() {});
               },
-              onTap: () {
-                if (inSearch) {
-                  inSearch = false;
-                  setState(() {});
-                }
+              onTap: () async {
+                _controller.reverse();
+
+                setState(() {});
               },
               child: SingleChildScrollView(
                 child: Padding(
@@ -322,7 +353,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                                           .clear();
                                       Provider.of<Products>(context,
                                               listen: false)
-                                          .checkfiltered();
+                                          .checkFiltered();
                                     },
                                     child: Container(
                                       decoration: _selectedCategoryId == 0
@@ -482,14 +513,14 @@ class _ProductsScreenState extends State<ProductsScreen>
                                                 if (sortValue == 'گرانترین') {
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorder = 'desc';
+                                                      .sOrder = 'desc';
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorderby = 'price';
+                                                      .sOrderBy = 'price';
                                                   page = 1;
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .spage = page;
+                                                      .sPage = page;
                                                   loadedProductstolist.clear();
 
                                                   searchItems();
@@ -497,29 +528,29 @@ class _ProductsScreenState extends State<ProductsScreen>
                                                     'ارزانترین') {
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorder = 'asc';
+                                                      .sOrder = 'asc';
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorderby = 'price';
+                                                      .sOrderBy = 'price';
 
                                                   page = 1;
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .spage = page;
+                                                      .sPage = page;
                                                   loadedProductstolist.clear();
 
                                                   searchItems();
                                                 } else {
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorder = 'desc';
+                                                      .sOrder = 'desc';
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .sorderby = 'date';
+                                                      .sOrderBy = 'date';
                                                   page = 1;
                                                   Provider.of<Products>(context,
                                                           listen: false)
-                                                      .spage = page;
+                                                      .sPage = page;
                                                   loadedProductstolist.clear();
 
                                                   searchItems();
@@ -607,18 +638,18 @@ class _ProductsScreenState extends State<ProductsScreen>
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .sbrand = brandsEndpoint;
+                                                    .sBrand = brandsEndpoint;
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .spage = 1;
+                                                    .sPage = 1;
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
                                                     .searchBuilder();
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .checkfiltered();
+                                                    .checkFiltered();
                                                 loadedProductstolist.clear();
 
                                                 searchItems();
@@ -712,18 +743,18 @@ class _ProductsScreenState extends State<ProductsScreen>
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .scolor = colorsEndpoint;
+                                                    .sColor = colorsEndpoint;
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .spage = 1;
+                                                    .sPage = 1;
 
                                                 Provider.of<Products>(context,
                                                         listen: false)
                                                     .searchBuilder();
                                                 Provider.of<Products>(context,
                                                         listen: false)
-                                                    .checkfiltered();
+                                                    .checkFiltered();
                                                 loadedProductstolist.clear();
 
                                                 searchItems();
@@ -967,128 +998,150 @@ class _ProductsScreenState extends State<ProductsScreen>
                 ),
               ),
             ),
-            inSearch
-                ? Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: AppBar().preferredSize.height,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: AppTheme.secondary,
-                            width: 0.6,
-                          ),
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                  onTap: () {
-                                    FocusScope.of(context)
-                                        .requestFocus(new FocusNode());
-                                    String brandsEndpoint = '';
-                                    String colorsEndpoint = '';
-                                    String sellcaseEndpoint = '';
-                                    String priceRange = '';
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .filterTitle
-                                        .clear();
-
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .searchKey = searchTextController.text;
-
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .sbrand = brandsEndpoint;
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .scolor = colorsEndpoint;
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .spriceRange = priceRange;
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .spage = 1;
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .ssellcase = sellcaseEndpoint;
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .searchBuilder();
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .checkfiltered();
-
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .searchBuilder();
-                                    Provider.of<Products>(context,
-                                            listen: false)
-                                        .checkfiltered();
-                                    loadedProductstolist.clear();
-
-                                    searchItems();
-                                  },
-                                  child: Icon(Icons.search)),
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                textInputAction: TextInputAction.search,
-                                onFieldSubmitted: (_) {
-                                  Provider.of<Products>(context, listen: false)
-                                      .searchKey = searchTextController.text;
-                                  Provider.of<Products>(context, listen: false)
-                                      .searchBuilder();
-
-                                  return Navigator.of(context).pushNamed(
-                                      ProductsScreen.routeName,
-                                      arguments: 0);
-                                },
-                                controller: searchTextController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    color: Colors.blue,
-                                    fontFamily: 'Iransans',
-                                    fontSize:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            12.0,
-                                  ),
-                                  hintText: 'جستجوی محصولات ...',
-                                  labelStyle: TextStyle(
-                                    color: Colors.blue,
-                                    fontFamily: 'Iransans',
-                                    fontSize:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            10.0,
-                                  ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AnimatedContainer(
+                duration: _controller.duration,
+                curve: Curves.easeIn,
+                child: ScaleTransition(
+                  scale: _opacityAnimation,
+                  child: FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: SlideTransition(
+                      position: _slideAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: AppBar().preferredSize.height,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppTheme.secondary,
+                                  width: 0.6,
                                 ),
                               ),
+                              child: Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        String brandsEndpoint = '';
+                                        String colorsEndpoint = '';
+                                        String sellcaseEndpoint = '';
+                                        String priceRange = '';
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .filterTitle
+                                            .clear();
+
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .searchKey =
+                                            searchTextController.text;
+
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .sBrand = brandsEndpoint;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .sColor = colorsEndpoint;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .sPriceRange = priceRange;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .sPage = 1;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .sSellCase = sellcaseEndpoint;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .searchBuilder();
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .checkFiltered();
+
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .searchBuilder();
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .checkFiltered();
+                                        Navigator.of(context).pushReplacementNamed(
+                                            ProductsScreen.routeName,
+                                            arguments: 0);
+                                      },
+                                      child: Icon(
+                                        Icons.search,
+                                        color: AppTheme.primary,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      textInputAction: TextInputAction.search,
+                                      onFieldSubmitted: (_) {
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .searchKey =
+                                            searchTextController.text;
+                                        Provider.of<Products>(context,
+                                            listen: false)
+                                            .searchBuilder();
+
+                                        return Navigator.of(context).pushNamed(
+                                            ProductsScreen.routeName,
+                                            arguments: 0);
+                                      },
+                                      controller: searchTextController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                              12.0,
+                                        ),
+                                        hintText: 'جستجوی محصولات ...',
+                                        labelStyle: TextStyle(
+                                          color: AppTheme.secondary,
+                                          fontFamily: 'Iransans',
+                                          fontSize: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                              10.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                        onTap: () {
+                                          _controller.reverse();
+                                          setState(() {});
+                                        },
+                                        child: Icon(Icons.clear)),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                  onTap: () {
-                                    inSearch = false;
-                                    setState(() {});
-                                  },
-                                  child: Icon(Icons.clear)),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  )
-                : Container(),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         drawer: Theme(

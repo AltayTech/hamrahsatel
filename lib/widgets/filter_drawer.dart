@@ -587,20 +587,20 @@ class _FilterDrawerState extends State<FilterDrawer> {
                           Provider.of<Products>(context, listen: false)
                               .searchKey = '';
 
-                          Provider.of<Products>(context, listen: false).sbrand =
+                          Provider.of<Products>(context, listen: false).sBrand =
                               brandsEndpoint;
-                          Provider.of<Products>(context, listen: false).scolor =
+                          Provider.of<Products>(context, listen: false).sColor =
                               colorsEndpoint;
                           Provider.of<Products>(context, listen: false)
-                              .spriceRange = priceRange;
-                          Provider.of<Products>(context, listen: false).spage =
+                              .sPriceRange = priceRange;
+                          Provider.of<Products>(context, listen: false).sPage =
                               1;
                           Provider.of<Products>(context, listen: false)
-                              .ssellcase = sellcaseEndpoint;
+                              .sSellCase = sellcaseEndpoint;
                           Provider.of<Products>(context, listen: false)
                               .searchBuilder();
                           Provider.of<Products>(context, listen: false)
-                              .checkfiltered();
+                              .checkFiltered();
 
                           brandsEndpoint = endPointBuilder(_selectedBrandId);
                           addToFilterList(_selectedColorTitle);
@@ -612,21 +612,21 @@ class _FilterDrawerState extends State<FilterDrawer> {
                               endPointBuilder(_selectedSellCaseId);
                           priceRange = '$startValue,$endValue';
 
-                          Provider.of<Products>(context, listen: false).sbrand =
+                          Provider.of<Products>(context, listen: false).sBrand =
                               brandsEndpoint;
-                          Provider.of<Products>(context, listen: false).scolor =
+                          Provider.of<Products>(context, listen: false).sColor =
                               colorsEndpoint;
                           _isPrice
                               ? Provider.of<Products>(context, listen: false)
-                                  .spriceRange = priceRange
+                                  .sPriceRange = priceRange
                               : Provider.of<Products>(context, listen: false)
-                                  .spriceRange = '';
+                                  .sPriceRange = '';
                           Provider.of<Products>(context, listen: false)
-                              .ssellcase = sellcaseEndpoint;
+                              .sSellCase = sellcaseEndpoint;
                           Provider.of<Products>(context, listen: false)
                               .searchBuilder();
                           Provider.of<Products>(context, listen: false)
-                              .checkfiltered();
+                              .checkFiltered();
 
                           widget.callback();
                           Navigator.pop(context);
@@ -672,24 +672,24 @@ class _FilterDrawerState extends State<FilterDrawer> {
                               .filterTitle
                               .clear();
 
-                          Provider.of<Products>(context, listen: false).sbrand =
+                          Provider.of<Products>(context, listen: false).sBrand =
                               brandsEndpoint;
-                          Provider.of<Products>(context, listen: false).spage =
+                          Provider.of<Products>(context, listen: false).sPage =
                               1;
-                          Provider.of<Products>(context, listen: false).scolor =
+                          Provider.of<Products>(context, listen: false).sColor =
                               colorsEndpoint;
                           Provider.of<Products>(context, listen: false)
-                              .spriceRange = priceRange;
-                          Provider.of<Products>(context, listen: false).spage =
+                              .sPriceRange = priceRange;
+                          Provider.of<Products>(context, listen: false).sPage =
                               1;
                           Provider.of<Products>(context, listen: false)
-                              .ssellcase = sellcaseEndpoint;
+                              .sSellCase = sellcaseEndpoint;
                           Provider.of<Products>(context, listen: false)
-                              .sproductcat = '';
+                              .sProductCat = '';
                           Provider.of<Products>(context, listen: false)
                               .searchBuilder();
                           Provider.of<Products>(context, listen: false)
-                              .checkfiltered();
+                              .checkFiltered();
 
                           widget.callback();
                           Navigator.pop(context);

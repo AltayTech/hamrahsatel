@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../provider/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/Products.dart';
+import '../provider/app_theme.dart';
 import '../widgets/en_to_ar_number_convertor.dart';
 import '../widgets/splashscreen.dart';
 import 'navigation_bottom_screen.dart';
@@ -35,7 +35,7 @@ class _SplashScreensState extends State<SplashScreens> {
         style: new TextStyle(
           fontFamily: 'BFarnaz',
           fontSize: MediaQuery.of(context).textScaleFactor * 30,
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
       loadingText: Text(
@@ -44,20 +44,21 @@ class _SplashScreensState extends State<SplashScreens> {
           fontFamily: 'Iransans',
           fontWeight: FontWeight.w400,
           fontSize: MediaQuery.of(context).textScaleFactor * 18,
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
       image: new Image.asset(
         'assets/images/logo_splash.png',
+        color: AppTheme.primary,
         fit: BoxFit.cover,
       ),
       gradientBackground: LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
-          AppTheme.h1,
-          AppTheme.primary,
-          AppTheme.primary,
+          AppTheme.bg,
+          AppTheme.bg,
+          AppTheme.bg,
         ],
       ),
       styleTextUnderTheLoader: new TextStyle(),

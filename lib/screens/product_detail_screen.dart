@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hamrahsatel/models/color_code_product_detail.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
-import '../models/color_code.dart';
+import '../customer_info.dart';
 import '../models/product.dart';
 import '../provider/Products.dart';
 import '../provider/app_theme.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
 import '../screens/product_detail_more_details_screen.dart';
 import '../widgets/badge.dart';
 import '../widgets/custom_dialog_select_color.dart';
@@ -36,7 +36,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Product loadedProduct;
   String _snackBarMessage = '';
 
-  var _selectedColor;
+  ColorCodeProductDetail _selectedColor;
 
   bool isLogin;
 
@@ -44,10 +44,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void didChangeDependencies() async {
     if (_isInit) {
       await searchItems();
-      loadedProduct = Provider.of<Products>(context).findById();
+      loadedProduct = Provider.of<Products>(context, listen: false).findById();
 //      _selectedColor = loadedProduct.color[0];
 
-      isLogin = Provider.of<Auth>(context).isAuth;
+      isLogin = Provider.of<Auth>(context, listen: false).isAuth;
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -66,7 +66,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     print(_isLoading.toString());
   }
 
-  Future<void> addToShoppingcart(
+  Future<void> addToShoppingCart(
       Product loadedProduct, var _selectedColor, bool isLogin) async {
     setState(() {
       _isLoading = true;
@@ -81,16 +81,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     print(_isLoading.toString());
   }
 
-  Future<void> addtoshopFromDialogBox(ColorCode selectedColor) async {
+  Future<void> addtoshopFromDialogBox(
+      ColorCodeProductDetail selectedColor) async {
     setState(() {
       _isLoading = true;
     });
 
     _snackBarMessage = 'محصول با موفقیت به سبد اضافه گردید!';
-//    _selectedColor == null
-//        ? _selectedColor = loadedProduct.color
-//        : _selectedColor =
-//    loadedProduct.color[_selectedColorIndex];
+
     _selectedColor = selectedColor;
     setState(() {
       _isLoading = true;
@@ -142,7 +140,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: AppTheme.secondary,
             fontFamily: 'Iransans',
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 20.0,
+            fontSize: textScaleFactor * 16,
           ),
         );
       } else if (loadedProduct.price.price_without_discount == '0' ||
@@ -157,7 +155,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: AppTheme.secondary,
             fontFamily: 'Iransans',
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 20.0,
+            fontSize: textScaleFactor * 16,
           ),
         );
       } else if (loadedProduct.price.price == '0' ||
@@ -173,7 +171,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: AppTheme.secondary,
             fontFamily: 'Iransans',
             fontWeight: FontWeight.bold,
-            fontSize: textScaleFactor * 20.0,
+            fontSize: textScaleFactor * 16,
           ),
         );
       } else {
@@ -192,7 +190,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 decorationThickness: 2,
                 color: AppTheme.accent,
                 fontFamily: 'Iransans',
-                fontSize: textScaleFactor * 16.0,
+                fontSize: textScaleFactor * 14,
               ),
             ),
             Text(
@@ -205,7 +203,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: AppTheme.secondary,
                 fontFamily: 'Iransans',
                 fontWeight: FontWeight.bold,
-                fontSize: textScaleFactor * 20.0,
+                fontSize: textScaleFactor * 16,
               ),
             ),
           ],
@@ -217,6 +215,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          title: Text(
+            'محصولات',
+            style: TextStyle(
+              fontFamily: 'Iransans',
+            ),
+          ),
           backgroundColor: AppTheme.appBarColor,
           iconTheme: new IconThemeData(color: AppTheme.appBarIconColor),
           elevation: 0,
@@ -260,88 +264,116 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          loadedProduct.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            height: 2,
-                            color: AppTheme.primary,
-                            fontFamily: 'Iransans',
-                            fontWeight: FontWeight.bold,
-                            fontSize: textScaleFactor * 16.0,
-                          ),
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20),
+                      Container(
+                        height: deviceHeight * 0.1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: Text(
-                                      'تومان',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontFamily: 'Iransans',
-                                        fontSize: textScaleFactor * 10.0,
-                                      ),
-                                    ),
-                                  ),
-                                  priceWidget(),
-                                ],
-                              ),
-                            ),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text(
-                                loadedProduct.brand[0].title,
-                                style: TextStyle(
-                                  color: AppTheme.h1,
-                                  fontFamily: 'Iransans',
-                                  fontSize: textScaleFactor * 16.0,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  ProductDetailMoreDetailScreen.routeName,
-                                  arguments: loadedProduct,
-                                );
-                              },
+                            Expanded(
+                              flex: 3,
                               child: Container(
+                                height: double.infinity,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: AppTheme.secondary),
+//                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: AppTheme.grey),
                                   color: AppTheme.bg,
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 8.0,
-                                    bottom: 4,
-                                    left: 15,
-                                    right: 18,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: textScaleFactor * 5.0),
+                                          child: FittedBox(
+                                            child: Text(
+                                              'تومان',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontFamily: 'Iransans',
+                                                fontSize:
+                                                    textScaleFactor * 10.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        FittedBox(child: priceWidget()),
+                                      ],
+                                    ),
                                   ),
-                                  child: Text(
-                                    'جزئیات',
-                                    style: TextStyle(
-                                      color: AppTheme.primary,
-                                      fontFamily: 'Iransans',
-                                      fontSize: textScaleFactor * 16.0,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+//                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: AppTheme.grey),
+                                  color: AppTheme.bg,
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          loadedProduct.title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            height: 2,
+                                            color: AppTheme.black,
+                                            fontFamily: 'Iransans',
+                                            fontSize: textScaleFactor * 13.0,
+                                          ),
+                                          textAlign: TextAlign.right,
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                      ),
+                                      Text(
+                                        loadedProduct.brand[0].title,
+                                        style: TextStyle(
+                                          color: AppTheme.h1,
+                                          fontFamily: 'Iransans',
+                                          fontSize: textScaleFactor * 14.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+//                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: AppTheme.grey),
+                                  color: AppTheme.bg,
+                                ),
+                                child: Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        ProductDetailMoreDetailScreen.routeName,
+                                        arguments: loadedProduct,
+                                      );
+                                    },
+                                    child: Text(
+                                      'جزئیات',
+                                      style: TextStyle(
+                                        color: AppTheme.black,
+                                        fontFamily: 'Iransans',
+                                        fontSize: textScaleFactor * 16.0,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -352,7 +384,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: deviceHeight * 0.55,
+                        height: deviceHeight * 0.7,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5)),
                         child: Stack(
@@ -365,7 +397,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 enableInfiniteScroll: true,
                                 reverse: false,
                                 autoPlay: false,
-                                height: deviceHeight * 0.55,
+                                height: deviceHeight * 0.7,
                                 autoPlayInterval: Duration(seconds: 3),
                                 autoPlayAnimationDuration:
                                     Duration(milliseconds: 800),
@@ -375,21 +407,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   _current = index;
                                   setState(() {});
                                 },
-
                               ),
                               items: loadedProduct.gallery.map((gallery) {
                                 return Builder(
                                   builder: (BuildContext context) {
-                                    return Container(
-                                        width: deviceWidth,
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        child: FadeInImage(
-                                          placeholder: AssetImage(
-                                              'assets/images/circle.gif'),
-                                          image: NetworkImage(gallery),
-                                          fit: BoxFit.contain,
-                                        ));
+                                    return Center(
+                                      child: Container(
+                                          width: deviceWidth,
+                                          height: deviceHeight * 0.7,
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 5.0),
+                                          child: FadeInImage(
+                                            placeholder: AssetImage(
+                                                'assets/images/circle.gif'),
+                                            image: NetworkImage(gallery),
+                                            fit: BoxFit.contain,
+                                          )),
+                                    );
                                   },
                                 );
                               }).toList(),
@@ -450,8 +484,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     color: Color(
                                       int.parse(
                                         '0xff' +
-                                            loadedProduct
-                                                .color[index].color_code
+                                            loadedProduct.color[index].colorCode
                                                 .replaceRange(0, 1, ''),
                                       ),
                                     ),

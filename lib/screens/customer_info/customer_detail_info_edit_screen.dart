@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/app_theme.dart';
 import '../../models/customer.dart';
-import '../../provider/customer_info.dart';
+import '../../customer_info.dart';
 import '../../widgets/main_drawer.dart';
 import 'customer_user_info_screen.dart';
 
@@ -203,20 +203,20 @@ class _CustomerDetailInfoEditScreenState
                         ),
                       );
 
-                      Provider.of<CustomerInfo>(context).first_name =
+                      Provider.of<CustomerInfo>(context, listen: false).first_name =
                           nameController.text;
-                      Provider.of<CustomerInfo>(context).last_name =
+                      Provider.of<CustomerInfo>(context, listen: false).last_name =
                           familyController.text;
 
-                      Provider.of<CustomerInfo>(context).email =
+                      Provider.of<CustomerInfo>(context, listen: false).email =
                           emailController.text;
-                      Provider.of<CustomerInfo>(context).ostan =
+                      Provider.of<CustomerInfo>(context, listen: false).ostan =
                           ostanController.text;
-                      Provider.of<CustomerInfo>(context).city =
+                      Provider.of<CustomerInfo>(context, listen: false).city =
                           cityController.text;
-                      Provider.of<CustomerInfo>(context).address =
+                      Provider.of<CustomerInfo>(context, listen: false).address =
                           addressController.text;
-                      Provider.of<CustomerInfo>(context).postcode =
+                      Provider.of<CustomerInfo>(context, listen: false).postcode =
                           postCodeController.text;
                       Provider.of<CustomerInfo>(context, listen: false)
                           .sendCustomer()

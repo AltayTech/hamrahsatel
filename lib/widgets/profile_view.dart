@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../provider/app_theme.dart';
 import '../models/customer.dart';
 import '../provider/auth.dart';
-import '../provider/customer_info.dart';
+import '../customer_info.dart';
 import '../screens/customer_info/customer_favorite_screen.dart';
 import '../screens/customer_info/customer_orders_screen.dart';
 import '../screens/customer_info/customer_user_info_screen.dart';
@@ -46,12 +46,12 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLogin = Provider.of<Auth>(context).isAuth;
+    bool isLogin = Provider.of<Auth>(context, listen: false).isAuth;
 
     double deviceSizeWidth = MediaQuery.of(context).size.width;
     double deviceSizeHeight = MediaQuery.of(context).size.height;
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    Customer customer = Provider.of<CustomerInfo>(context).customer;
+    Customer customer = Provider.of<CustomerInfo>(context, listen: false).customer;
     double itemPaddingF = 0.05;
     return !isLogin
         ? Container(

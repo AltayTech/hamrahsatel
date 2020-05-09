@@ -4,7 +4,7 @@ import './screens/messages_create_screen.dart';
 import 'package:provider/provider.dart';
 
 import './provider/auth.dart';
-import './provider/customer_info.dart';
+import 'customer_info.dart';
 import './screens/about_us_screen.dart';
 import './screens/calculator_screen.dart';
 import './screens/cart_screen.dart';
@@ -45,19 +45,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Products(),
+          create: (context) => Products(),
+          lazy: false,
         ),
         ChangeNotifierProvider(
-          create: (ctx) => Auth(),
+          create: (context) => Auth(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => CustomerInfo(),
+          create: (context) => CustomerInfo(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => CommissionCalculator(),
+          create: (context) => CommissionCalculator(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => Messages(),
+          create: (context) => Messages(),
         ),
       ],
       child: MaterialApp(
@@ -88,7 +89,7 @@ class MyApp extends StatelessWidget {
           textDirection: TextDirection.rtl, // setting rtl
         ),
         routes: {
-          HomeScreeen.routeName: (ctx) => HomeScreeen(),
+          HomeScreen.routeName: (ctx) => HomeScreen(),
           FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
           FavoriteView.routeName: (ctx) => FavoriteView(),
           ProfileScreen.routeName: (ctx) => ProfileScreen(),
